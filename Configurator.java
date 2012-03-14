@@ -509,7 +509,7 @@ public class Configurator {
             	
             private Class<?> kl = leaf;
 
-            private Iterator <Field> flds=new ArrIter<>(new Field [0]);
+            private Iterator <Field> flds=new ArrIter<Field>(new Field [0]);
 
             public boolean hasNext () {
               //
