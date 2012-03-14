@@ -14,3 +14,6 @@
 -> V metode setProperty zmeneny nazvy argumentu tak, aby byly expresivnejsi. Nazvy propertyName a
 propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slova "property".
 -> PtySetter zmeneno na PropertySetter
+-> mkMethodSetter zmeneno na createMethodSetter
+-> Argumenty v makeFldPtySetter ...
+

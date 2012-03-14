@@ -138,11 +138,10 @@ public class Configurator {
         // field based setter, assuming the property is simple enough to
         // convert to object instance. If that also fails, log a warning.
         //
-        PropertySetter str = mkMethodSetter ( configuredObject, name );
-        if ( str == null )
-        {
-            str = makeFldPtySetter ( name, configuredObject );
-            if ( str == null ) {
+        PropertySetter setter = createMethodSetter ( configuredObject, name );
+        if ( setter == null ) {
+            setter = makeFldPtySetter ( name, configuredObject );
+            if ( setter == null ) {
                 if ( log.isLoggable ( Level.WARNING ) )
                     log.log ( Level.WARNING, "Unable to find configuration method for property %s", name );
                 return;
@@ -152,7 +151,7 @@ public class Configurator {
         //
         // Set the property value.
         //
-        str.setVal ( value );
+        setter.setVal ( value );
     }
 
 
@@ -248,9 +247,9 @@ public class Configurator {
      * {@link PropertySetter} will modify the value of an object field annotated
      * by the {@code @Property} annotation with matching name.
      *
-     * @param nm
+     * @param name
      *      name of the property to set
-     * @param trg
+     * @param target
      *      target object on which to set the property
      *
      * @return
@@ -258,7 +257,7 @@ public class Configurator {
      *      the given object, or {@code null} if the target object has no field
      *      with matching annotation
      */
-    static PropertySetter makeFldPtySetter ( final String nm, final Object trg ) {
+    static PropertySetter makeFldPtySetter ( final String name, final Object target ) {
         //
         // Find a configurable field for the given property and create a
         // PropertySetter for the property.
@@ -267,21 +266,21 @@ public class Configurator {
         // hierarchy and find the first field annotated with the
         // @Property annotation matching the given property field.
         //
-        for ( final Field fld : new AllDeclFieldsIterable ( trg.getClass() ) ) {
+        for ( final Field fld : new AllDeclFieldsIterable ( target.getClass() ) ) {
             String cpn;
 
             Property pty = fld.getAnnotation ( Property.class );
             if ( pty == null ) cpn = null;
             else cpn = ( pty.name().length() > 0 ) ? pty.name() : fld.getName();
 
-            if ( nm.equals ( cpn ) ) {
+            if ( name.equals ( cpn ) ) {
                 //
                 // Match found -- create the setter.
                 //
                 return new PropertySetter() {
                 public void setVal( String val ) throws ConfExc {
-                  trace( "setting field property %s to %s", nm, val );
-                  configureFldPty ( nm, trg, val, fld );
+                  trace( "setting field property %s to %s", name, val );
+                  configureFldPty ( name, target, val, fld );
                 }
                 };
             }
@@ -383,15 +382,15 @@ public class Configurator {
      *
      * @param trg
      *      target object on which to set the property
-     * @param n
+     * @param name
      *      name of the property to set
      * @return
      *      {@link PropertySetter} which allows to configure the property on
      *      the given object, or {@code null} if the target object has no setter
      *      method with matching annotation
      */
-    static PropertySetter mkMethodSetter ( final Object trg, final String n ) {
-      Class <?> tc;
+    static PropertySetter createMethodSetter ( final Object trg, final String name ) {
+      Class <?> targetClass;
 
       //
       // Find a setter method for the given property and create a
@@ -401,9 +400,9 @@ public class Configurator {
       // hierarchy and find the first setter method annotated with the
       // @Setter annotation matching the given property field.
       //
-      tc = trg.getClass();
+      targetClass = trg.getClass();
       do {
-        for ( final Method dm : tc.getDeclaredMethods() ) {
+        for ( final Method dm : targetClass.getDeclaredMethods() ) {
           Setter str;
           String s;
           str = dm.getAnnotation ( Setter.class ) ;
@@ -420,30 +419,30 @@ public class Configurator {
                 s = s.substring ( 3, 4 ).toLowerCase() + s.substring( 4 );
               }
             }
-            if ( n.equals ( s ) ) {
+            if ( name.equals ( s ) ) {
               //
               // Match found -- create the setter.
               //
               return new PropertySetter() {
               public void setVal( String v ) {
                 boolean oa;
-                trace ( "setting method property %s to %s", n, v );
+                trace ( "setting method property %s to %s", name, v );
                 if ( ( Class<?> ) dm.getReturnType() != void.class || dm.getParameterTypes() [ 0 ] != String.class || dm.getParameterTypes().length != 1 )
-                  throw new ConfExc ( "property %s: method %s() is not a setter", n, dm.getName() );
+                  throw new ConfExc ( "property %s: method %s() is not a setter", name, dm.getName() );
                   try {
                     oa = dm.isAccessible();
                     dm.setAccessible ( true );
                     dm.invoke ( trg, v );
                     dm.setAccessible ( oa );
                   } catch ( Exception e ) {
-                    wrap ( e, "Unable to set property %s=%s using method %s()", n, v, dm.getName() );
+                    wrap ( e, "Unable to set property %s=%s using method %s()", name, v, dm.getName() );
                   }
               }
             };
           }
         }
-        tc = tc.getSuperclass();
-      } while ( tc != null );
+        targetClass = targetClass.getSuperclass();
+      } while ( targetClass != null );
       //
       // No match found.
       //
