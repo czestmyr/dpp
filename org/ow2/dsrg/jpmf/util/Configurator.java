@@ -138,14 +138,23 @@ public class Configurator {
         // field based setter, assuming the property is simple enough to
         // convert to object instance. If that also fails, log a warning.
         //
-        PropertySetter setter = createMethodSetter ( configuredObject, name );
+        Method propertySetter = findPropertySetter ( configuredObject, name );
+        if ( propertySetter != null ) {
+          //TODO: Call the setter
+          trace ( "setting method property %s to %s", name, value );
+          try {
+            setPropertyUsingMethod ( propertySetter, configuredObject, value );
+          } catch ( Exception e ) {
+            wrap ( e, "Unable to set property %s=%s using method %s()", name, value, propertySetter.getName() );
+          }
+          return;
+        }
+        
+        PropertySetter setter = makeFldPtySetter ( name, configuredObject );
         if ( setter == null ) {
-            setter = makeFldPtySetter ( name, configuredObject );
-            if ( setter == null ) {
-                if ( log.isLoggable ( Level.WARNING ) )
-                    log.log ( Level.WARNING, "Unable to find configuration method for property %s", name );
-                return;
-            }
+          if ( log.isLoggable ( Level.WARNING ) )
+            log.log ( Level.WARNING, "Unable to find configuration method for property %s", name );
+          return;
         }
 
         //
@@ -389,7 +398,7 @@ public class Configurator {
      *      the given object, or {@code null} if the target object has no setter
      *      method with matching annotation
      */
-    static PropertySetter createMethodSetter ( final Object trg, final String name ) {
+    static Method findPropertySetter ( final Object trg, final String name ) {
       Class <?> targetClass;
 
       //
@@ -402,43 +411,25 @@ public class Configurator {
       //
       targetClass = trg.getClass();
       do {
-        for ( final Method dm : targetClass.getDeclaredMethods() ) {
+        for ( final Method method : targetClass.getDeclaredMethods() ) {
           Setter str;
-          String s;
-          str = dm.getAnnotation ( Setter.class ) ;
-          if ( str == null ) s = null;
+          String propertyName;
+          str = method.getAnnotation ( Setter.class ) ;
+          if ( str == null ) propertyName = null;
           else {
-            s = str.name();
-            if ( s.length() == 0 )
-            {
+            propertyName = str.name();
+            if ( propertyName.length() == 0 ) {
               //
               // If the method name starts with "set", strip the prefix and lower case the first letter of the suffix.
               //
-              s = dm.getName();
-              if ( s.startsWith( "set" ) )
-                s = s.substring ( 3, 4 ).toLowerCase() + s.substring( 4 );
+              propertyName = method.getName();
+              if ( propertyName.startsWith( "set" ) ) {
+                propertyName = propertyName.substring ( 3, 4 ).toLowerCase() + propertyName.substring( 4 );
               }
             }
-            if ( name.equals ( s ) ) {
-              //
-              // Match found -- create the setter.
-              //
-              return new PropertySetter() {
-              public void setVal( String v ) {
-                boolean oa;
-                trace ( "setting method property %s to %s", name, v );
-                if ( ( Class<?> ) dm.getReturnType() != void.class || dm.getParameterTypes() [ 0 ] != String.class || dm.getParameterTypes().length != 1 )
-                  throw new ConfExc ( "property %s: method %s() is not a setter", name, dm.getName() );
-                  try {
-                    oa = dm.isAccessible();
-                    dm.setAccessible ( true );
-                    dm.invoke ( trg, v );
-                    dm.setAccessible ( oa );
-                  } catch ( Exception e ) {
-                    wrap ( e, "Unable to set property %s=%s using method %s()", name, v, dm.getName() );
-                  }
-              }
-            };
+          }
+          if ( name.equals ( propertyName ) ) {
+            return method;
           }
         }
         targetClass = targetClass.getSuperclass();
@@ -449,6 +440,16 @@ public class Configurator {
       return null;
     }
 
+    static void setPropertyUsingMethod( Method method, Object trg, String v ) {
+      boolean oa;
+      if ( ( Class<?> ) method.getReturnType() != void.class || method.getParameterTypes() [ 0 ] != String.class || method.getParameterTypes().length != 1 )
+        throw new ConfExc ( "method %s() is not a setter", method.getName() );
+
+      oa = method.isAccessible();
+      method.setAccessible ( true );
+      method.invoke ( trg, v );
+      method.setAccessible ( oa );
+    }
 
     /* ***********************************************************************
      * Logging
