@@ -1,0 +1,7 @@
+-> Sjednocen coding style, jmenovite mezery kolem argumentu funkci (nekde byly a nekde ne).
+    Duvod: Zvysuje citelnost kodu.
+-> Zmena interface: metoda Configurator.set(...) zmenena na Configurator.setProperty(...)
+    Duvod: V prikladu v zadani ukolu bylo explicitne pouzito jmeno setProperty a navic je mnohem
+    vystiznejsi nez pouhe "set"
+-> V metode setProperty zmeneny nazvy argumentu tak, aby byly expresivnejsi. Nazvy propertyName a
+propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slova "property".

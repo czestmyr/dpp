@@ -121,30 +121,30 @@ public class Configurator {
      * Sets the given property to the given value in the given configurable
      * object.
      *
-     * @param t
+     * @param configuredObject
      *      target configurable object to set the property on
-     * @param n
+     * @param name
      *      property name
-     * @param v
+     * @param value
      *      property value
      * @throws ConfExc
      *      if the value of the given property cannot be set on the
      *      given object
      */
-    public static void set (Object t, String n, String v) {
+    public static void setProperty ( Object configuredObject, String name, String value ) {
         //
         // First try to obtain a method based setter, which is necessary
         // for more complex properties. If that fails, try to obtain a
         // field based setter, assuming the property is simple enough to
         // convert to object instance. If that also fails, log a warning.
         //
-        PtySetter str = mkMethodSetter (t, n);
-        if (str == null)
+        PtySetter str = mkMethodSetter ( configuredObject, name );
+        if ( str == null )
         {
-            str = makeFldPtySetter (n, t);
-            if (str == null) {
-                if (log.isLoggable (Level.WARNING))
-                    log.log (Level.WARNING, "Unable to find configuration method for property %s", n );
+            str = makeFldPtySetter ( name, configuredObject );
+            if ( str == null ) {
+                if ( log.isLoggable ( Level.WARNING ) )
+                    log.log ( Level.WARNING, "Unable to find configuration method for property %s", name );
                 return;
             }
         }
@@ -152,7 +152,7 @@ public class Configurator {
         //
         // Set the property value.
         //
-        str.setVal (v);
+        str.setVal ( value );
     }
 
 
