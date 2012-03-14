@@ -8,7 +8,7 @@ public class Calculator {
 		System.out.println("Hello, world!");
 
 		Calculator calc = new Calculator();
-		Configurator.set(calc, "magic", "41");
+		Configurator.setProperty(calc, "magic", "41");
 		Configurator.check(calc);
 
 		int result = calc.add(2,2);
