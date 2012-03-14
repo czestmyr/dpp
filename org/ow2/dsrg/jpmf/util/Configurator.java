@@ -138,7 +138,7 @@ public class Configurator {
         // field based setter, assuming the property is simple enough to
         // convert to object instance. If that also fails, log a warning.
         //
-        PtySetter str = mkMethodSetter ( configuredObject, name );
+        PropertySetter str = mkMethodSetter ( configuredObject, name );
         if ( str == null )
         {
             str = makeFldPtySetter ( name, configuredObject );
@@ -229,11 +229,11 @@ public class Configurator {
 
     /**
      * Private interface encapsulating a method for setting a property value on
-     * an object. Instances of the {@link PtySetter} interface are bound to
+     * an object. Instances of the {@link PropertySetter} interface are bound to
      * a particular target object and property name at construction time -- only
      * the value remains unbound and can be set.
      */
-    private interface PtySetter {
+    private interface PropertySetter {
         void setVal ( String v );
     }
 
@@ -243,9 +243,9 @@ public class Configurator {
      * ***********************************************************************/
 
     /**
-     * Returns a field based {@link PtySetter} bound to the given object
+     * Returns a field based {@link PropertySetter} bound to the given object
      * and property name. When setting the property value, the returned
-     * {@link PtySetter} will modify the value of an object field annotated
+     * {@link PropertySetter} will modify the value of an object field annotated
      * by the {@code @Property} annotation with matching name.
      *
      * @param nm
@@ -254,11 +254,11 @@ public class Configurator {
      *      target object on which to set the property
      *
      * @return
-     *      {@link PtySetter} which allows to configure the property on
+     *      {@link PropertySetter} which allows to configure the property on
      *      the given object, or {@code null} if the target object has no field
      *      with matching annotation
      */
-    static PtySetter makeFldPtySetter ( final String nm, final Object trg ) {
+    static PropertySetter makeFldPtySetter ( final String nm, final Object trg ) {
         //
         // Find a configurable field for the given property and create a
         // PropertySetter for the property.
@@ -278,7 +278,7 @@ public class Configurator {
                 //
                 // Match found -- create the setter.
                 //
-                return new PtySetter() {
+                return new PropertySetter() {
                 public void setVal( String val ) throws ConfExc {
                   trace( "setting field property %s to %s", nm, val );
                   configureFldPty ( nm, trg, val, fld );
@@ -376,9 +376,9 @@ public class Configurator {
      * ***********************************************************************/
 
     /**
-     * Returns a method based {@link PtySetter} bound to the given object
+     * Returns a method based {@link PropertySetter} bound to the given object
      * and property name. When setting the property value, the returned
-     * {@link PtySetter} will invoke a setter method annotated by the
+     * {@link PropertySetter} will invoke a setter method annotated by the
      * {@link Setter} annotation with matching name.
      *
      * @param trg
@@ -386,11 +386,11 @@ public class Configurator {
      * @param n
      *      name of the property to set
      * @return
-     *      {@link PtySetter} which allows to configure the property on
+     *      {@link PropertySetter} which allows to configure the property on
      *      the given object, or {@code null} if the target object has no setter
      *      method with matching annotation
      */
-    static PtySetter mkMethodSetter ( final Object trg, final String n ) {
+    static PropertySetter mkMethodSetter ( final Object trg, final String n ) {
       Class <?> tc;
 
       //
@@ -424,7 +424,7 @@ public class Configurator {
               //
               // Match found -- create the setter.
               //
-              return new PtySetter() {
+              return new PropertySetter() {
               public void setVal( String v ) {
                 boolean oa;
                 trace ( "setting method property %s to %s", n, v );
