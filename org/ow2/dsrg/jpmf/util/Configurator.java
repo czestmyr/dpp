@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  * Utility class for configuration and validation of configurable objects.
  * <p>
@@ -44,7 +43,6 @@ import java.util.logging.Logger;
 public class Configurator {
 
     public static Logger log = Logger.getAnonymousLogger();
-
 
     /* ***********************************************************************
      * ANNOTATIONS
@@ -94,7 +92,6 @@ public class Configurator {
         String description() default "";
     }
 
-
     @Documented
     @Retention ( RetentionPolicy.RUNTIME )
     @Target ( ElementType.METHOD )
@@ -109,9 +106,7 @@ public class Configurator {
          *      name without the "set" prefix with the first letter in lower case
          */
         String name() default "";
-
     }
-
 
     /* ***********************************************************************
      * PUBLIC METHODS
@@ -161,7 +156,6 @@ public class Configurator {
         }
         return;
     }
-
 
     /**
      * Checks if all configurable fields in the passed object are not null.
@@ -271,7 +265,6 @@ public class Configurator {
         return null;
     }
 
-
     /**
      * Sets the given field of the given object to the given value. The
      * value is converted from string representation to an instance of
@@ -315,7 +308,6 @@ public class Configurator {
         }
     }
 
-
     /**
      * Creates an object instance from the string representation of a property value.
      * The instance type is determined by the type of the given field and the instance
@@ -332,14 +324,14 @@ public class Configurator {
      */
     static Object makeValueInstance ( Field field, String value ) {
         // First try to create the value instance by invoking a string constructor of the field class.
-	Class <?> fieldType = field.getType();
+        Class <?> fieldType = field.getType();
 
         try {
-	    Constructor <?> fieldConstructor = fieldType.getConstructor ( new Class <?> [] { String.class } );
+            Constructor <?> fieldConstructor = fieldType.getConstructor ( new Class <?> [] { String.class } );
             return fieldConstructor.newInstance ( value );
         } catch ( Exception e ) {
-	    /* quell the exception and try the next method */
-	}
+            /* quell the exception and try the next method */
+        }
 
         // If there is no suitable constructor, try to create the instance by invoking a static factory method.
         try {
@@ -376,37 +368,39 @@ public class Configurator {
      *      method with matching annotation
      */
     static Method findPropertySetter ( final Object target, final String name ) {
-      Class <?> targetClass;
-
-      //
-      // Find a setter method for the given property and create a
-      // PropertySetter for the property.
-      //
-      // Specifically, enumerate all methods in the given object's class
-      // hierarchy and find the first setter method annotated with the
-      // @Setter annotation matching the given property field.
-      //
-      targetClass = target.getClass();
-      do {
-        for ( final Method method : targetClass.getDeclaredMethods() ) {
-          Setter setter = method.getAnnotation ( Setter.class );
-          if ( setter == null ) continue;
-
-          String propertyName = setter.name();
-          if ( propertyName.length() == 0 ) {
-	    propertyName = getPropertyName ( method.getName() );
-          }
-
-          if ( name.equals ( propertyName ) ) {
-            return method;
-          }
-        }
-        targetClass = targetClass.getSuperclass();
-      } while ( targetClass != null );
-      //
-      // No match found.
-      //
-      return null;
+        Class <?> targetClass;
+  
+        //
+        // Find a setter method for the given property and create a
+        // PropertySetter for the property.
+        //
+        // Specifically, enumerate all methods in the given object's class
+        // hierarchy and find the first setter method annotated with the
+        // @Setter annotation matching the given property field.
+        //
+        targetClass = target.getClass();
+        do {
+            for ( final Method method : targetClass.getDeclaredMethods() ) {
+                Setter setter = method.getAnnotation ( Setter.class );
+                if ( setter == null ) {
+                    continue;
+                }
+      
+                String propertyName = setter.name();
+                if ( propertyName.length() == 0 ) {
+                    propertyName = getPropertyName ( method.getName() );
+                }
+      
+                if ( name.equals ( propertyName ) ) {
+                    return method;
+                }
+            }
+            targetClass = targetClass.getSuperclass();
+        } while ( targetClass != null );
+        //
+        // No match found.
+        //
+        return null;
     }
     /**
      *  If the methodName starts with "set", strip the prefix and lower case the first letter of the suffix.
@@ -420,8 +414,8 @@ public class Configurator {
         if ( methodName.startsWith( "set" ) ) {
             return methodName.substring ( 3, 4 ).toLowerCase() + methodName.substring( 4 );
         } else {
-	    return methodName;
-	}
+            return methodName;
+        }
     }
 
     /* ***********************************************************************
@@ -440,18 +434,17 @@ public class Configurator {
      *      value which should be setted using method
      */
     static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
-
-      boolean hasMoreParameters = method.getParameterTypes().length != 1;
-      boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
-      boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
-      if ( hasReturnValue || hasBadType || hasMoreParameters ) {
-        throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
-      }
-
-      boolean accessibility = method.isAccessible();
-      method.setAccessible ( true );
-      method.invoke ( target, value );
-      method.setAccessible ( accessibility );
+        boolean hasMoreParameters = method.getParameterTypes().length != 1;
+        boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
+        boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
+        if ( hasReturnValue || hasBadType || hasMoreParameters ) {
+            throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
+        }
+  
+        boolean accessibility = method.isAccessible();
+        method.setAccessible ( true );
+        method.invoke ( target, value );
+        method.setAccessible ( accessibility );
     }
 
     /* ***********************************************************************
@@ -460,7 +453,7 @@ public class Configurator {
 
     private static void trace ( String format, Object ... args ) {
         if ( log.isLoggable ( Level.FINE ) ) {
-          log.log ( Level.FINE, format, args );
+            log.log ( Level.FINE, format, args );
         }
     }
 
@@ -474,10 +467,10 @@ public class Configurator {
      */
     public static class ConfigurationException extends RuntimeException {
         ConfigurationException ( String format, Object ... args ) {
-          super ( String.format ( format, args ) );
+            super ( String.format ( format, args ) );
         }
         ConfigurationException ( Throwable exc, String format, Object ... args ) {
-          super ( String.format ( format, args ), exc );
+            super ( String.format ( format, args ), exc );
         }
     }
 
@@ -489,8 +482,6 @@ public class Configurator {
     private static void wrap ( Throwable exc, String format, Object ... args ) {
         throw new ConfigurationException ( exc, format, args );
     }
-
-
 
     /* ***********************************************************************
      * FieldsIterable
@@ -511,48 +502,48 @@ public class Configurator {
          * is {@code null}, the iterable produces an empty iterator.
          */
         FieldsIterable ( Class <?> leafClass ) {
-	    leaf = leafClass;
-	}
+            leaf = leafClass;
+        }
 
         @Override
         public Iterator <Field> iterator() {
             return new Iterator <Field>() {
-                    
-            private Class <?> currentClass = leaf;
-
-            private Iterator <Field> fields = new ArrayIterator <Field> ( new Field [ 0 ] );
-
-            public boolean hasNext() {
-              //
-              // If there are no fields, check if there is another class
-              // where to look for fields. If we run out of classes, there
-              // are no more fields left.
-              //
-              while ( !fields.hasNext() ) {
-                      if ( currentClass == null ) {
-                    return false;
-                      }
-                      
-                      fields = new ArrayIterator <Field> ( currentClass.getDeclaredFields() );
-                      
-                      currentClass = currentClass.getSuperclass();
-              }
-
-              return true;
-            }
-
-            @Override
-            public Field next() {
-                if ( !hasNext() ) {
-                  throw new NoSuchElementException();
+                        
+                private Class <?> currentClass = leaf;
+    
+                private Iterator <Field> fields = new ArrayIterator <Field> ( new Field [ 0 ] );
+    
+                public boolean hasNext() {
+                    //
+                    // If there are no fields, check if there is another class
+                    // where to look for fields. If we run out of classes, there
+                    // are no more fields left.
+                    //
+                    while ( !fields.hasNext() ) {
+                        if ( currentClass == null ) {
+                            return false;
+                        }
+                            
+                        fields = new ArrayIterator <Field> ( currentClass.getDeclaredFields() );
+                            
+                        currentClass = currentClass.getSuperclass();
+                    }
+      
+                    return true;
                 }
-                return fields.next();
-            }
-
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+    
+                @Override
+                public Field next() {
+                    if ( !hasNext() ) {
+                      throw new NoSuchElementException();
+                    }
+                    return fields.next();
+                }
+    
+                public void remove() {
+                    throw new UnsupportedOperationException();
+                }
+            };
         }
     }
 
@@ -568,8 +559,8 @@ public class Configurator {
 
         ArrayIterator ( ElementType [] elements ) {
             array = elements;
-	    length = elements.length;
-	    pos = 0;
+            length = elements.length;
+            pos = 0;
         }
 
         @Override
@@ -578,13 +569,13 @@ public class Configurator {
         }
 
         public boolean hasNext() {
-	    return pos < length;
-	}
+            return pos < length;
+        }
 
         @Override
         public ElementType next() {
             if ( !hasNext() ) {
-              throw new NoSuchElementException();
+                throw new NoSuchElementException();
             }
             return array [ pos++ ];
         }
