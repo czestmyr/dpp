@@ -141,6 +141,7 @@ public class Configurator {
         Method propertySetter = findPropertySetter ( configuredObject, name );
         if ( propertySetter != null ) {
           try {
+            trace ( "setting method property %s to %s", name, value );
             setPropertyUsingMethod ( propertySetter, configuredObject, value );
           } catch ( Exception e ) {
             wrap ( e, "Unable to set property %s=%s using method %s()", name, value, propertySetter.getName() );
@@ -150,6 +151,7 @@ public class Configurator {
         
         Field property = findProperty ( name, configuredObject );
         if ( property != null ) {
+          trace ( "setting field property %s to %s", name, value );
           setDirectly ( name, configuredObject, value, property );
           return;
         }
@@ -179,7 +181,7 @@ public class Configurator {
         //
 
         try {
-            for ( Field field : new AllDeclFieldsIterable ( configuredObject.getClass() ) ) {
+            for ( Field field : new FieldsIterable ( configuredObject.getClass() ) ) {
                 //
                 // Skip fields without the @Property annotation or fields
                 // with non-null value.
@@ -268,7 +270,7 @@ public class Configurator {
         // hierarchy and find the first field annotated with the
         // @Property annotation matching the given property field.
         //
-        for ( final Field fld : new AllDeclFieldsIterable ( target.getClass() ) ) {
+        for ( final Field fld : new FieldsIterable ( target.getClass() ) ) {
             String cpn;
 
             Property pty = fld.getAnnotation ( Property.class );
@@ -429,8 +431,6 @@ public class Configurator {
     }
 
     static void setPropertyUsingMethod( Method method, Object trg, String v ) throws Exception{
-      trace ( "setting method property %s to %s", name, value );
-
       if ( ( Class<?> ) method.getReturnType() != void.class || method.getParameterTypes() [ 0 ] != String.class || method.getParameterTypes().length != 1 ) {
         throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
       }
@@ -521,7 +521,7 @@ public class Configurator {
                     return false;
                       }
                       
-                      fields = new ArrIter <Field> ( currentClass.getDeclaredFields() );
+                      fields = new ArrayIterator <Field> ( currentClass.getDeclaredFields() );
                       
                       currentClass = currentClass.getSuperclass();
               }
@@ -554,7 +554,7 @@ public class Configurator {
         private int len;
         private int pos;
 
-        ArrIter ( ElementType [] elements ) {
+        ArrayIterator ( ElementType [] elements ) {
             arr = elements;
 	    len = elements.length;
 	    pos = 0;
