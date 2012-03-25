@@ -431,7 +431,10 @@ public class Configurator {
      *      value which should be setted using method
      */
     static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
-      if ( ( Class<?> ) method.getReturnType() != void.class || method.getParameterTypes() [ 0 ] != String.class || method.getParameterTypes().length != 1 ) {
+      boolean hasMoreParameters = method.getParameterTypes().length != 1;
+      boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
+      boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
+      if ( hasReturnValue || hasBadType || hasMoreParameters ) {
         throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
       }
 
