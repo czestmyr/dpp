@@ -25,6 +25,7 @@ propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slov
 -> Trida ArrIter prejmenovana na ArrayIterator
     Duvod: Nazev je popisnejsi.
 -> Prejmenovan parametr f ve tride s vyjimkou na format
+-> str melo sice kratkou dobu platnosti, ale mohlo by se plest se "string"
 
 -------------- Refactoring ----------------------
 

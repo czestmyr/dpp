@@ -140,8 +140,6 @@ public class Configurator {
         //
         Method propertySetter = findPropertySetter ( configuredObject, name );
         if ( propertySetter != null ) {
-          //TODO: Call the setter
-          trace ( "setting method property %s to %s", name, value );
           try {
             setPropertyUsingMethod ( propertySetter, configuredObject, value );
           } catch ( Exception e ) {
@@ -404,23 +402,20 @@ public class Configurator {
       targetClass = trg.getClass();
       do {
         for ( final Method method : targetClass.getDeclaredMethods() ) {
-          Setter str;
-          String propertyName;
-          str = method.getAnnotation ( Setter.class ) ;
-          if ( str == null ) {
-            propertyName = null;
-          } else {
-            propertyName = str.name();
-            if ( propertyName.length() == 0 ) {
-              //
-              // If the method name starts with "set", strip the prefix and lower case the first letter of the suffix.
-              //
-              propertyName = method.getName();
-              if ( propertyName.startsWith( "set" ) ) {
-                propertyName = propertyName.substring ( 3, 4 ).toLowerCase() + propertyName.substring( 4 );
-              }
+          Setter setter = method.getAnnotation ( Setter.class );
+          if ( setter == null ) continue;
+
+          String propertyName = setter.name();
+          if ( propertyName.length() == 0 ) {
+            //
+            // If the method name starts with "set", strip the prefix and lower case the first letter of the suffix.
+            //
+            propertyName = method.getName();
+            if ( propertyName.startsWith( "set" ) ) {
+              propertyName = propertyName.substring ( 3, 4 ).toLowerCase() + propertyName.substring( 4 );
             }
           }
+
           if ( name.equals ( propertyName ) ) {
             return method;
           }
@@ -434,6 +429,8 @@ public class Configurator {
     }
 
     static void setPropertyUsingMethod( Method method, Object trg, String v ) throws Exception{
+      trace ( "setting method property %s to %s", name, value );
+
       if ( ( Class<?> ) method.getReturnType() != void.class || method.getParameterTypes() [ 0 ] != String.class || method.getParameterTypes().length != 1 ) {
         throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
       }
