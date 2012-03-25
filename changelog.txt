@@ -27,6 +27,9 @@ propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slov
 -> Prejmenovan parametr f ve tride s vyjimkou na format
 -> str melo sice kratkou dobu platnosti, ale mohlo by se plest se "string"
 -> AllDecl pred FieldsIterable je zbytecne
+-> Zprehlednen kod metody mkValueInst a metoda prejmenovana na makeValueInstance
+    Slozita volani rozdelena vlozenim novych lokalnich promennych.
+
 
 -------------- Refactoring ----------------------
 
