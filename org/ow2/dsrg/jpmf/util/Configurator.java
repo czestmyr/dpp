@@ -187,43 +187,39 @@ public class Configurator {
                 // with non-null value.
                 //
                 Property property = field.getAnnotation ( Property.class );
-                if ( property != null ) {
-                    boolean accessibility;
-                    Object oldValue;
+                if ( property == null ) continue;
 
-                    //
-                    // Make the field accessible before getting its value and
-                    // restore the previous accessibility state after that.
-                    //
-                    accessibility = field.isAccessible();
-                    field.setAccessible ( true );
-                    oldValue = field.get ( configuredObject );
-                    field.setAccessible ( accessibility );
+                boolean accessibility;
+                Object oldValue;
 
-                    //
-                    // Set default value for null fields.
-                    //
-                    if ( oldValue == null ) {
-                        String name = ( ( property.name().length() > 0 ) ? property.name() : field.getName() );
-                        String defaultValue = ( ( property.defaultValue().length() > 0 ) ? property.defaultValue() : null );
-                        if ( defaultValue != null ) {
-                            trace ( "setting field property %s to default value %s", name, defaultValue );
-                            setDirectly ( name, configuredObject, defaultValue, field );
-                        }
-                        else {
-                          if ( property.required () ) {
-                            throw new ConfigurationException ( "Required property '%s' is not configured", name );
-                            }
-                        }
+                //
+                // Make the field accessible before getting its value and
+                // restore the previous accessibility state after that.
+                //
+                accessibility = field.isAccessible();
+                field.setAccessible ( true );
+                oldValue = field.get ( configuredObject );
+                field.setAccessible ( accessibility );
+
+                //
+                // Set default value for null fields.
+                //
+                if ( oldValue != null ) continue;
+
+                String name = ( ( property.name().length() > 0 ) ? property.name() : field.getName() );
+                String defaultValue = ( ( property.defaultValue().length() > 0 ) ? property.defaultValue() : null );
+                if ( defaultValue != null ) {
+                    trace ( "setting field property %s to default value %s", name, defaultValue );
+                    setDirectly ( name, configuredObject, defaultValue, field );
+                } else {
+                    if ( property.required () ) {
+                        throw new ConfigurationException ( "Required property '%s' is not configured", name );
                     }
                 }
-
             }
-
         } catch ( ConfigurationException ce ) {
             // propagate without wrapping
             throw ce;
-
         } catch ( Exception e ) {
             wrap ( e, "Unable to verify object property configuration!" );
         }

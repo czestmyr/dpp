@@ -25,3 +25,9 @@ propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slov
 -> Trida ArrIter prejmenovana na ArrayIterator
     Duvod: Nazev je popisnejsi.
 -> Prejmenovan parametr f ve tride s vyjimkou na format
+
+-------------- Refactoring ----------------------
+
+-> V mistech, kde se osetruje nejaka podminka IFem a pri jejim nespleni se nic
+    neprovede, jsme zmenili test na opacnou podminku a vetev exekuce ukoncili
+    returnem nebo pomoci continue.
