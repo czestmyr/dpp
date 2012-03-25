@@ -342,28 +342,33 @@ public class Configurator {
      * is created either by calling a string constructor or a static factory method on
      * the field class.
      *
-     * @param fld
+     * @param field
      *      field to create value for
-     * @param s
+     * @param value
      *      string representation of field value
      * @return
      *      an object of the given field type representing the given value, or
      *      {@code null} if the instance could not be created
      */
-    static Object mkValInst ( Field fld, String s ) {
+    static Object mkValInst ( Field field, String value ) {
         // First try to create the value instance by invoking a string constructor of the field class.
+	Class <?> fieldType = field.getType();
+
         try {
-            return ( ( Constructor <?> ) ( ( Class <?> ) fld.getType() ).getConstructor ( new Class <?> [] { String.class } ) ).newInstance ( s );
-        } catch ( Exception e ) { /* quell the exception and try the next method */ }
+	    Constructor <?> fieldConstructor = fieldType.getConstructor ( new Class <?> [] { String.class } );
+            return fieldConstructor.newInstance ( value );
+        } catch ( Exception e ) {
+	    /* quell the exception and try the next method */
+	}
 
         // If there is no suitable constructor, try to create the instance by invoking a static factory method.
         try {
-            Method fact = ( ( Class <?> ) fld.getType() ).getMethod ("valueOf", new Class <?> [] { String.class } );
-            if ( ( ( Class<?> ) fld.getType() ).isAssignableFrom( fact.getReturnType() ) ) {
-              return fact.invoke ( null, s );
+            Method fact = fieldType.getMethod ( "valueOf", new Class <?> [] { String.class } );
+            if ( fieldType.isAssignableFrom( fact.getReturnType() ) ) {
+              return fact.invoke ( null, value );
             }
         } catch ( Exception e ) {
-          /* quell the exception */ 
+            /* quell the exception */ 
         }
 
         // Could not create the instance, return null.
