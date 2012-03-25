@@ -222,7 +222,7 @@ public class Configurator {
 		}
 
 	        String fmt = "setting field property %s to default value %s";
-                trace ( fmt, name, defaultValue );
+                trace ( fmt, name, property.defaultValue() );
                 setDirectly ( name, object, property.defaultValue(), field );
             }
         } catch ( ConfigurationException ce ) {
