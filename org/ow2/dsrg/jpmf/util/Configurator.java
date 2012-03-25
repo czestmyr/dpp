@@ -550,13 +550,13 @@ public class Configurator {
      * *******************************************************************/
 
     static class ArrayIterator <ElementType> implements Iterator <ElementType> {
-        private ElementType [] arr;
-        private int len;
+        private ElementType [] array;
+        private int length;
         private int pos;
 
         ArrayIterator ( ElementType [] elements ) {
-            arr = elements;
-	    len = elements.length;
+            array = elements;
+	    length = elements.length;
 	    pos = 0;
         }
 
@@ -566,7 +566,7 @@ public class Configurator {
         }
 
         public boolean hasNext() {
-	    return pos < len;
+	    return pos < length;
 	}
 
         @Override
@@ -574,7 +574,7 @@ public class Configurator {
             if ( !hasNext() ) {
               throw new NoSuchElementException();
             }
-            return arr [ pos++ ];
+            return array [ pos++ ];
         }
     }
 
