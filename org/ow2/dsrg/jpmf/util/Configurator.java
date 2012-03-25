@@ -481,7 +481,7 @@ public class Configurator {
 
 
     /* ***********************************************************************
-     * AllDeclFieldsIterable
+     * FieldsIterable
      * ***********************************************************************/
 
     /**
@@ -491,24 +491,24 @@ public class Configurator {
      * the classes along the inheritance path. The iterator (obviously) does not
      * support element removal, since it operates on an immutable structure.
      */
-    static class AllDeclFieldsIterable implements Iterable <Field> {
+    static class FieldsIterable implements Iterable <Field> {
         private Class <?> leaf;
 
         /**
          * Creates an iterable for the given leaf class. If the leaf class
          * is {@code null}, the iterable produces an empty iterator.
          */
-        AllDeclFieldsIterable ( Class <?> lc ) {
-	    leaf = lc;
+        FieldsIterable ( Class <?> leafClass ) {
+	    leaf = leafClass;
 	}
 
         @Override
         public Iterator <Field> iterator() {
             return new Iterator <Field>() {
                     
-            private Class <?> kl = leaf;
+            private Class <?> currentClass = leaf;
 
-            private Iterator <Field> flds = new ArrayIterator <Field> ( new Field [ 0 ] );
+            private Iterator <Field> fields = new ArrayIterator <Field> ( new Field [ 0 ] );
 
             public boolean hasNext() {
               //
@@ -516,14 +516,14 @@ public class Configurator {
               // where to look for fields. If we run out of classes, there
               // are no more fields left.
               //
-              while ( !flds.hasNext() ) {
-                      if ( kl == null ) {
+              while ( !fields.hasNext() ) {
+                      if ( currentClass == null ) {
                     return false;
                       }
                       
-                      flds = new ArrIter <Field> ( kl.getDeclaredFields() );
+                      fields = new ArrIter <Field> ( currentClass.getDeclaredFields() );
                       
-                      kl = kl.getSuperclass();
+                      currentClass = currentClass.getSuperclass();
               }
 
               return true;
@@ -534,7 +534,7 @@ public class Configurator {
                 if ( !hasNext() ) {
                   throw new NoSuchElementException();
                 }
-                return flds.next();
+                return fields.next();
             }
 
             public void remove() {

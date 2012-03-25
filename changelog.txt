@@ -26,6 +26,7 @@ propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slov
     Duvod: Nazev je popisnejsi.
 -> Prejmenovan parametr f ve tride s vyjimkou na format
 -> str melo sice kratkou dobu platnosti, ale mohlo by se plest se "string"
+-> AllDecl pred FieldsIterable je zbytecne
 
 -------------- Refactoring ----------------------
 
