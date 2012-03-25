@@ -187,7 +187,9 @@ public class Configurator {
                 // with non-null value.
                 //
                 Property property = field.getAnnotation ( Property.class );
-                if ( property == null ) continue;
+                if ( property == null ) {
+		    continue;
+		}
 
                 Object oldValue;
 
@@ -203,7 +205,9 @@ public class Configurator {
                 //
                 // Set default value for null fields.
                 //
-                if ( oldValue != null ) continue;
+                if ( oldValue != null ) {
+		    continue;
+		}
 
                 String name;
 	        if ( property.name().length() > 0 ) {
@@ -431,10 +435,11 @@ public class Configurator {
         // First try to create the value instance by invoking a string
 	// constructor of the field class.
         Class <?> fieldType = field.getType();
+	Class <?> [] paramType = new Class <?> [] { String.class };
 
         try {
             Constructor <?> fieldConstructor =
-		fieldType.getConstructor ( new Class <?> [] { String.class } );
+		fieldType.getConstructor ( paramType );
             return fieldConstructor.newInstance ( value );
         } catch ( Exception e ) {
             /* quell the exception and try the next method */
@@ -443,10 +448,7 @@ public class Configurator {
         // If there is no suitable constructor, try to create the instance by
 	// invoking a static factory method.
         try {
-            Method method = fieldType.getMethod (
-	        "valueOf",
-		new Class <?> [] { String.class } 
-	    );
+            Method method = fieldType.getMethod ( "valueOf", paramType );
             if ( fieldType.isAssignableFrom( method.getReturnType() ) ) {
               return method.invoke ( null, value );
             }
@@ -508,8 +510,8 @@ public class Configurator {
      * Wraps the given {@link Throwable} as a {@link ConfigurationException}
      * along with an additional formatted message.
      */
-    private static void wrap ( Throwable exc, String format, Object ... args ) {
-        throw new ConfigurationException ( exc, format, args );
+    private static void wrap ( Throwable e, String format, Object ... args ) {
+        throw new ConfigurationException ( e, format, args );
     }
 
     /* ***********************************************************************
