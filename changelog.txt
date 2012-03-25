@@ -5,7 +5,7 @@
     Prazdne zavorky se neoodeluji od nazvu metody mezerou a mezi nimi se tez nedava mezera.
     	Sice to neni jednotne se zbytkem, ale vypada to mnohem lepe a je jasne k cemu ty zavorky
 	patri ve slozitejsich vyrazech.
-
+    Za vsechny if pridany zavorky ohranicujici blok
 ----------- Zmeny nazvu -----------
 
 -> Zmena interface: metoda Configurator.set(...) zmenena na Configurator.setProperty(...)
@@ -16,4 +16,12 @@ propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slov
 -> PtySetter zmeneno na PropertySetter
 -> mkMethodSetter zmeneno na createMethodSetter
 -> Argumenty v makeFldPtySetter ...
-
+-> ConfExp zmeneno na ConfigurationException
+    Duvod: Nazev vyjimky ma vetsi rozsah, proto by melo byt jmeno popisnejsi.
+-> Zmeneny nazvy lokalnich promennych v metode check (...)
+-> Prjemenovan tempatovany typ z E na ElementType
+-> Prejmenovano v konstruktoru tridy ArrIter a na elements
+-> Jednoradkove bloky rozepsany do vice radek
+-> Trida ArrIter prejmenovana na ArrayIterator
+    Duvod: Nazev je popisnejsi.
+-> Prejmenovan parametr f ve tride s vyjimkou na format
