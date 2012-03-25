@@ -394,13 +394,7 @@ public class Configurator {
 
           String propertyName = setter.name();
           if ( propertyName.length() == 0 ) {
-            //
-            // If the method name starts with "set", strip the prefix and lower case the first letter of the suffix.
-            //
-            propertyName = method.getName();
-            if ( propertyName.startsWith( "set" ) ) {
-              propertyName = propertyName.substring ( 3, 4 ).toLowerCase() + propertyName.substring( 4 );
-            }
+	    propertyName = getPropertyName ( method.getName() );
           }
 
           if ( name.equals ( propertyName ) ) {
@@ -414,6 +408,22 @@ public class Configurator {
       //
       return null;
     }
+    /**
+     *  If the methodName starts with "set", strip the prefix and lower case the first letter of the suffix.
+     *
+     *  @param methodName
+     *       name of the method which is
+     *  @return 
+     *       name without beginning "set" if exist
+     */
+    String getPropertyName ( string methodName ) {
+        if ( methodName.startsWith( "set" ) ) {
+            return methodName.substring ( 3, 4 ).toLowerCase() + methodName.substring( 4 );
+        } else {
+	    return methodName;
+	}
+    }
+
     /* ***********************************************************************
      * Method-based property setter
      * ***********************************************************************/
