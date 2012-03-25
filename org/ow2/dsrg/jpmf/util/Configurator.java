@@ -58,8 +58,8 @@ public class Configurator {
          * field.
          *
          * @return
-         *      name of the property held in the annotated field, or empty string
-         *      indicating that the name is identical to the field name
+         *      name of the property held in the annotated field, or empty
+	 *      string indicating that the name is identical to the field name
          */
         String name() default "";
 
@@ -103,7 +103,7 @@ public class Configurator {
          * @return
          *      name of the property configured by the annotated method, or
          *      empty string indicating that the name corresponds to method
-         *      name without the "set" prefix with the first letter in lower case
+         *      name without the "set" prefix with the first letter in lowercase
          */
         String name() default "";
     }
@@ -116,7 +116,7 @@ public class Configurator {
      * Sets the given property to the given value in the given configurable
      * object. 
      *
-     * @param configuredObject
+     * @param object
      *      target configurable object to set the property on
      * @param name
      *      property name
@@ -126,33 +126,39 @@ public class Configurator {
      *      if the value of the given property cannot be set on the
      *      given object
      */
-    public static void setProperty ( Object configuredObject, String name, String value ) {
+    public static void setProperty (
+        Object object,
+        String name,
+        String value
+    ) {
         //
         // First try to obtain a method based setter, which is necessary
         // for more complex properties. If that fails, try to obtain a
         // field based setter, assuming the property is simple enough to
         // convert to object instance. If that also fails, log a warning.
         //
-        Method propertySetter = findPropertySetter ( configuredObject, name );
+        Method propertySetter = findPropertySetter ( object, name );
         if ( propertySetter != null ) {
-          try {
-            trace ( "setting method property %s to %s", name, value );
-            setPropertyUsingMethod ( propertySetter, configuredObject, value );
-          } catch ( Exception e ) {
-            wrap ( e, "Unable to set property %s=%s using method %s()", name, value, propertySetter.getName() );
-          }
-          return;
+            try {
+                trace ( "setting method property %s to %s", name, value );
+                setUsingMethod ( propertySetter, object, value );
+            } catch ( Exception e ) {
+		String fmt = "Unable to set property %s=%s using method %s()";
+                wrap ( e, fmt, name, value, propertySetter.getName() );
+            }
+            return;
         }
         
-        Field property = findProperty ( name, configuredObject );
+        Field property = findProperty ( name, object );
         if ( property != null ) {
-          trace ( "setting field property %s to %s", name, value );
-          setDirectly ( name, configuredObject, value, property );
-          return;
+            trace ( "setting field property %s to %s", name, value );
+            setDirectly ( name, object, value, property );
+            return;
         }
 
         if ( log.isLoggable ( Level.WARNING ) ) {
-          log.log ( Level.WARNING, "Unable to find configuration method for property %s", name );
+            String fmt = "Unable to find configuration method for property %s";
+            log.log ( Level.WARNING, fmt, name );
         }
         return;
     }
@@ -160,10 +166,10 @@ public class Configurator {
     /**
      * Checks if all configurable fields in the passed object are not null.
      *
-     * @param configuredObject
+     * @param object
      *      object with configurable fields
      */
-    public static void check ( Object configuredObject ) {
+    public static void check ( Object object ) {
         //
         // Find all configurable fields and make sure that all mandatory
         // fields have a non-null value. If any configurable field with
@@ -175,7 +181,7 @@ public class Configurator {
         //
 
         try {
-            for ( Field field : new FieldsIterable ( configuredObject.getClass() ) ) {
+            for ( Field field : new FieldsIterable ( object.getClass() ) ) {
                 //
                 // Skip fields without the @Property annotation or fields
                 // with non-null value.
@@ -191,7 +197,7 @@ public class Configurator {
                 //
                 boolean accessibility = field.isAccessible();
                 field.setAccessible ( true );
-                oldValue = field.get ( configuredObject );
+                oldValue = field.get ( object );
                 field.setAccessible ( accessibility );
 
                 //
@@ -199,16 +205,25 @@ public class Configurator {
                 //
                 if ( oldValue != null ) continue;
 
-                String name = ( ( property.name().length() > 0 ) ? property.name() : field.getName() );
-                String defaultValue = ( ( property.defaultValue().length() > 0 ) ? property.defaultValue() : null );
-                if ( defaultValue != null ) {
-                    trace ( "setting field property %s to default value %s", name, defaultValue );
-                    setDirectly ( name, configuredObject, defaultValue, field );
-                } else {
+                String name;
+	        if ( property.name().length() > 0 ) {
+		    name = property.name();
+		} else {
+		    name = field.getName();
+		}
+
+                if ( property.defaultValue().length() == 0 ) {
                     if ( property.required () ) {
-                        throw new ConfigurationException ( "Required property '%s' is not configured", name );
-                    }
-                }
+			String fmt = "Required property '%s' is not configured";
+                        throw new ConfigurationException ( fmt, name );
+                    } else {
+		        continue;
+		    }
+		}
+
+	        String fmt = "setting field property %s to default value %s";
+                trace ( fmt, name, defaultValue );
+                setDirectly ( name, object, property.defaultValue(), field );
             }
         } catch ( ConfigurationException ce ) {
             // propagate without wrapping
@@ -249,13 +264,13 @@ public class Configurator {
 
             Property property = field.getAnnotation ( Property.class );
             if ( property == null ) {
-              propertyName = null;
-            } else {
-              propertyName = ( property.name().length() > 0 ) ? property.name() : field.getName();
+                propertyName = null;
+            } else if ( property.name().length() <= 0 ) {
+                propertyName = field.getName();
             }
 
             if ( name.equals ( propertyName ) ) {
-              return field;
+                return field;
             }
         }
 
@@ -272,7 +287,7 @@ public class Configurator {
      *
      * @param name
      *      name of the property being configured
-     * @param configuredObject
+     * @param object
      *      target object on which to set the field value
      * @param value
      *      string value of the property being configured
@@ -284,14 +299,21 @@ public class Configurator {
      *      converted to an instance of the field type or if setting
      *      the field failed
      */
-    static void setDirectly ( String name, Object configuredObject, String value, Field field ) {
+    static void setDirectly (
+        String name,
+	Object object,
+	String value,
+	Field field
+    ) {
         //
         // Create an instance of the property value and set the field
         // value on the target object.
         //
         Object typedValue = makeValueInstance ( field, value );
         if ( typedValue == null ) {
-            throw new ConfigurationException ( "property %s: could not create %s instance for %s", name, field.getType().getName(), value );
+            String fmt = "property %s: could not create %s instance for %s";
+	    String typeName = field.getType().getName();
+            throw new ConfigurationException ( fmt, name, typeName, value );
         }
 
         try {
@@ -301,10 +323,11 @@ public class Configurator {
             //
             boolean accessibility = field.isAccessible();
             field.setAccessible ( true );
-            field.set ( configuredObject, typedValue );
+            field.set ( object, typedValue );
             field.setAccessible ( accessibility );
         } catch ( Exception e ) {
-            wrap ( e, "Unable to configure field %s with property %s=%s", field.getName(), name, value );
+	    String fmt = "Unable to configure field %s with property %s=%s";
+            wrap ( e, fmt, field.getName(), name, value );
         }
     }
 
