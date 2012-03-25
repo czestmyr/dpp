@@ -225,41 +225,22 @@ public class Configurator {
         }
     }
 
-
-    /* ***********************************************************************
-     * PropertySetter
-     * ***********************************************************************/
-
-    /**
-     * Private interface encapsulating a method for setting a property value on
-     * an object. Instances of the {@link PropertySetter} interface are bound to
-     * a particular target object and property name at construction time -- only
-     * the value remains unbound and can be set.
-     */
-    private interface PropertySetter {
-        void setVal ( String v );
-    }
-
-
     /* ***********************************************************************
      * Field-based property setter
      * ***********************************************************************/
 
     /**
-     * Returns a field based {@link PropertySetter} bound to the given object
-     * and property name. When setting the property value, the returned
-     * {@link PropertySetter} will modify the value of an object field annotated
-     * by the {@code @Property} annotation with matching name.
+     * Finds a field-based property of an object.
+     * The Field has to be correctly annotated and the annotation name has to 
+     * match the supplied name argument.
      *
      * @param name
-     *      name of the property to set
+     *      name of the property that is to be found
      * @param target
-     *      target object on which to set the property
+     *      target object on which to perform the search
      *
      * @return
-     *      {@link PropertySetter} which allows to configure the property on
-     *      the given object, or {@code null} if the target object has no field
-     *      with matching annotation
+     *      the found property
      */
     static Field findProperty ( final String name, final Object target ) {
         //
