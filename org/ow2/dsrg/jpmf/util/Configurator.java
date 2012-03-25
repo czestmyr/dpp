@@ -219,7 +219,7 @@ public class Configurator {
     }
 
     /* ***********************************************************************
-     * Field-based property setter
+     * Field-based properties
      * ***********************************************************************/
 
     /**
@@ -308,6 +308,85 @@ public class Configurator {
         }
     }
 
+    /* ***********************************************************************
+     * Method-based properties
+     * ***********************************************************************/
+
+    /**
+     * Returns a setter method that sets a property of the given name.
+     *
+     * @param target
+     *      target object on which to set the property
+     * @param name
+     *      name of the property to set
+     * @return
+     *      setter method that can be used to set the given property
+     */
+    static Method findPropertySetter ( final Object target, final String name ) {
+        Class <?> targetClass;
+  
+        //
+        // Find a setter method for the given property and create a
+        // PropertySetter for the property.
+        //
+        // Specifically, enumerate all methods in the given object's class
+        // hierarchy and find the first setter method annotated with the
+        // @Setter annotation matching the given property field.
+        //
+        targetClass = target.getClass();
+        do {
+            for ( final Method method : targetClass.getDeclaredMethods() ) {
+                Setter setter = method.getAnnotation ( Setter.class );
+                if ( setter == null ) {
+                    continue;
+                }
+      
+                String propertyName = setter.name();
+                if ( propertyName.length() == 0 ) {
+                    propertyName = getPropertyName ( method.getName() );
+                }
+      
+                if ( name.equals ( propertyName ) ) {
+                    return method;
+                }
+            }
+            targetClass = targetClass.getSuperclass();
+        } while ( targetClass != null );
+        //
+        // No match found.
+        //
+        return null;
+    }
+
+    /**
+     * Calls the method on target and adds value as a parametr. If necessary
+     * makes the method accessible from this point.
+     *
+     * @param method
+     *      method wchich is called to set the propetry
+     * @param target
+     *      object on which is the method called
+     * @param value
+     *      value which should be setted using method
+     */
+    static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
+        boolean hasMoreParameters = method.getParameterTypes().length != 1;
+        boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
+        boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
+        if ( hasReturnValue || hasBadType || hasMoreParameters ) {
+            throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
+        }
+  
+        boolean accessibility = method.isAccessible();
+        method.setAccessible ( true );
+        method.invoke ( target, value );
+        method.setAccessible ( accessibility );
+    }
+
+    /* ***********************************************************************
+     * Helper methods
+     * ***********************************************************************/
+
     /**
      * Creates an object instance from the string representation of a property value.
      * The instance type is determined by the type of the given field and the instance
@@ -347,104 +426,22 @@ public class Configurator {
         return null;
     }
 
-
-    /* ***********************************************************************
-     * Method-based property setter
-     * ***********************************************************************/
-
     /**
-     * Returns a method based {@link PropertySetter} bound to the given object
-     * and property name. When setting the property value, the returned
-     * {@link PropertySetter} will invoke a setter method annotated by the
-     * {@link Setter} annotation with matching name.
-     *
-     * @param target
-     *      target object on which to set the property
-     * @param name
-     *      name of the property to set
-     * @return
-     *      {@link PropertySetter} which allows to configure the property on
-     *      the given object, or {@code null} if the target object has no setter
-     *      method with matching annotation
-     */
-    static Method findPropertySetter ( final Object target, final String name ) {
-        Class <?> targetClass;
-  
-        //
-        // Find a setter method for the given property and create a
-        // PropertySetter for the property.
-        //
-        // Specifically, enumerate all methods in the given object's class
-        // hierarchy and find the first setter method annotated with the
-        // @Setter annotation matching the given property field.
-        //
-        targetClass = target.getClass();
-        do {
-            for ( final Method method : targetClass.getDeclaredMethods() ) {
-                Setter setter = method.getAnnotation ( Setter.class );
-                if ( setter == null ) {
-                    continue;
-                }
-      
-                String propertyName = setter.name();
-                if ( propertyName.length() == 0 ) {
-                    propertyName = getPropertyName ( method.getName() );
-                }
-      
-                if ( name.equals ( propertyName ) ) {
-                    return method;
-                }
-            }
-            targetClass = targetClass.getSuperclass();
-        } while ( targetClass != null );
-        //
-        // No match found.
-        //
-        return null;
-    }
-    /**
-     *  If the methodName starts with "set", strip the prefix and lower case the first letter of the suffix.
+     *  Finds the name of the set property when given name of the setter.
+     *  If the methodName starts with "set", strips the prefix and lower cases
+     *  the first letter of the suffix.
      *
      *  @param methodName
      *       name of the method which is
      *  @return 
      *       name without beginning "set" if exist
      */
-    String getPropertyName ( string methodName ) {
+    static String getPropertyName ( String methodName ) {
         if ( methodName.startsWith( "set" ) ) {
             return methodName.substring ( 3, 4 ).toLowerCase() + methodName.substring( 4 );
         } else {
             return methodName;
         }
-    }
-
-    /* ***********************************************************************
-     * Method-based property setter
-     * ***********************************************************************/
-
-    /**
-     * Calls the method on target and adds value as a parametr. If necessary
-     * makes the method accessible from this point.
-     *
-     * @param method
-     *      method wchich is called to set the propetry
-     * @param target
-     *      object on which is the method called
-     * @param value
-     *      value which should be setted using method
-     */
-    static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
-        boolean hasMoreParameters = method.getParameterTypes().length != 1;
-        boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
-        boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
-        if ( hasReturnValue || hasBadType || hasMoreParameters ) {
-            throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
-        }
-  
-        boolean accessibility = method.isAccessible();
-        method.setAccessible ( true );
-        method.invoke ( target, value );
-        method.setAccessible ( accessibility );
     }
 
     /* ***********************************************************************
@@ -456,7 +453,6 @@ public class Configurator {
             log.log ( Level.FINE, format, args );
         }
     }
-
 
     /* ***********************************************************************
      * ConfigurationException
@@ -473,7 +469,6 @@ public class Configurator {
             super ( String.format ( format, args ), exc );
         }
     }
-
 
     /**
      * Wraps the given {@link Throwable} as a {@link ConfigurationException}
@@ -547,7 +542,6 @@ public class Configurator {
         }
     }
 
-
     /* *******************************************************************
      * ArrayIterator
      * *******************************************************************/
@@ -580,5 +574,4 @@ public class Configurator {
             return array [ pos++ ];
         }
     }
-
 }
