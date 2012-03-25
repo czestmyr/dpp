@@ -189,14 +189,13 @@ public class Configurator {
                 Property property = field.getAnnotation ( Property.class );
                 if ( property == null ) continue;
 
-                boolean accessibility;
                 Object oldValue;
 
                 //
                 // Make the field accessible before getting its value and
                 // restore the previous accessibility state after that.
                 //
-                accessibility = field.isAccessible();
+                boolean accessibility = field.isAccessible();
                 field.setAccessible ( true );
                 oldValue = field.get ( configuredObject );
                 field.setAccessible ( accessibility );
@@ -251,18 +250,18 @@ public class Configurator {
         // hierarchy and find the first field annotated with the
         // @Property annotation matching the given property field.
         //
-        for ( final Field fld : new FieldsIterable ( target.getClass() ) ) {
-            String cpn;
+        for ( final Field field : new FieldsIterable ( target.getClass() ) ) {
+            String propertyName;
 
-            Property pty = fld.getAnnotation ( Property.class );
-            if ( pty == null ) {
-              cpn = null;
+            Property property = field.getAnnotation ( Property.class );
+            if ( property == null ) {
+              propertyName = null;
             } else {
-              cpn = ( pty.name().length() > 0 ) ? pty.name() : fld.getName();
+              propertyName = ( property.name().length() > 0 ) ? property.name() : field.getName();
             }
 
-            if ( name.equals ( cpn ) ) {
-              return fld;
+            if ( name.equals ( propertyName ) ) {
+              return field;
             }
         }
 
@@ -344,9 +343,9 @@ public class Configurator {
 
         // If there is no suitable constructor, try to create the instance by invoking a static factory method.
         try {
-            Method fact = fieldType.getMethod ( "valueOf", new Class <?> [] { String.class } );
-            if ( fieldType.isAssignableFrom( fact.getReturnType() ) ) {
-              return fact.invoke ( null, value );
+            Method method = fieldType.getMethod ( "valueOf", new Class <?> [] { String.class } );
+            if ( fieldType.isAssignableFrom( method.getReturnType() ) ) {
+              return method.invoke ( null, value );
             }
         } catch ( Exception e ) {
             /* quell the exception */ 
@@ -367,7 +366,7 @@ public class Configurator {
      * {@link PropertySetter} will invoke a setter method annotated by the
      * {@link Setter} annotation with matching name.
      *
-     * @param trg
+     * @param target
      *      target object on which to set the property
      * @param name
      *      name of the property to set
@@ -376,7 +375,7 @@ public class Configurator {
      *      the given object, or {@code null} if the target object has no setter
      *      method with matching annotation
      */
-    static Method findPropertySetter ( final Object trg, final String name ) {
+    static Method findPropertySetter ( final Object target, final String name ) {
       Class <?> targetClass;
 
       //
@@ -387,7 +386,7 @@ public class Configurator {
       // hierarchy and find the first setter method annotated with the
       // @Setter annotation matching the given property field.
       //
-      targetClass = trg.getClass();
+      targetClass = target.getClass();
       do {
         for ( final Method method : targetClass.getDeclaredMethods() ) {
           Setter setter = method.getAnnotation ( Setter.class );
@@ -431,6 +430,7 @@ public class Configurator {
      *      value which should be setted using method
      */
     static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
+
       boolean hasMoreParameters = method.getParameterTypes().length != 1;
       boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
       boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
@@ -448,9 +448,9 @@ public class Configurator {
      * Logging
      * ***********************************************************************/
 
-    private static void trace ( String f, Object ... a ) {
+    private static void trace ( String format, Object ... args ) {
         if ( log.isLoggable ( Level.FINE ) ) {
-          log.log ( Level.FINE, f, a );
+          log.log ( Level.FINE, format, args );
         }
     }
 
@@ -463,11 +463,11 @@ public class Configurator {
      * Common exception for all configuration errors.
      */
     public static class ConfigurationException extends RuntimeException {
-        ConfigurationException ( String format, Object ... a ) {
-          super ( String.format ( format, a ) );
+        ConfigurationException ( String format, Object ... args ) {
+          super ( String.format ( format, args ) );
         }
-        ConfigurationException ( Throwable t, String format, Object ... a ) {
-          super ( String.format ( format, a ), t );
+        ConfigurationException ( Throwable exc, String format, Object ... args ) {
+          super ( String.format ( format, args ), exc );
         }
     }
 
@@ -476,8 +476,8 @@ public class Configurator {
      * Wraps the given {@link Throwable} as a {@link ConfigurationException}
      * along with an additional formatted message.
      */
-    private static void wrap ( Throwable t, String f, Object ... args ) {
-        throw new ConfigurationException ( t, f, args );
+    private static void wrap ( Throwable exc, String format, Object ... args ) {
+        throw new ConfigurationException ( exc, format, args );
     }
 
 
