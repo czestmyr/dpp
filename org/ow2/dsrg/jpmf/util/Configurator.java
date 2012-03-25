@@ -260,12 +260,9 @@ public class Configurator {
         // @Property annotation matching the given property field.
         //
         for ( final Field field : new FieldsIterable ( target.getClass() ) ) {
-            String propertyName;
-
             Property property = field.getAnnotation ( Property.class );
-            if ( property == null ) {
-                propertyName = null;
-            } else if ( property.name().length() <= 0 ) {
+            String propertyName = null;
+            if ( property != null && property.name().length() <= 0 ) {
                 propertyName = field.getName();
             }
 
@@ -345,7 +342,7 @@ public class Configurator {
      * @return
      *      setter method that can be used to set the given property
      */
-    static Method findPropertySetter ( final Object target, final String name ) {
+    static Method findPropertySetter ( final Object target, final String name ){
         Class <?> targetClass;
   
         //
@@ -392,12 +389,18 @@ public class Configurator {
      * @param value
      *      value which should be setted using method
      */
-    static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
+    static void setUsingMethod(
+        Method method,
+	Object target,
+	String value
+    ) throws Exception {
         boolean hasMoreParameters = method.getParameterTypes().length != 1;
-        boolean hasReturnValue = ( Class <?> ) method.getReturnType() != void.class;
+        boolean hasReturnValue =
+            ( Class <?> ) method.getReturnType() != void.class;
         boolean hasBadType = method.getParameterTypes() [ 0 ] != String.class;
         if ( hasReturnValue || hasBadType || hasMoreParameters ) {
-            throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
+            String fmt = "method %s() is not a setter";
+            throw new ConfigurationException ( fmt, method.getName() );
         }
   
         boolean accessibility = method.isAccessible();
@@ -411,10 +414,10 @@ public class Configurator {
      * ***********************************************************************/
 
     /**
-     * Creates an object instance from the string representation of a property value.
-     * The instance type is determined by the type of the given field and the instance
-     * is created either by calling a string constructor or a static factory method on
-     * the field class.
+     * Creates an object instance from the string representation of a property
+     * value. The instance type is determined by the type of the given field and
+     * the instance is created either by calling a string constructor or a
+     * static factory method on the field class.
      *
      * @param field
      *      field to create value for
@@ -425,19 +428,25 @@ public class Configurator {
      *      {@code null} if the instance could not be created
      */
     static Object makeValueInstance ( Field field, String value ) {
-        // First try to create the value instance by invoking a string constructor of the field class.
+        // First try to create the value instance by invoking a string
+	// constructor of the field class.
         Class <?> fieldType = field.getType();
 
         try {
-            Constructor <?> fieldConstructor = fieldType.getConstructor ( new Class <?> [] { String.class } );
+            Constructor <?> fieldConstructor =
+		fieldType.getConstructor ( new Class <?> [] { String.class } );
             return fieldConstructor.newInstance ( value );
         } catch ( Exception e ) {
             /* quell the exception and try the next method */
         }
 
-        // If there is no suitable constructor, try to create the instance by invoking a static factory method.
+        // If there is no suitable constructor, try to create the instance by
+	// invoking a static factory method.
         try {
-            Method method = fieldType.getMethod ( "valueOf", new Class <?> [] { String.class } );
+            Method method = fieldType.getMethod (
+	        "valueOf",
+		new Class <?> [] { String.class } 
+	    );
             if ( fieldType.isAssignableFrom( method.getReturnType() ) ) {
               return method.invoke ( null, value );
             }
@@ -461,7 +470,8 @@ public class Configurator {
      */
     static String getPropertyName ( String methodName ) {
         if ( methodName.startsWith( "set" ) ) {
-            return methodName.substring ( 3, 4 ).toLowerCase() + methodName.substring( 4 );
+            return methodName.substring ( 3, 4 ).toLowerCase() +
+		   methodName.substring( 4 );
         } else {
             return methodName;
         }
@@ -488,8 +498,9 @@ public class Configurator {
         ConfigurationException ( String format, Object ... args ) {
             super ( String.format ( format, args ) );
         }
-        ConfigurationException ( Throwable exc, String format, Object ... args ) {
-            super ( String.format ( format, args ), exc );
+
+        ConfigurationException ( Throwable e, String format, Object ... args ) {
+            super ( String.format ( format, args ), e );
         }
     }
 
@@ -529,7 +540,8 @@ public class Configurator {
                         
                 private Class <?> currentClass = leaf;
     
-                private Iterator <Field> fields = new ArrayIterator <Field> ( new Field [ 0 ] );
+                private Iterator <Field> fields =
+		    new ArrayIterator <Field> ( new Field [ 0 ] );
     
                 public boolean hasNext() {
                     //
@@ -541,8 +553,9 @@ public class Configurator {
                         if ( currentClass == null ) {
                             return false;
                         }
-                            
-                        fields = new ArrayIterator <Field> ( currentClass.getDeclaredFields() );
+                        
+			Field[] fieldArray = currentClass.getDeclaredFields();
+                        fields = new ArrayIterator <Field> ( fieldArray );
                             
                         currentClass = currentClass.getSuperclass();
                     }
@@ -582,7 +595,8 @@ public class Configurator {
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException ( "cannot remove elements from array" );
+            String msg = "cannot remove elements from array";
+            throw new UnsupportedOperationException ( msg );
         }
 
         public boolean hasNext() {
