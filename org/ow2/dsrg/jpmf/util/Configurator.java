@@ -119,7 +119,7 @@ public class Configurator {
 
     /**
      * Sets the given property to the given value in the given configurable
-     * object.
+     * object. 
      *
      * @param configuredObject
      *      target configurable object to set the property on
@@ -415,17 +415,30 @@ public class Configurator {
       //
       return null;
     }
+    /* ***********************************************************************
+     * Method-based property setter
+     * ***********************************************************************/
 
-    static void setPropertyUsingMethod( Method method, Object trg, String v ) throws Exception{
+    /**
+     * Calls the method on target and adds value as a parametr. If necessary
+     * makes the method accessible from this point.
+     *
+     * @param method
+     *      method wchich is called to set the propetry
+     * @param target
+     *      object on which is the method called
+     * @param value
+     *      value which should be setted using method
+     */
+    static void setPropertyUsingMethod( Method method, Object target, String value ) throws Exception{
       if ( ( Class<?> ) method.getReturnType() != void.class || method.getParameterTypes() [ 0 ] != String.class || method.getParameterTypes().length != 1 ) {
         throw new ConfigurationException ( "method %s() is not a setter", method.getName() );
       }
 
-      boolean oa;
-      oa = method.isAccessible();
+      boolean accessibility = method.isAccessible();
       method.setAccessible ( true );
-      method.invoke ( trg, v );
-      method.setAccessible ( oa );
+      method.invoke ( target, value );
+      method.setAccessible ( accessibility );
     }
 
     /* ***********************************************************************
