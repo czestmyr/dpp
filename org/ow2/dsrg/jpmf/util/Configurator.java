@@ -316,7 +316,7 @@ public class Configurator {
         // Create an instance of the property value and set the field
         // value on the target object.
         //
-        Object typedValue = mkValInst ( field, value );
+        Object typedValue = makeValueInstance ( field, value );
         if ( typedValue == null ) {
             throw new ConfigurationException ( "property %s: could not create %s instance for %s", name, field.getType().getName(), value );
         }
@@ -350,7 +350,7 @@ public class Configurator {
      *      an object of the given field type representing the given value, or
      *      {@code null} if the instance could not be created
      */
-    static Object mkValInst ( Field field, String value ) {
+    static Object makeValueInstance ( Field field, String value ) {
         // First try to create the value instance by invoking a string constructor of the field class.
 	Class <?> fieldType = field.getType();
 
