@@ -1,38 +1,58 @@
------------- Coding style ------------
+                      Martin Bulant a Cestmir Houska
+                         Changelog 1. ukolu z DPP
 
--> Sjednocen coding style, jmenovite mezery kolem argumentu funkci (nekde byly a nekde ne).
-    Duvod: Zvysuje citelnost kodu.
-    Prazdne zavorky se neoodeluji od nazvu metody mezerou a mezi nimi se tez nedava mezera.
-    	Sice to neni jednotne se zbytkem, ale vypada to mnohem lepe a je jasne k cemu ty zavorky
-	patri ve slozitejsich vyrazech.
-    Za vsechny if pridany zavorky ohranicujici blok
------------ Zmeny nazvu -----------
+    Nejprve bylo treba zdrojove kody opravit tak, aby byly vubec spustitelne.
+V jednom miste bylo treba specifikovat argument genericke tridy ArrIter. Dale
+jsme zmenili nazev metody "set" na "setProperty", coz je sice zmena rozhrani
+tridy, ale podle prikladu ze zadani to tak je spravne.
+    Dalsi zmeny, ktere jsme provedli ve zdrojovem kodu zadani se daji rozdelit
+do tri skupin: zmeny nazvu funkci, parametru a promennych, znemy stylu kodu a
+refactoring nesrozumitelnych nebo prilis slozite zapsanych konstrukci. Tyto tri
+skupiny rozebereme postupne
 
--> Zmena interface: metoda Configurator.set(...) zmenena na Configurator.setProperty(...)
-    Duvod: V prikladu v zadani ukolu bylo explicitne pouzito jmeno setProperty a navic je mnohem
-    vystiznejsi nez pouhe "set"
--> V metode setProperty zmeneny nazvy argumentu tak, aby byly expresivnejsi. Nazvy propertyName a
-propertyValue jsme chvili zvazovali, ale zavrhli kvuli zbytecnemu opakovani slova "property".
--> PtySetter zmeneno na PropertySetter
--> mkMethodSetter zmeneno na createMethodSetter
--> Argumenty v makeFldPtySetter ...
--> ConfExp zmeneno na ConfigurationException
-    Duvod: Nazev vyjimky ma vetsi rozsah, proto by melo byt jmeno popisnejsi.
--> Zmeneny nazvy lokalnich promennych v metode check (...)
--> Prjemenovan tempatovany typ z E na ElementType
--> Prejmenovano v konstruktoru tridy ArrIter a na elements
--> Jednoradkove bloky rozepsany do vice radek
--> Trida ArrIter prejmenovana na ArrayIterator
-    Duvod: Nazev je popisnejsi.
--> Prejmenovan parametr f ve tride s vyjimkou na format
--> str melo sice kratkou dobu platnosti, ale mohlo by se plest se "string"
--> AllDecl pred FieldsIterable je zbytecne
--> Zprehlednen kod metody mkValueInst a metoda prejmenovana na makeValueInstance
-    Slozita volani rozdelena vlozenim novych lokalnich promennych.
+    Zmeny nazvu:
 
+    Hodne zmen nazvu, ktere jsme provedli, meni nazvy lokalnich promennych, aby
+byl lepe citelny kod. Tyto promenne maji sice kratkou dobu platnosti, ale presto
+neuskodi, kdyz misto nic nerikajiciho nekolikapismenneho nazvu pouzijeme kratke
+slovo. Priklady takovychto zmen jsou napriklad "nm" na "name", "trg" na
+"target", "fld" na "field", "str" na "setter". U posledne jmenovaneho to bylo
+zvlaste matouci, protoze jsme si mysleli, ze jde o string. Timto zpusobem jsme
+hodne menili i nazvy parametru v metodach. Stejne tak jsme odstranili zkraceniny
+v nazvech metod.
+    Na vice popisnejsi nazvy jsme zmenili i jmena trid. Zvlaste vhodne je to dle
+naseho nazoru napriklad u tridy ConfExp, protoze bude pristupna zvnejsku. Tuto
+tridu jsme tedy prejmenovali na ConfigurationException. ArrIter jsme
+prejmenovali na ArrayIterator.
+    Na druhou stranu, nektere nazvy byly zbytecne dlouhe. Napriklad
+AllDeclFieldsIterable jsme zmenili na FieldsIterable, bez vetsi zmeny semantiky
+nazvu tridy.
+    Nazvy promennych "e" a "ce" v chytani vyjimek jsme nechali, nebot maji
+extremne kratkou dobu zivota a navic je to v Jave jiz celkem vzita konvence.
 
--------------- Refactoring ----------------------
+    Styl kodu:
 
--> V mistech, kde se osetruje nejaka podminka IFem a pri jejim nespleni se nic
-    neprovede, jsme zmenili test na opacnou podminku a vetev exekuce ukoncili
-    returnem nebo pomoci continue.
+    Styl kodu v zadani byl velice roztrouseny, takze jsme ho sjednotili. Vsude
+jsou nyni mezery kolem argumentu funkci, krome mist, kde jsou zavorky bez
+parametru - "()". Za vsechny if prikazy jsme take pridali zavorky, ohranicujuci
+blok. Stejne tak jsme sjednotili styl odsazovani na ctyri mezery na jedno
+odsazeni a odstranili prebytecne prazdne radky.
+
+    Refactoring a prehlednost kodu:
+
+    Prepsali jsme if vetve tak, abychom ukoncovali vetve co nejdrive a zmensili
+tak pocet bloku odsazeni. ("if (bad) return" misto "if (good) { ... }")
+    Vnorene podminky v metode "set" jsme rozdelili na dve casti, odpovidajici
+field-based properties a setter properties. Zde nam prislo zbytecne rozhrani
+PropertySetter, jehoz jedinym ukolem bylo vytvorit instanci objektu tridy, ktera
+poskytovala metodu, ktera byla jednou zavolana a pote byl objekt zahozen. Toto
+jsme zmenili na prime volani dane metody v mistech, kde byl PropertySetter
+pouzivan. Takto nam vznikly metody "findPropertySetter", "setUsingMethod"
+"findProperty" a "setDirectly".
+    V metode "setUsingMethod" byla tezce srozumitelna disjunkce tri podminek,
+ktera overovala spravnou formu setter metody. Tuto disjunkci jsme zprehlednili
+vytahnutim podminek ven pred if a jejich pojmenovanim.
+    Na mnoha mistech se pouziva zmena pristupnosti u properties, takze jsme
+zvazovali jeji zabaleni do privatnich metod, ale to jsme nakonec zavrhli, nebot
+by tyto metody mely stejne vetsinou jenom jeden radek kodu.
+
