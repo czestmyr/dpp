@@ -29,7 +29,7 @@ bool Parser::reachedEnd() {
 
 int Parser::parseOneInternal(const string& chars) {
 	for (int i = 0; i < chars.length(); ++i) {
-	  if (!reachedEnd() && parsedString[position] == chars[i]) {
+		if (!reachedEnd() && parsedString[position] == chars[i]) {
 			position++;
 			return 1;
 		}
