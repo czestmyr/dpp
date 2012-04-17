@@ -1,5 +1,5 @@
 #include "Integer.h"
-#include "../Parser.h"  // Parsing functions
+#include "../StringParser.h"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ void Integer::setHighBound(int bound) {
 }
 
 bool Integer::conforms(const string& argument) const {
-	Parser argParser(argument);
+	StringParser argParser(argument);
 
 	// Parse some whitespace, followed by a plus or minus sign and some
 	// whitespace again. Then, parse numbers followed by trailing whitespace.

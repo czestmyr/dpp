@@ -1,14 +1,17 @@
-#ifndef _ARGLIB_PARSER_H_
-#define _ARGLIB_PARSER_H_
+#ifndef _ARGLIB_STRING_PARSER_H_
+#define _ARGLIB_STRING_PARSER_H_
 
 #include <string>
 
 #define WHITESPACE " \t\n\r"
 #define NUMBERS "0123456789"
+#define LOWERCASE_LETTERS "abcdefghijklmnopqrstuvwxyz"
+#define UPPERCASE_LETTERS "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define LETTERS (LOWERCASE_LETTERS + UPPERCASE_LETTERS)
 
-class Parser {
+class StringParser {
 	public:
-		Parser(const std::string& toParse);
+		StringParser(const std::string& toParse);
 	
 		int parseMany(const std::string& chars);
 		int parseOne(const std::string& chars);

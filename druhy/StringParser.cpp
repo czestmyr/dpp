@@ -1,10 +1,10 @@
-#include "Parser.h"
+#include "StringParser.h"
 
 using namespace std;
 
-Parser::Parser(const string& toParse): parsedString(toParse), position(0) {}
+StringParser::StringParser(const string& toParse): parsedString(toParse), position(0) {}
 
-int Parser::parseMany(const string& chars) {
+int StringParser::parseMany(const string& chars) {
 	int parsedChars = 0;
   
 	// Repeatedly try to parse one character and return the number of successes
@@ -15,19 +15,19 @@ int Parser::parseMany(const string& chars) {
 	return parsedChars;
 }
 
-int Parser::parseOne(const string& chars) {
+int StringParser::parseOne(const string& chars) {
 	return parseOneInternal(chars);
 }
 
-string Parser::getError(const std::string& chars) {
+string StringParser::getError(const std::string& chars) {
 	return "";  // TODO
 }
 
-bool Parser::reachedEnd() {
+bool StringParser::reachedEnd() {
 	return position == parsedString.length();
 }
 
-int Parser::parseOneInternal(const string& chars) {
+int StringParser::parseOneInternal(const string& chars) {
 	for (int i = 0; i < chars.length(); ++i) {
 		if (!reachedEnd() && parsedString[position] == chars[i]) {
 			position++;

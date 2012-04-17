@@ -2,7 +2,7 @@
 
 all: arglib_test
 
-arglib_test: main.o Parser.o types/Integer.o
+arglib_test: main.o StringParser.o types/Integer.o
 	g++ $^ -o $@
 
 %.o: %.c
