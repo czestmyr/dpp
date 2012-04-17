@@ -12,7 +12,8 @@ class ArgumentParser {
 		enum ArgumentType {
 			REGULAR_ARGUMENT,
 			SHORT_OPTION,
-			LONG_OPTION
+			LONG_OPTION,
+			DOUBLE_HYPHEN_SEPARATOR
 		};
 
 		ArgumentType determineType(const std::string& argument);

@@ -27,6 +27,10 @@ bool ArgumentParser::parse(int argc, char* argv[]) {
 				// Parse the long option
 				std::cout << argument << " is a long option." << std::endl;
 			break;
+			case DOUBLE_HYPHEN_SEPARATOR:
+				// Make all further arguments regular
+				allRegular = true;
+			break;
 			default:
 				// This shouldn't happen
 				return false;
@@ -53,6 +57,8 @@ ArgumentParser::ArgumentType ArgumentParser::determineType(const std::string& ar
 		return REGULAR_ARGUMENT;
 	} else if (leadingHyphens == 1) {
 		return SHORT_OPTION;
+	} else if (leadingHyphens == 2 && parser.reachedEnd()) {
+		return DOUBLE_HYPHEN_SEPARATOR;
 	} else {
 		return LONG_OPTION;
 	}

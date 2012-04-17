@@ -5,7 +5,7 @@ all: arglib_test
 arglib_test: main.o StringParser.o ArgumentParser.o types/Integer.o
 	g++ $^ -o $@
 
-%.o: %.c
+%.o: %.cpp
 	g++ -c $< -o $@
 
 clean:

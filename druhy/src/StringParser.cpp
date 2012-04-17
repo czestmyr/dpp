@@ -39,8 +39,13 @@ bool StringParser::reachedEnd() {
 }
 
 int StringParser::parseOneInternal(const string& chars) {
+	// If there is nothing to parse, return
+	if (reachedEnd()) {
+		return 0;
+	}
+
 	for (int i = 0; i < chars.length(); ++i) {
-		if (!reachedEnd() && parsedString[position] == chars[i]) {
+		if (parsedString[position] == chars[i]) {
 			position++;
 			return 1;
 		}
