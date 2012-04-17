@@ -1,5 +1,6 @@
 // TODO: create a real main function. Now, it just test things...
 #include "types/Integer.h"
+#include "ArgumentParser.h"
 
 #include <string>
 #include <iostream>
@@ -20,6 +21,9 @@ int main(int argc, char* argv[]) {
 	cout << "\"" << c << "\" - " << ((i.conforms(c))?"conforms":"invalid") << endl;
 	cout << "\"" << d << "\" - " << ((i.conforms(d))?"conforms":"invalid") << endl;
 	cout << "\"" << e << "\" - " << ((i.conforms(e))?"conforms":"invalid") << endl;
+
+	ArgumentParser p;
+	p.parse(argc, argv);
 
 	return 0;
 }
