@@ -19,6 +19,17 @@ int StringParser::parseOne(const string& chars) {
 	return parseOneInternal(chars);
 }
 
+int StringParser::parseExact(int howMany, const std::string& chars) {
+	int parsedChars = 0;
+
+	// Repeatedly try to parse one character and return the number of successes
+	while (parseOneInternal(chars) && parsedChars < howMany) {
+		parsedChars++;
+	}
+
+	return parsedChars;
+}
+
 string StringParser::getError(const std::string& chars) {
 	return "";  // TODO
 }

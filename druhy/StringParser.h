@@ -15,6 +15,7 @@ class StringParser {
 	
 		int parseMany(const std::string& chars);
 		int parseOne(const std::string& chars);
+		int parseExact(int howMany, const std::string& chars);
 
 		std::string getError(const std::string& chars);
 		bool reachedEnd();
