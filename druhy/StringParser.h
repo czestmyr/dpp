@@ -12,7 +12,8 @@
 class StringParser {
 	public:
 		StringParser(const std::string& toParse);
-	
+
+		// TODO: Document that these methods always return number of characters parsed
 		int parseMany(const std::string& chars);
 		int parseOne(const std::string& chars);
 		int parseExact(int howMany, const std::string& chars);
