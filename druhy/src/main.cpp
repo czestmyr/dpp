@@ -1,6 +1,7 @@
 // TODO: create a real main function. Now, it just test things...
 #include "types/Integer.h"
 #include "ArgumentParser.h"
+#include "OptionSyntax.h"
 
 #include <string>
 #include <iostream>
@@ -16,7 +17,8 @@ int main(int argc, char* argv[]) {
 	((i.fromString(a).isValid())?"conforms":"invalid") << endl;
 	cout << "The parsed value of a is " << i.fromString(a).getInt() << endl;
 
-	ArgumentParser p;
+	OptionSyntax s;
+	ArgumentParser p(&s);
 	p.parse(argc, argv);
 
 	return 0;

@@ -1,12 +1,13 @@
 #include "ArgumentParser.h"
 #include "StringParser.h"
+#include "OptionSyntax.h"
 
 // TODO: Remove this before handing in
 #include <iostream>
 
 using namespace std;
 
-ArgumentParser::ArgumentParser(): allRegular(false) {}
+ArgumentParser::ArgumentParser(OptionSyntax* syntax): allRegular(false), mySyntax(syntax) {}
 
 bool ArgumentParser::parse(int argc, char* argv[]) {
 	int argIndex = 1;  // The zeroth argument is the name of the executable

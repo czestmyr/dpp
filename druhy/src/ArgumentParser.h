@@ -3,9 +3,11 @@
 
 #include <string>
 
+class OptionSyntax;
+
 class ArgumentParser {
 	public:
-		ArgumentParser();
+		ArgumentParser(OptionSyntax* syntax);
 
 		bool parse(int argc, char* argv[]);
 	private:
@@ -20,6 +22,9 @@ class ArgumentParser {
 
 		/// Tells whether all the remaining arguments should be treated as regular arguments
 		bool allRegular;
+
+		/// OptionSyntax object that can be queried on existing options and their properties
+		OptionSyntax* mySyntax;
 };
 
 #endif
