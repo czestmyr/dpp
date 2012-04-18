@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "ArgumentParser.h"
 #include "StringParser.h"
 #include "OptionSyntax.h"
@@ -10,23 +12,34 @@ using namespace std;
 ArgumentParser::ArgumentParser(OptionSyntax* syntax): allRegular(false), mySyntax(syntax) {}
 
 bool ArgumentParser::parse(int argc, char* argv[]) {
-	int argIndex = 1;  // The zeroth argument is the name of the executable
-	while (argIndex < argc) {
-		string argument(argv[argIndex]);
+	// Convert arguments to std::strings for better manipulation
+	vector<string> arguments;
+	for (int i = 1; i < argc; ++i) {  // The zeroth argument is the name of the executable
+		arguments.push_back(string(argv[i]));
+	}
+
+	// Parse the arguments
+	int argIndex = 0;
+	while (argIndex < arguments.size()) {
+		string& argument = arguments[argIndex];
 		ArgumentType argType = determineType(argument);
 
+		int indexIncrement = 1;
 		switch (argType) {
 			case REGULAR_ARGUMENT:
 				// Save the argument somewhere together with it's information
 				std::cout << argument << " is a regular argument." << std::endl;
+				// TODO: Implement the argument saving
 			break;
 			case SHORT_OPTION:
 				// Parse the short option
 				std::cout << argument << " is a short option." << std::endl;
+				indexIncrement = parseShortOption(arguments, argIndex);
 			break;
 			case LONG_OPTION:
 				// Parse the long option
 				std::cout << argument << " is a long option." << std::endl;
+				indexIncrement = parseOption(arguments, argIndex);
 			break;
 			case DOUBLE_HYPHEN_SEPARATOR:
 				// Make all further arguments regular
@@ -37,11 +50,32 @@ bool ArgumentParser::parse(int argc, char* argv[]) {
 				return false;
 		}
 
-		argIndex++;
+		// Parsing functions denote a failure by returning zero
+		if (indexIncrement == 0) {
+			return false;
+		}
+
+		argIndex += indexIncrement;
 	}
 
 	// If we got here, the arguments were parsed successfully.
 	return true;
+}
+
+int ArgumentParser::parseShortOption(const std::vector<std::string>& arguments, int argIndex) {
+	// Incorrect format of short option
+	if (arguments[argIndex].size() != 2) {
+		cout << "Short option has incorrect format!" << endl;
+		return 0;  // TODO: Print some error information in a proper way!
+	}
+
+	// Short options are just a special case of regular options
+	parseOption(arguments, argIndex);
+}
+
+int ArgumentParser::parseOption(const std::vector<std::string>& arguments, int argIndex) {
+	cout << "Option would be parsed now!" << endl;  // TODO: This is just a test. DO some proper logging in future!
+	return 1;
 }
 
 ArgumentParser::ArgumentType ArgumentParser::determineType(const std::string& argument) {

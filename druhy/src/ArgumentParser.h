@@ -2,6 +2,7 @@
 #define _ARGLIB_ARGUMENT_PARSER_H_
 
 #include <string>
+#include <vector>
 
 class OptionSyntax;
 
@@ -11,6 +12,9 @@ class ArgumentParser {
 
 		bool parse(int argc, char* argv[]);
 	private:
+		int parseShortOption(const std::vector<std::string>& arguments, int argIndex);
+		int parseOption(const std::vector<std::string>& arguments, int argIndex);
+
 		enum ArgumentType {
 			REGULAR_ARGUMENT,
 			SHORT_OPTION,
