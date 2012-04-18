@@ -3,23 +3,31 @@
 
 class Value {
 	public:
+		Value();
+
 		int getInt();
 		unsigned int getUnsignedInt();
 		long getLong();
 		unsigned long getUnsignedLong();
 		float getFloat();
 		double getDouble();
-		template <class T> T* getPointer();
+
+		template <class T> T* getPointer() {
+			return (T*)ptr;
+		}
 	
-		void setInt(int newValue) { i = newValue; }
-		void setUnsignedInt(unsigned int newValue) { ui = newValue; }
-		void setLong(long newValue) { l = newValue; }
-		void setUnsignedLong(unsigned long newValue) { ul = newValue; }
-		void setFloat(float newValue) { f = newValue; }
-		void setDouble(double newValue) { d = newValue; }
+		void setInt(int newValue);
+		void setUnsignedInt(unsigned int newValue);
+		void setLong(long newValue);
+		void setUnsignedLong(unsigned long newValue);
+		void setFloat(float newValue);
+		void setDouble(double newValue);
 		void setPointer(void* pointer);
 
+		bool isValid() { return valid; }
 	private:
+		bool valid;
+
 		union {
 			int i;
 			unsigned int ui;
