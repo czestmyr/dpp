@@ -1,0 +1,12 @@
+#ifndef _ARGLIB_PARAMETER_ATTRIBUTE_H_
+#define _ARGLIB_PARAMETER_ATTRIBUTE_H_
+
+enum ParameterAttribute {
+	INVALID,
+	REQUIRED,
+	ALLOWED,
+	FORBIDDEN
+};
+
+#endif
+

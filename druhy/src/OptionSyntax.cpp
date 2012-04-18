@@ -4,9 +4,10 @@ using namespace std;
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
-void OptionSyntax::addOption(const std::string& optionName, IType* type) {
+void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute attrib, IType* type) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<std::string, unsigned int>(optionName, id));
+	attributes.insert(pair<unsigned int, ParameterAttribute>(id, attrib));
 	types.insert(pair<unsigned int, IType*>(id, type));
 	helpStrings.insert(pair<unsigned int, std::string>(id, ""));
 }
@@ -21,6 +22,17 @@ bool OptionSyntax::setOptionHelp(const std::string& optionName, const std::strin
 
 bool OptionSyntax::wasAdded(const std::string& option) const {
 	return ids.count(option) != 0;
+}
+
+ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
+	if (ids.count(option) == 0) {
+		return INVALID;
+	}
+
+	// Find will not fail here, because we tested presence of the option
+	// in ID map and attributes will always have an entry for existing id
+	unsigned int id = (*ids.find(option)).second;
+	return (*attributes.find(id)).second;
 }
 
 const IType* OptionSyntax::getType(const std::string& option) const {
