@@ -38,6 +38,10 @@ bool StringParser::reachedEnd() {
 	return position == parsedString.length();
 }
 
+size_t StringParser::getPosition() {
+	return position;
+}
+
 int StringParser::parseOneInternal(const string& chars) {
 	// If there is nothing to parse, return
 	if (reachedEnd()) {

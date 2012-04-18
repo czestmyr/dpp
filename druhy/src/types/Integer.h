@@ -11,7 +11,6 @@ class Integer: public IType {
 		void setLowBound(int bound);
 		void setHighBound(int bound);
 
-		bool conforms(const std::string& argument) const;
 		Value fromString(const std::string& argument) const;
 
 	private:

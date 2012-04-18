@@ -20,6 +20,8 @@ class StringParser {
 
 		std::string getError(const std::string& chars);
 		bool reachedEnd();
+
+		size_t getPosition();
 	private:
 		int parseOneInternal(const std::string& chars);
 		

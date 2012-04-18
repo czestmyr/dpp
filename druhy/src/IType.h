@@ -6,12 +6,8 @@
 
 class IType {
 	public:
-		/// Tells whether the given argument conforms to the type.
-		/// \param argument The argument to check
-		/// \return whether the given argument conforms to this type.
-		virtual bool conforms(const std::string& argument) const = 0;
-
 		/// Interprets the string as a value of this type.
+		/// If the argument is invalid, an invalid value is returned.
 		/// \param argument The argument string to be cast to this type
 		/// \return Value instance containing the cast value
 		/// \note In subclasses, if the returned value should be of
