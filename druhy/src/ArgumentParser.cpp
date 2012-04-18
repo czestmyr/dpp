@@ -34,12 +34,12 @@ bool ArgumentParser::parse(int argc, char* argv[]) {
 			case SHORT_OPTION:
 				// Parse the short option
 				std::cout << argument << " is a short option." << std::endl;
-				indexIncrement = parseShortOption(arguments, argIndex);
+				indexIncrement = parseShortOption(arguments[argIndex].substr(1), arguments, argIndex);
 			break;
 			case LONG_OPTION:
 				// Parse the long option
 				std::cout << argument << " is a long option." << std::endl;
-				indexIncrement = parseOption(arguments, argIndex);
+				indexIncrement = parseOption(arguments[argIndex].substr(2), arguments, argIndex);
 			break;
 			case DOUBLE_HYPHEN_SEPARATOR:
 				// Make all further arguments regular
@@ -62,19 +62,21 @@ bool ArgumentParser::parse(int argc, char* argv[]) {
 	return true;
 }
 
-int ArgumentParser::parseShortOption(const std::vector<std::string>& arguments, int argIndex) {
+int ArgumentParser::parseShortOption(const string& option, const vector<string>& arguments, int argIndex) {
 	// Incorrect format of short option
-	if (arguments[argIndex].size() != 2) {
+	if (option.size() != 1) {		
 		cout << "Short option has incorrect format!" << endl;
 		return 0;  // TODO: Print some error information in a proper way!
 	}
 
 	// Short options are just a special case of regular options
-	parseOption(arguments, argIndex);
+	parseOption(option, arguments, argIndex);
 }
 
-int ArgumentParser::parseOption(const std::vector<std::string>& arguments, int argIndex) {
+int ArgumentParser::parseOption(const string& option, const vector<string>& arguments, int argIndex) {
 	cout << "Option would be parsed now!" << endl;  // TODO: This is just a test. DO some proper logging in future!
+	cout << "Option name: " << option << endl;
+
 	return 1;
 }
 
