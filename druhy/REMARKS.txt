@@ -1,1 +1,7 @@
 -> Pokud se u volby nespecifikuje, zda je parametr vyzadovan, bude zakazan, aby uzivatele (programatora) neprekvapilo, ze mu to zere obycejne argumenty
+
+TODO:
+
+-> Vse zdokumentovat
+-> Uzavrit kod do namespace arglib (nebo tak nejak)
+
