@@ -1,4 +1,4 @@
-OBJECTS=main.o StringParser.o ArgumentParser.o types/Integer.o Value.o OptionSyntax.o ArgumentList.o
+OBJECTS=main.o StringParser.o ArgumentParser.o types/Integer.o Value.o OptionSyntax.o ArgumentList.o ArgumentException.o
 
 .PHONY : all
 

@@ -4,6 +4,7 @@
 #include "StringParser.h"
 #include "OptionSyntax.h"
 #include "ArgumentList.h"
+#include "ArgumentException.h"
 
 // TODO: Remove this before handing in
 #include <iostream>
@@ -66,9 +67,8 @@ bool ArgumentParser::parse(int argc, char* argv[]) {
 
 int ArgumentParser::parseShortOption(const string& option, const vector<string>& arguments, int argIndex) {
 	// Incorrect format of short option
-	if (option.size() != 1) {		
-		cout << "Short option has incorrect format!" << endl;
-		return 0;  // TODO: Print some error information in a proper way!
+	if (option.size() != 1) {
+		throw ArgumentException("Short option has incorrect format");
 	}
 
 	// Short options are just a special case of longer options
