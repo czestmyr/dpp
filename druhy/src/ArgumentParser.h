@@ -5,10 +5,11 @@
 #include <vector>
 
 class OptionSyntax;
+class ArgumentList;
 
 class ArgumentParser {
 	public:
-		ArgumentParser(OptionSyntax* syntax);
+		ArgumentParser(OptionSyntax* syntax, ArgumentList* argumentList);
 
 		bool parse(int argc, char* argv[]);
 	private:
@@ -29,7 +30,9 @@ class ArgumentParser {
 		bool allRegular;
 
 		/// OptionSyntax object that can be queried on existing options and their properties
-		OptionSyntax* mySyntax;
+		OptionSyntax* optionSyntax;
+
+		ArgumentList* argList;
 };
 
 #endif

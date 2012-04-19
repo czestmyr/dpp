@@ -3,13 +3,15 @@
 #include "ArgumentParser.h"
 #include "StringParser.h"
 #include "OptionSyntax.h"
+#include "ArgumentList.h"
 
 // TODO: Remove this before handing in
 #include <iostream>
 
 using namespace std;
 
-ArgumentParser::ArgumentParser(OptionSyntax* syntax): allRegular(false), mySyntax(syntax) {}
+ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentList* argumentList):
+	allRegular(false), optionSyntax(syntax), argList(argumentList) {}
 
 bool ArgumentParser::parse(int argc, char* argv[]) {
 	// Convert arguments to std::strings for better manipulation
@@ -29,7 +31,7 @@ bool ArgumentParser::parse(int argc, char* argv[]) {
 			case REGULAR_ARGUMENT:
 				// Save the argument somewhere together with it's information
 				std::cout << argument << " is a regular argument." << std::endl;
-				// TODO: Implement the argument saving
+				argList->addArgument(argument);
 			break;
 			case SHORT_OPTION:
 				// Parse the short option
@@ -92,7 +94,7 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 			parsedArguments = 1;
 		// Next argument is a regular argument, we could use it as a parameter value
 		} else {
-			ParameterAttribute attrib = mySyntax->getAttribute(option);
+			ParameterAttribute attrib = optionSyntax->getAttribute(option);
 			// If parameters are forbidden, don't eat them up
 			if (attrib == FORBIDDEN || attrib == INVALID) {
 				success = saveOption(option, NULL);

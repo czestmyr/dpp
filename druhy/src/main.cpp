@@ -2,6 +2,7 @@
 #include "types/Integer.h"
 #include "ArgumentParser.h"
 #include "OptionSyntax.h"
+#include "ArgumentList.h"
 
 #include <string>
 #include <iostream>
@@ -18,7 +19,8 @@ int main(int argc, char* argv[]) {
 	cout << "The parsed value of a is " << i.fromString(a).getInt() << endl;
 
 	OptionSyntax s;
-	ArgumentParser p(&s);
+	ArgumentList al;
+	ArgumentParser p(&s, &al);
 	p.parse(argc, argv);
 
 	return 0;
