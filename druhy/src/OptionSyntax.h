@@ -11,9 +11,8 @@ class OptionSyntax {
 		OptionSyntax();
 
 		// TODO: So far, type will be owned by the OptionSyntax. Make it better in the future
-		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* type = NULL);
-		void setSynonymous(const std::string& option1, const std::string& option2);
-		void setOptionHelp(const std::string& optionName, const std::string& helpString);
+		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* paramType = NULL, const std::string& helpString = "");
+		void addSynonym(const std::string& original, const std::string& synonym);
 
 		bool wasAdded(const std::string& option) const;
 		ParameterAttribute getAttribute(const std::string& option) const;

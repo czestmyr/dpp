@@ -5,19 +5,15 @@ using namespace std;
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
-void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute attrib, IType* type) {
+void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute attrib, IType* paramType, const string& helpString) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<std::string, unsigned int>(optionName, id));
 	attributes.insert(pair<unsigned int, ParameterAttribute>(id, attrib));
-	types.insert(pair<unsigned int, IType*>(id, type));
-	helpStrings.insert(pair<unsigned int, std::string>(id, ""));
+	types.insert(pair<unsigned int, IType*>(id, paramType));
+	helpStrings.insert(pair<unsigned int, std::string>(id, helpString));
 }
 
-void OptionSyntax::setSynonymous(const std::string& option1, const std::string& option2) {
-	// TODO: implement
-}
-
-void OptionSyntax::setOptionHelp(const std::string& optionName, const std::string& helpString) {
+void OptionSyntax::addSynonym(const std::string& original, const std::string& synonym) {
 	// TODO: implement
 }
 
