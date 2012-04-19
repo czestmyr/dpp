@@ -14,8 +14,8 @@ ArgumentParser::ArgumentParser(OptionSyntax* syntax): allRegular(false), mySynta
 bool ArgumentParser::parse(int argc, char* argv[]) {
 	// Convert arguments to std::strings for better manipulation
 	vector<string> arguments;
-	for (int i = 1; i < argc; ++i) {  // The zeroth argument is the name of the executable
-		arguments.push_back(string(argv[i]));
+	for (int i = 1; i < argc; ++i) {
+		arguments.push_back(argv[i]);
 	}
 
 	// Parse the arguments
@@ -69,15 +69,61 @@ int ArgumentParser::parseShortOption(const string& option, const vector<string>&
 		return 0;  // TODO: Print some error information in a proper way!
 	}
 
-	// Short options are just a special case of regular options
+	// Short options are just a special case of longer options
 	parseOption(option, arguments, argIndex);
 }
 
 int ArgumentParser::parseOption(const string& option, const vector<string>& arguments, int argIndex) {
-	cout << "Option would be parsed now!" << endl;  // TODO: This is just a test. DO some proper logging in future!
+	cout << "Option would be parsed now!" << endl;  // TODO: This is just a test. Do some proper logging in future!
 	cout << "Option name: " << option << endl;
 
-	return 1;
+	// Get the option name and parameter value and save them
+	size_t equalSignPos = option.find("=");
+	int parsedArguments = 1;
+	bool success = false;
+	if (equalSignPos == string::npos) {
+		// There is no next argument to use as a parameter
+		if (argIndex + 1 >= arguments.size()) {
+			success = saveOption(option, NULL);
+			parsedArguments = 1;
+		// Next argument is not a regular argument
+		} else if (determineType(arguments[argIndex + 1]) != REGULAR_ARGUMENT) {
+			success = saveOption(option, NULL);
+			parsedArguments = 1;
+		// Next argument is a regular argument, we could use it as a parameter value
+		} else {
+			ParameterAttribute attrib = mySyntax->getAttribute(option);
+			// If parameters are forbidden, don't eat them up
+			if (attrib == FORBIDDEN || attrib == INVALID) {
+				success = saveOption(option, NULL);
+				parsedArguments = 1;
+			} else {
+				success = saveOption(option, &arguments[argIndex + 1]);
+				parsedArguments = 2;
+			}
+		}
+	} else {
+		// Value for the option is in the option string
+		string optionName = option.substr(0, equalSignPos);
+		string parameterValue = option.substr(equalSignPos + 1, string::npos);
+		success = saveOption(optionName, &parameterValue);
+		parsedArguments = 1;
+	}
+
+	if (!success) {
+		return 0;
+	} else {
+		return parsedArguments;
+	}
+}
+
+bool ArgumentParser::saveOption(const std::string& option, const std::string* value) {
+	if (value != NULL)
+		cout << "Saving option value: \"" << option << "\"=\"" << *value << "\"" << endl;
+	else
+		cout << "Saving option value: \"" << option << "\"=NULL" << endl;
+	return true;
+	// TODO: Implement this
 }
 
 ArgumentParser::ArgumentType ArgumentParser::determineType(const std::string& argument) {

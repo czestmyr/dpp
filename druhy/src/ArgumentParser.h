@@ -14,6 +14,7 @@ class ArgumentParser {
 	private:
 		int parseShortOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
 		int parseOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
+		bool saveOption(const std::string& option, const std::string* value);
 
 		enum ArgumentType {
 			REGULAR_ARGUMENT,
