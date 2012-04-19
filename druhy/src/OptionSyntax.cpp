@@ -1,4 +1,5 @@
 #include "OptionSyntax.h"
+#include "ArgumentException.h"
 
 using namespace std;
 
@@ -12,11 +13,11 @@ void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute a
 	helpStrings.insert(pair<unsigned int, std::string>(id, ""));
 }
 
-bool OptionSyntax::setSynonymous(const std::string& option1, const std::string& option2) {
+void OptionSyntax::setSynonymous(const std::string& option1, const std::string& option2) {
 	// TODO: implement
 }
 
-bool OptionSyntax::setOptionHelp(const std::string& optionName, const std::string& helpString) {
+void OptionSyntax::setOptionHelp(const std::string& optionName, const std::string& helpString) {
 	// TODO: implement
 }
 
@@ -26,7 +27,7 @@ bool OptionSyntax::wasAdded(const std::string& option) const {
 
 ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
 	if (ids.count(option) == 0) {
-		return INVALID;
+		throw ArgumentException("Unknown option: " + option);
 	}
 
 	// Find will not fail here, because we tested presence of the option
@@ -37,7 +38,7 @@ ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
 
 const IType* OptionSyntax::getType(const std::string& option) const {
 	if (ids.count(option) == 0) {
-		return NULL;
+		throw ArgumentException("Unknown option: " + option);
 	}
 
 	// Find will not fail here, because we tested presence of the option
@@ -48,7 +49,7 @@ const IType* OptionSyntax::getType(const std::string& option) const {
 
 const std::string& OptionSyntax::getHelp(const std::string& option) const {
 	if (ids.count(option) == 0) {
-		return emptyHelp;
+		throw ArgumentException("Unknown option: " + option);
 	}
 
 	// Find will not fail here, because we tested presence of the option
@@ -61,6 +62,4 @@ unsigned int OptionSyntax::getUnusedId() {
 	lastId++;
 	return lastId;
 }
-
-string OptionSyntax::emptyHelp = "";
 
