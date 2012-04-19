@@ -11,11 +11,11 @@ class ArgumentParser {
 	public:
 		ArgumentParser(OptionSyntax* syntax, ArgumentList* argumentList);
 
-		bool parse(int argc, char* argv[]);
+		void parse(int argc, char* argv[]);
 	private:
 		int parseShortOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
 		int parseOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
-		bool saveOption(const std::string& option, const std::string* value);
+		void saveOption(const std::string& option, const std::string* value);
 
 		enum ArgumentType {
 			REGULAR_ARGUMENT,
