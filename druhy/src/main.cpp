@@ -3,6 +3,7 @@
 #include "ArgumentParser.h"
 #include "OptionSyntax.h"
 #include "ArgumentList.h"
+#include "types/Integer.h"
 
 #include <string>
 #include <iostream>
@@ -12,13 +13,15 @@ int main(int argc, char* argv[]) {
 	string a, b, c, d, e;
 	Integer i;
 
-	a = " - 1235";
-
-	cout << "\"" << a << "\" - " <<
-	((i.fromString(a).isValid())?"conforms":"invalid") << endl;
-	cout << "The parsed value of a is " << i.fromString(a).getInt() << endl;
-
 	OptionSyntax s;
+
+	s.addOption("v");
+	s.addOption("version");
+	Integer* integer = new Integer;
+	integer->setHighBound(100);
+	integer->setLowBound(0);
+	s.addOption("percent", REQUIRED, integer, "Help for the integer option");
+
 	ArgumentList al;
 	ArgumentParser p(&s, &al);
 	p.parse(argc, argv);
