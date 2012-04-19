@@ -117,7 +117,7 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 
 	// If the value is specified and the option forbids it, complain
 	if (value != NULL && attrib == FORBIDDEN) {
-		throw ArgumentException(string("Option ") + option + " does not allow parameters, but value " + value + " was given!");
+		throw ArgumentException(string("Option ") + option + " does not allow parameters, but value " + *value + " was given!");
 	}
 
 	// If the value is not specified and the option requires it, complain
@@ -126,15 +126,15 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 	}
 
 	// Try to cast the value of the option to its type
-	IType* type = optionSyntax->getType(option);
+	const IType* type = optionSyntax->getType(option);
 	if (type == NULL) {
 		throw ArgumentException(string("Type for option ") + option + " was not specified");
 	}
 	Value castValue = type->fromString(*value);
 
 	// If the value could not be cast from string, throw an exception
-	if (!castValue.valid()) {
-		throw ArgumentException(string("Parsing the value ") + value + " unsuccessful!");
+	if (!castValue.isValid()) {
+		throw ArgumentException(string("Parsing the value ") + *value + " unsuccessful!");
 	}
 
 	// TODO: Save the value somewhere

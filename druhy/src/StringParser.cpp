@@ -32,7 +32,7 @@ int StringParser::parseExact(int howMany, const std::string& chars) {
 }
 
 void StringParser::raiseException(const std::string& exceptionMessage) {
-	throw ArgumentException(exception);
+	throw ArgumentException(exceptionMessage);
 }
 
 bool StringParser::reachedEnd() {
