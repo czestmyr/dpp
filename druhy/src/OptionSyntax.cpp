@@ -17,10 +17,6 @@ void OptionSyntax::addSynonym(const std::string& original, const std::string& sy
 	// TODO: implement
 }
 
-bool OptionSyntax::wasAdded(const std::string& option) const {
-	return ids.count(option) != 0;
-}
-
 ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
 	if (ids.count(option) == 0) {
 		throw ArgumentException("Unknown option: " + option);

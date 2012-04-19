@@ -1,4 +1,5 @@
 #include "StringParser.h"
+#include "ArgumentException.h"
 
 using namespace std;
 
@@ -30,8 +31,8 @@ int StringParser::parseExact(int howMany, const std::string& chars) {
 	return parsedChars;
 }
 
-string StringParser::getError(const std::string& chars) {
-	return "";  // TODO
+void StringParser::raiseException(const std::string& exceptionMessage) {
+	throw ArgumentException(exception);
 }
 
 bool StringParser::reachedEnd() {

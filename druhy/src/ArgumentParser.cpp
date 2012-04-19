@@ -5,6 +5,7 @@
 #include "OptionSyntax.h"
 #include "ArgumentList.h"
 #include "ArgumentException.h"
+#include "Value.h"
 
 // TODO: Remove this before handing in
 #include <iostream>
@@ -81,9 +82,10 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 			parsedArguments = 1;
 		// Next argument is a regular argument, we could use it as a parameter value
 		} else {
+			// The syntax has to be queried here prematurely to prevent fail
 			ParameterAttribute attrib = optionSyntax->getAttribute(option);
 			// If parameters are forbidden, don't eat them up
-			if (attrib == FORBIDDEN || attrib == INVALID) {
+			if (attrib == FORBIDDEN) {
 				saveOption(option, NULL);
 				parsedArguments = 1;
 			} else {
@@ -107,7 +109,35 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 		cout << "Saving option value: \"" << option << "\"=\"" << *value << "\"" << endl;
 	else
 		cout << "Saving option value: \"" << option << "\"=NULL" << endl;
-	// TODO: Implement this
+
+	// NOTE: We don't need to test whether the option was allowed, because
+	// exceptions will take care of that in the following function calls.
+
+	ParameterAttribute attrib = optionSyntax->getAttribute(option);
+
+	// If the value is specified and the option forbids it, complain
+	if (value != NULL && attrib == FORBIDDEN) {
+		throw ArgumentException(string("Option ") + option + " does not allow parameters, but value " + value + " was given!");
+	}
+
+	// If the value is not specified and the option requires it, complain
+	if (value == NULL && attrib == REQUIRED) {
+		throw ArgumentException(string("Option ") + option + " requires a parameter, but none was given!");
+	}
+
+	// Try to cast the value of the option to its type
+	IType* type = optionSyntax->getType(option);
+	if (type == NULL) {
+		throw ArgumentException(string("Type for option ") + option + " was not specified");
+	}
+	Value castValue = type->fromString(*value);
+
+	// If the value could not be cast from string, throw an exception
+	if (!castValue.valid()) {
+		throw ArgumentException(string("Parsing the value ") + value + " unsuccessful!");
+	}
+
+	// TODO: Save the value somewhere
 }
 
 ArgumentParser::ArgumentType ArgumentParser::determineType(const std::string& argument) {

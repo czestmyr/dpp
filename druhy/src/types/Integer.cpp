@@ -34,14 +34,14 @@ Value Integer::fromString(const string& argument) const {
 	// Fail if no numbers could be parsed
 	size_t numbersBegin = argParser.getPosition();
 	if (argParser.parseMany(NUMBERS) == 0) {
-		return val;
+		argParser.raiseException("No numbers in the integer");
 	}
 	size_t numbersEnd = argParser.getPosition();
 	argParser.parseMany(WHITESPACE);
 	
 	// Fail if there are any trailing characters
 	if (!argParser.reachedEnd()) {
-		return val;
+		argParser.raiseException("Trailing characters in an integer");
 	}
 
 	// Parse the number itself
@@ -54,10 +54,10 @@ Value Integer::fromString(const string& argument) const {
 
 	// Check for bound compliance
 	if (hasHighBound && intValue > highBound) {
-		return val;
+		argParser.raiseException("Integer value out of bounds");
 	}
 	if (hasLowBound && intValue < lowBound) {
-		return val;
+		argParser.raiseException("Integer value out of bounds");
 	}
 
 	// Set and return the correct value

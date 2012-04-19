@@ -18,7 +18,8 @@ class StringParser {
 		int parseOne(const std::string& chars);
 		int parseExact(int howMany, const std::string& chars);
 
-		std::string getError(const std::string& chars);
+		/// Raises a parsing exception
+		void raiseException(const std::string& exceptionMessage);
 		bool reachedEnd();
 
 		size_t getPosition();

@@ -14,7 +14,6 @@ class OptionSyntax {
 		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* paramType = NULL, const std::string& helpString = "");
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		bool wasAdded(const std::string& option) const;
 		ParameterAttribute getAttribute(const std::string& option) const;
 		const IType* getType(const std::string& option) const;
 		const std::string& getHelp(const std::string& option) const;
