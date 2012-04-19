@@ -1,0 +1,4 @@
+ShortOption
+User specifies only one short option, and set if this option is required or
+optional. Then run the program, according to the optionality write an error if
+the option weren't specified.
