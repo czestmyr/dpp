@@ -1,10 +1,10 @@
-#ifndef _ARGLIB_ARGUMENT_LIST_H_
-#define _ARGLIB_ARGUMENT_LIST_H_
+#ifndef _ARGLIB_ARGUMENT_DATA_H_
+#define _ARGLIB_ARGUMENT_DATA_H_
 
 #include <string>
 #include <list>
 
-class ArgumentList {
+class ArgumentData {
 	public:
 		bool addArgument(const std::string& argument);
 

@@ -2,7 +2,7 @@
 #include "types/Integer.h"
 #include "ArgumentParser.h"
 #include "OptionSyntax.h"
-#include "ArgumentList.h"
+#include "ArgumentData.h"
 #include "types/Integer.h"
 
 #include <string>
@@ -22,8 +22,8 @@ int main(int argc, char* argv[]) {
 	integer->setLowBound(0);
 	s.addOption("percent", REQUIRED, integer, "Help for the integer option");
 
-	ArgumentList al;
-	ArgumentParser p(&s, &al);
+	ArgumentData ad;
+	ArgumentParser p(&s, &ad);
 	p.parse(argc, argv);
 
 	return 0;

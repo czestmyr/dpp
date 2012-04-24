@@ -3,7 +3,7 @@
 #include "ArgumentParser.h"
 #include "StringParser.h"
 #include "OptionSyntax.h"
-#include "ArgumentList.h"
+#include "ArgumentData.h"
 #include "ArgumentException.h"
 #include "Value.h"
 
@@ -12,8 +12,8 @@
 
 using namespace std;
 
-ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentList* argumentList):
-	allRegular(false), optionSyntax(syntax), argList(argumentList) {}
+ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData):
+	allRegular(false), optionSyntax(syntax), argData(argumentData) {}
 
 void ArgumentParser::parse(int argc, char* argv[]) {
 	// Convert arguments to std::strings for better manipulation
@@ -33,7 +33,7 @@ void ArgumentParser::parse(int argc, char* argv[]) {
 			case REGULAR_ARGUMENT:
 				// Save the argument somewhere together with it's information
 				std::cout << argument << " is a regular argument." << std::endl;
-				argList->addArgument(argument);
+				argData->addArgument(argument);
 			break;
 			case SHORT_OPTION:
 				// Parse the short option

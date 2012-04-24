@@ -5,11 +5,11 @@
 #include <vector>
 
 class OptionSyntax;
-class ArgumentList;
+class ArgumentData;
 
 class ArgumentParser {
 	public:
-		ArgumentParser(OptionSyntax* syntax, ArgumentList* argumentList);
+		ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData);
 
 		void parse(int argc, char* argv[]);
 	private:
@@ -32,7 +32,7 @@ class ArgumentParser {
 		/// OptionSyntax object that can be queried on existing options and their properties
 		OptionSyntax* optionSyntax;
 
-		ArgumentList* argList;
+		ArgumentData* argData;
 };
 
 #endif
