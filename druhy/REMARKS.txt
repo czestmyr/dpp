@@ -1,5 +1,5 @@
 -> Pokud se u volby nespecifikuje, zda je parametr vyzadovan, bude zakazan, aby uzivatele (programatora) neprekvapilo, ze mu to zere obycejne argumenty
--> Vyjimky jsou odvozeny os std::exception, aby si je v pripade predavani uzivateli mohl uzivatel odchytat
+-> Vyjimky jsou odvozeny od std::exception, aby si je v pripade predavani uzivateli mohl uzivatel odchytat
 -> Nezapomenuot zduvodnit, proc treba IType.h (a tim padem vsechny typy) nevyhazuje vyjimky: Je to proto, ze nechceme uzivatele nutit, aby vyjimky
 pouzival, nechce-li. Stejne tak StringParser.h bude mozna pouzivan uzivatelem, a proto nevyhazuje vyjimky.
 

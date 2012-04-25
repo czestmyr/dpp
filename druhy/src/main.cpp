@@ -5,6 +5,8 @@
 #include "ArgumentData.h"
 #include "types/Integer.h"
 
+#include "OptionsHandler.h"
+
 #include <string>
 #include <iostream>
 using namespace std;
@@ -26,5 +28,6 @@ int main(int argc, char* argv[]) {
 	ArgumentParser p(&s, &ad);
 	p.parse(argc, argv);
 
+	OptionsHandler h;
 	return 0;
 }
