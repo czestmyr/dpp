@@ -1,5 +1,5 @@
-#ifndef _ARGLIB_OPTIONS_HANDLER_H_
-#define _ARGLIB_OPTIONS_HANDLER_H_
+#ifndef _ARGLIB_ARGUMENTS_HANDLER_H_
+#define _ARGLIB_ARGUMENTS_HANDLER_H_
 
 #include <string>
 #include "OptionSyntax.h"
@@ -7,9 +7,9 @@
 #include "ArgumentParser.h"
 
 
-class OptionsHandler {
+class ArgumentsHandler {
 	public:
-		OptionsHandler();
+		ArgumentsHandler();
 
 		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* paramType = NULL, const std::string& helpString = "");
 		void addSynonym(const std::string& original, const std::string& synonym);
