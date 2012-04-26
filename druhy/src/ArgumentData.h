@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Value.h"
 
 class ArgumentData {
 	public:
