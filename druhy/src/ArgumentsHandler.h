@@ -20,8 +20,7 @@ class ArgumentsHandler {
 
 		bool isOptionSet(const std::string& optionName);
 		Value getOptionArgument(const std::string& optionName);
-		// TODO: Shouldn't we use typedef for this crazy type?
-		std::vector<std::string> getRegularArguments();
+		const std::vector<std::string>& getRegularArguments(); 
 	private:
 		OptionSyntax syntax;	
 		ArgumentData data;

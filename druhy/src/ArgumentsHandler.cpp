@@ -12,15 +12,15 @@ void ArgumentsHandler::writeHelp() {
 	//TODO: Implement
 }
 void ArgumentsHandler::parse(int argc, char* argv[]) {
-	ArgumentParser p(&syntax, &data);		
+	ArgumentParser p(&syntax, &data);
 	p.parse(argc, argv);
 }
 bool ArgumentsHandler::isOptionSet(const std::string& optionName) {
-	//TODO: Implement
+	data.isOptionSet(optionName);
 }
 Value ArgumentsHandler::getOptionArgument(const std::string& optionName) {
-	//TODO: Implement
+	data.getOptionArgument(optionName);
 }
-std::vector<std::string> ArgumentsHandler::getRegularArguments() {
-	//TODO: Implement
+const std::vector<std::string>& ArgumentsHandler::getRegularArguments() {
+	data.getArguments();
 }

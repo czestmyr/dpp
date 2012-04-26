@@ -2,15 +2,19 @@
 #define _ARGLIB_ARGUMENT_DATA_H_
 
 #include <string>
-#include <list>
+#include <vector>
 
 class ArgumentData {
 	public:
 		bool addArgument(const std::string& argument);
 
-		const std::list<std::string>& getArguments() const { return arguments; }
+		bool isOptionSet(const std::string& optionName);
+
+		Value getOptionArgument(const std::string& optionName);
+
+		const std::vector<std::string>& getArguments() const { return arguments; }
 	private:
-		std::list<std::string> arguments;
+		std::vector<std::string> arguments;
 };
 
 #endif
