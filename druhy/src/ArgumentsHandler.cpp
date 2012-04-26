@@ -8,12 +8,19 @@ void ArgumentsHandler::addOption(const std::string& optionName, ParameterAttribu
 void ArgumentsHandler::addSynonym(const std::string& original, const std::string& synonym) {
 	syntax.addSynonym(original, synonym);
 }
-ParameterAttribute ArgumentsHandler::getAttribute(const std::string& option) const {
-	//TODO: implement
+void ArgumentsHandler::writeHelp() {
+	//TODO: Implement
 }
-const IType* ArgumentsHandler::getType(const std::string& option) const {
-	//TODO: implement
+void ArgumentsHandler::parse(int argc, char* argv[]) {
+	ArgumentParser p(&syntax, &data);		
+	p.parse(argc, argv);
 }
-const std::string& ArgumentsHandler::getHelp(const std::string& option) const {
-	//TODO: implement
+bool ArgumentsHandler::isOptionSet(const std::string& optionName) {
+	//TODO: Implement
+}
+Value ArgumentsHandler::getOptionArgument(const std::string& optionName) {
+	//TODO: Implement
+}
+std::vector<std::string> ArgumentsHandler::getRegularArguments() {
+	//TODO: Implement
 }
