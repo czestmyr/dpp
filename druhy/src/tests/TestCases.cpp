@@ -1,1 +1,5 @@
-#include "UseCaseShortOptionTest.h"
+#include "TestCases.h"
+
+bool UseCaseShortOptionTest::runTest() {
+
+}

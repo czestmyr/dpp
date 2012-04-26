@@ -7,11 +7,16 @@
 
 #include "ArgumentsHandler.h"
 
+#include "tests/Tests.h"
+
 #include <string>
 #include <iostream>
 using namespace std;
 
 int main(int argc, char* argv[]) {
+	Tests tests;
+	tests.runTests();
+
 	string a, b, c, d, e;
 	Integer i;
 

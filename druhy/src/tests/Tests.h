@@ -2,13 +2,13 @@
 #define _ARGLIB_TESTS_H_
 
 #include <vector>
-#include "UseCaseShortOptionTest.h"
+#include "TestCases.h"
 
 class Tests {
 	public:
 		void runTests();
 	private:	
-	std::vector<AbstractTest* > tests;	
+		std::vector<AbstractTest* > tests;	
 };
 
 #endif
