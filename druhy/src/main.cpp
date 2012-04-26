@@ -28,6 +28,6 @@ int main(int argc, char* argv[]) {
 	ArgumentParser p(&s, &ad);
 	p.parse(argc, argv);
 
-	OptionsHandler h;
+	ArgumentsHandler h;
 	return 0;
 }
