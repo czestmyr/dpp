@@ -3,7 +3,7 @@
 
 class AbstractTest {
 	public:
-		virtual bool runTest();
+		virtual bool runTest()=0;
 	private:	
 };
 

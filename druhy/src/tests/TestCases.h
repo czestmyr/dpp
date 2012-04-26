@@ -4,9 +4,9 @@
 #include "../ArgumentsHandler.h"
 #include "AbstractTest.h"
 
-class UseCaseShortOptionTest : public AbstractTest{
+class UseCaseShortOptionTest : public AbstractTest {
 	public:
-		virtual bool runTest();
+		bool runTest();
 	private:	
 };
 
