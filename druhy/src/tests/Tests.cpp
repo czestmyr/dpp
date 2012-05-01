@@ -28,7 +28,7 @@ void Tests::runTests(){
 	bool success = true;
 
 	for (int i = 0; i < tests.size(); ++i) {
-		cout << "Test " << (i+1) << "/" << tests.size() << ": ";
+		cout << "\tTest " << (i+1) << "/" << tests.size() << ": ";
 		cout << tests[i]->getDescription() << " ... ";
 		if (tests[i]->runTest()) {
 			cout << "OK." << endl;
