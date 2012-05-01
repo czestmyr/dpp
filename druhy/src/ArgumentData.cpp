@@ -8,6 +8,6 @@ bool ArgumentData::isOptionSet(const std::string& optionName){
 	// TODO: implement
 }
 
-Value ArgumentData::getOptionArgument(const std::string& optionName){
+Value ArgumentData::getOptionParameter(const std::string& optionName){
 	// TODO: implement
 }

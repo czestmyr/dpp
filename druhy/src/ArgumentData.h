@@ -11,7 +11,7 @@ class ArgumentData {
 
 		bool isOptionSet(const std::string& optionName);
 
-		Value getOptionArgument(const std::string& optionName);
+		Value getOptionParameter(const std::string& optionName);
 
 		const std::vector<std::string>& getArguments() const { return arguments; }
 	private:

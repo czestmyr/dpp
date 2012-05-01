@@ -23,8 +23,8 @@ bool ArgumentsHandler::isOptionSet(const std::string& optionName) {
 	data.isOptionSet(optionName);
 }
 
-Value ArgumentsHandler::getOptionArgument(const std::string& optionName) {
-	data.getOptionArgument(optionName);
+Value ArgumentsHandler::getOptionParameter(const std::string& optionName) {
+	data.getOptionParameter(optionName);
 }
 
 const std::vector<std::string>& ArgumentsHandler::getRegularArguments() {
