@@ -3,14 +3,18 @@
 
 #include <string>
 #include <vector>
-#include "OptionSyntax.h"
-#include "ArgumentData.h"
-#include "ArgumentParser.h"
 
+#include "ParameterAttribute.h"
+#include "Value.h"
+
+class OptionSyntax;
+class ArgumentData;
+class IType;
 
 class FrontEnd {
 	public:
 		FrontEnd();
+		~FrontEnd();
 
 		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* paramType = NULL, const std::string& helpString = "");
 		void addSynonym(const std::string& original, const std::string& synonym);
@@ -20,10 +24,11 @@ class FrontEnd {
 
 		bool isOptionSet(const std::string& optionName) const;
 		Value getOptionParameter(const std::string& optionName) const;
-		const std::vector<std::string>& getRegularArguments() const; 
+		const std::vector<std::string>& getRegularArguments() const;
+
 	private:
-		OptionSyntax syntax;	
-		ArgumentData data;
+		OptionSyntax* syntax;	
+		ArgumentData* data;
 };
 
 #endif

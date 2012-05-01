@@ -1,8 +1,7 @@
 #include "TestCases.h"
 
 #include "Tests.h"
-#include "../types/Integer.h"
-#include "../ArgumentException.h"
+#include "Arglib.h"
 #include <iostream>
 
 using namespace std;

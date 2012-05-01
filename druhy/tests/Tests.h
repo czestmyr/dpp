@@ -9,9 +9,6 @@ class Tests {
 		/// Returns the singleton instance of the testing class.
 		static Tests& inst();
 
-		/// Initializes all the test instances.
-		Tests();
-
 		/// Destroys all the held test instances.
 		~Tests();
 
@@ -22,6 +19,9 @@ class Tests {
 		/// Runs all the tests that have been registered so far.
 		void runTests();
 	private:	
+		/// Initializes all the test instances.
+		Tests();
+
 		std::vector<AbstractTest*> tests;
 
 		static Tests instance;
