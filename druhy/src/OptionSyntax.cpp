@@ -14,7 +14,8 @@ void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute a
 }
 
 void OptionSyntax::addSynonym(const std::string& original, const std::string& synonym) {
-	// TODO: implement
+	unsigned int id = getId(original);
+	ids.insert(pair<std::string, unsigned int>(synonym, id));
 }
 
 ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
