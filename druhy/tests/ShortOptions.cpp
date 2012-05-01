@@ -53,7 +53,7 @@ bool ShortOptions::shortSynonymTest() {
 	try {
 		FrontEnd arglib;
 		arglib.addOption("a");
-		arglib.addOption("b");
+		arglib.addSynonym("a", "b");
 		arglib.parse(args.getCount(), args.getArguments());
 		if (!arglib.isOptionSet("b")) {
 			return false;
