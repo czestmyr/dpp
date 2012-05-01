@@ -28,21 +28,18 @@ void ArgumentParser::parse(int argc, const char* argv[]) {
 		string& argument = arguments[argIndex];
 		ArgumentType argType = determineType(argument);
 
+		// How many arguments the parsing ate up
 		int indexIncrement = 1;
+
+		// Perform action depending on the argument type
 		switch (argType) {
 			case REGULAR_ARGUMENT:
-				// Save the argument somewhere together with it's information
-				std::cout << argument << " is a regular argument." << std::endl;
 				argData->addArgument(argument);
 			break;
 			case SHORT_OPTION:
-				// Parse the short option
-				std::cout << argument << " is a short option." << std::endl;
 				indexIncrement = parseShortOption(arguments[argIndex].substr(1), arguments, argIndex);
 			break;
 			case LONG_OPTION:
-				// Parse the long option
-				std::cout << argument << " is a long option." << std::endl;
 				indexIncrement = parseOption(arguments[argIndex].substr(2), arguments, argIndex);
 			break;
 			case DOUBLE_HYPHEN_SEPARATOR:
@@ -105,12 +102,6 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 }
 
 void ArgumentParser::saveOption(const std::string& option, const std::string* value) {
-	// TODO: remove this before handing in
-	if (value != NULL)
-		cout << "Saving option value: \"" << option << "\"=\"" << *value << "\"" << endl;
-	else
-		cout << "Saving option value: \"" << option << "\"=NULL" << endl;
-
 	// NOTE: We don't need to test whether the option was allowed, because
 	// exceptions will take care of that in the following function calls.
 
