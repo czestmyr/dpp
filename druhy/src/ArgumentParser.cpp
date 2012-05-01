@@ -105,6 +105,7 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 }
 
 void ArgumentParser::saveOption(const std::string& option, const std::string* value) {
+	// TODO: remove this before handing in
 	if (value != NULL)
 		cout << "Saving option value: \"" << option << "\"=\"" << *value << "\"" << endl;
 	else
