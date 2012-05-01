@@ -7,4 +7,7 @@ TODO:
 
 -> Vse zdokumentovat. U kazde tridy napsat, k cemu slouzi. Popsat metody a datove membery
 -> Uzavrit kod do namespace arglib (nebo tak nejak)
-
+-> Sjednotit style:
+	-> Zkontrolovat, zda je const vsude tam, kde ma byt
+	-> Zkontrolovat, zda nejsou v kodu ponechany nejake TODO komentare (pomoci listtodos.sh)
+	-> Sjednotit "using namespace std;" na zacatku kazdeho zdrojaku
