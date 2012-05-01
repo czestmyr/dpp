@@ -31,9 +31,9 @@ void Tests::runTests(){
 		cout << "\tTest " << (i+1) << "/" << tests.size() << ": ";
 		cout << tests[i]->getDescription() << " ... ";
 		if (tests[i]->runTest()) {
-			cout << "OK." << endl;
+			cout << " OK." << endl;
 		} else {
-			cout << "FAIL!" << endl;
+			cout << " FAIL!" << endl;
 		}
 	}
 }

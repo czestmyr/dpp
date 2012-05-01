@@ -1,22 +1,17 @@
 #include "TestCases.h"
-#include "Tests.h"
 
+#include "Tests.h"
 #include "../types/Integer.h"
+#include "../ArgumentException.h"
+#include <iostream>
+
+using namespace std;
 
 void TestCases::addTestsTo(Tests* testSet) {
 	testSet->addTest(new UseCaseShortOptionTest);
 }
 
 bool TestCases::UseCaseShortOptionTest::runTest() {
-	FrontEnd h;
-	h.addOption("v");
-	h.addSynonym("v","u");
-
-	Integer* integer = new Integer;
-	integer->setHighBound(100);
-	integer->setLowBound(0);
-	h.addOption("p", REQUIRED, integer, "Help for the integer option");
-
 	const char* arg1 = "-v";
 	const char* arg2 = "-u";
 	const char* arg3 = "-p";
@@ -27,7 +22,23 @@ bool TestCases::UseCaseShortOptionTest::runTest() {
 	argv[2] = arg3;
 	argv[3] = arg4;
 
-	h.parse(4,argv);
+	try {
+		FrontEnd h;
+		h.addOption("v");
+		h.addSynonym("v","u");
+
+		Integer* integer = new Integer;
+		integer->setHighBound(100);
+		integer->setLowBound(0);
+		h.addOption("p", REQUIRED, integer, "Help for the integer option");
+
+		h.parse(4,argv);
+	} catch (ArgumentException e) {
+		cout << e.what();
+		return false;
+	}
+
+	return true;
 }
 
 const char* TestCases::UseCaseShortOptionTest::getDescription() {
