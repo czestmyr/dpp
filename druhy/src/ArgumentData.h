@@ -11,9 +11,9 @@ class ArgumentData {
 		bool addArgument(const std::string& argument);
 
 		void setOption(unsigned int optionId, const Value& parameter);
-		bool isOptionSet(unsigned int optionId);
+		bool isOptionSet(unsigned int optionId) const;
 
-		Value getOptionParameter(unsigned int optionId);
+		Value getOptionParameter(unsigned int optionId) const;
 
 		const std::vector<std::string>& getArguments() const { return arguments; }
 	private:

@@ -18,9 +18,9 @@ class ArgumentsHandler {
 		void writeHelp();
 		void parse(int argc, char* argv[]);
 
-		bool isOptionSet(const std::string& optionName);
-		Value getOptionParameter(const std::string& optionName);
-		const std::vector<std::string>& getRegularArguments(); 
+		bool isOptionSet(const std::string& optionName) const;
+		Value getOptionParameter(const std::string& optionName) const;
+		const std::vector<std::string>& getRegularArguments() const; 
 	private:
 		OptionSyntax syntax;	
 		ArgumentData data;
