@@ -137,9 +137,14 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 		if (!castValue.isValid()) {
 			throw ArgumentException(string("Parsing the value ") + *value + " unsuccessful!");
 		}
-		// TODO: Save the value somewhere
+
+		// Save the option into argument data
+		unsigned int id = optionSyntax->getId(option);
+		argData->setOption(id, castValue);
 	} else {
-		// TODO: Save the option somewhere
+		// Save the option into argument data with a default-constructed invalid Value
+		unsigned int id = optionSyntax->getId(option);
+		argData->setOption(id, Value());
 	}
 }
 
