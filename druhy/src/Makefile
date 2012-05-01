@@ -13,5 +13,5 @@ ${NAME}: ${OBJECTS}
 	g++ ${CXXFLAGS} -c $< -o $@
 
 clean:
-	rm -f ${OBJECTS} ${NAME}
+	rm -f ${OBJECTS}
 
