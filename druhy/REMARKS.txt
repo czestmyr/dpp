@@ -6,6 +6,7 @@ pouzival, nechce-li. Stejne tak StringParser.h bude mozna pouzivan uzivatelem, a
 TODO:
 
 -> Vse zdokumentovat. U kazde tridy napsat, k cemu slouzi. Popsat metody a datove membery
+-> Pridat hyperlinky do dokumentace
 -> Uzavrit kod do namespace arglib (nebo tak nejak)
 -> Sjednotit style:
 	-> Zkontrolovat, zda je const vsude tam, kde ma byt
