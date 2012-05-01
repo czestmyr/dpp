@@ -15,7 +15,7 @@ using namespace std;
 ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData):
 	allRegular(false), optionSyntax(syntax), argData(argumentData) {}
 
-void ArgumentParser::parse(int argc, char* argv[]) {
+void ArgumentParser::parse(int argc, const char* argv[]) {
 	// Convert arguments to std::strings for better manipulation
 	vector<string> arguments;
 	for (int i = 1; i < argc; ++i) {

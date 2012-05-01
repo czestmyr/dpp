@@ -12,11 +12,11 @@ bool UseCaseShortOptionTest::runTest() {
 	integer->setLowBound(0);
 	h.addOption("p", REQUIRED, integer, "Help for the integer option");
 
-	char* arg1 = "-v";
-	char* arg2 = "-u";
-	char* arg3 = "-p";
-	char* arg4 = "20";
-	char* argv[4];
+	const char* arg1 = "-v";
+	const char* arg2 = "-u";
+	const char* arg3 = "-p";
+	const char* arg4 = "20";
+	const char* argv[4];
 	argv[0] = arg1;
 	argv[1] = arg2;
 	argv[2] = arg3;

@@ -11,7 +11,7 @@ class ArgumentParser {
 	public:
 		ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData);
 
-		void parse(int argc, char* argv[]);
+		void parse(int argc, const char* argv[]);
 	private:
 		int parseShortOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
 		int parseOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);

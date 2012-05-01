@@ -13,7 +13,7 @@
 #include <iostream>
 using namespace std;
 
-int main(int argc, char* argv[]) {
+int main(int argc, const char* argv[]) {
 	Tests tests;
 	tests.runTests();
 
@@ -36,3 +36,4 @@ int main(int argc, char* argv[]) {
 	FrontEnd h;
 	return 0;
 }
+
