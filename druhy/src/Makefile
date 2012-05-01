@@ -1,12 +1,12 @@
-OBJECTS=main.o StringParser.o ArgumentParser.o types/Integer.o Value.o OptionSyntax.o ArgumentData.o ArgumentException.o FrontEnd.o tests/Tests.o tests/TestCases.o
+OBJECTS=StringParser.o ArgumentParser.o types/Integer.o Value.o OptionSyntax.o ArgumentData.o ArgumentException.o FrontEnd.o
 CXXFLAGS=-g
 
 .PHONY : all
 
-all: arglib_test
+all: arglib.a
 
-arglib_test: ${OBJECTS}
-	g++ ${CXXFLAGS} $^ -o $@
+arglib.a: ${OBJECTS}
+	ar cq $@ $^
 
 %.o: %.cpp
 	g++ ${CXXFLAGS} -c $< -o $@
