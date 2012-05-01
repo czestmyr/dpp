@@ -14,21 +14,21 @@ void UseCases::addTestsTo(Tests* testSet) {
 
 bool UseCases::runShortOptionsTest() {
 	ArgList args;
-	args.push("-v").push("-u").push("-p").push("20");
+	args.push("program").push("-v").push("-u").push("-p").push("20");
 
 	try {
-		FrontEnd h;
-		h.addOption("v");
-		h.addSynonym("v", "u");
+		FrontEnd arglib;
+		arglib.addOption("v");
+		arglib.addSynonym("v", "u");
 
 		Integer* integer = new Integer;
 		integer->setHighBound(100);
 		integer->setLowBound(0);
-		h.addOption("p", REQUIRED, integer, "Help for the integer option");
+		arglib.addOption("p", REQUIRED, integer, "Help for the integer option");
 
-		h.parse(args.getCount(), args.getArguments());
+		arglib.parse(args.getCount(), args.getArguments());
 	} catch (ArgumentException e) {
-		cout << e.what();
+		cout << "Exception: " << e.what();
 		return false;
 	}
 

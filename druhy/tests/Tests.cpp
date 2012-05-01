@@ -19,12 +19,12 @@ void Tests::runTests(){
 
 	for (int i = 0; i < tests.size(); ++i) {
 		cout << "\tTest " << (i+1) << "/" << tests.size() << ": ";
-		cout << testDescriptions[i] << " ... ";
+		cout << testDescriptions[i] << " | ";
 
 		if (tests[i]()) {
-			cout << " OK." << endl;
+			cout << " ... OK." << endl;
 		} else {
-			cout << " FAIL!" << endl;
+			cout << " ... FAIL!" << endl;
 		}
 	}
 }

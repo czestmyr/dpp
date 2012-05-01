@@ -1,6 +1,7 @@
 #include "ShortOptions.h"
 
 #include "Tests.h"
+#include "ArgList.h"
 #include "Arglib.h"
 #include "TestFunction.h"
 #include <iostream>
@@ -14,14 +15,54 @@ void ShortOptions::addTestsTo(Tests* testSet) {
 }
 
 bool ShortOptions::definedShortOptionTest() {
+	ArgList args;
+	args.push("program").push("-h");
+
+	try {
+		FrontEnd arglib;
+		arglib.addOption("h");
+		arglib.parse(args.getCount(), args.getArguments());
+	} catch (ArgumentException e) {
+		cout << "Exception: " << e.what();
+		return false;
+	}
+
 	return true;
 }
 
 bool ShortOptions::undefinedShortOptionTest() {
-	return true;
+	ArgList args;
+	args.push("program").push("-h");
+
+	try {
+		FrontEnd arglib;
+		arglib.addOption("q");
+		arglib.parse(args.getCount(), args.getArguments());
+	} catch (ArgumentException e) {
+		cout << "Exception: " <<  e.what();
+		return true;
+	}
+
+	return false;
 }
 
 bool ShortOptions::shortSynonymTest() {
+	ArgList args;
+	args.push("program").push("-a");
+
+	try {
+		FrontEnd arglib;
+		arglib.addOption("a");
+		arglib.addOption("b");
+		arglib.parse(args.getCount(), args.getArguments());
+		if (!arglib.isOptionSet("b")) {
+			return false;
+		}
+	} catch (ArgumentException e) {
+		cout << "Exception: " <<  e.what();
+		return false;
+	}
+
 	return true;
 }
 
