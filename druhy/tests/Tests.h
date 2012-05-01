@@ -2,27 +2,23 @@
 #define _ARGLIB_TESTS_H_
 
 #include <vector>
-#include "AbstractTest.h"
+#include <string>
+
+#include "TestFunction.h"
 
 class Tests {
 	public:
 		/// Returns the singleton instance of the testing class.
 		static Tests& inst();
 
-		/// Destroys all the held test instances.
-		~Tests();
-
-		/// Adds a new test to be performed. The ownership of the
-		/// parameter is handed over to the Tests class.
-		void addTest(AbstractTest* test);
+		/// Adds a new test to be performed.
+		void addTest(TestFunctionPtr test, const char* testDescription);
 
 		/// Runs all the tests that have been registered so far.
 		void runTests();
-	private:	
-		/// Initializes all the test instances.
-		Tests();
-
-		std::vector<AbstractTest*> tests;
+	private:
+		std::vector<TestFunctionPtr> tests;
+		std::vector<std::string> testDescriptions;
 
 		static Tests instance;
 };

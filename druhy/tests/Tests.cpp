@@ -1,7 +1,6 @@
 #include "Tests.h"
 
 #include <iostream>
-#include "TestCases.h"
 
 using namespace std;
 
@@ -9,18 +8,9 @@ Tests& Tests::inst() {
 	return instance;
 }
 
-Tests::Tests() {
-	TestCases::addTestsTo(this);
-}
-
-Tests::~Tests() {
-	for (int i = 0; i < tests.size(); ++i) {
-		delete(tests[i]);
-	}
-}
-
-void Tests::addTest(AbstractTest* test) {
+void Tests::addTest(TestFunctionPtr test, const char* testDescription) {
 	tests.push_back(test);
+	testDescriptions.push_back(testDescription);
 }
 
 void Tests::runTests(){
@@ -29,8 +19,9 @@ void Tests::runTests(){
 
 	for (int i = 0; i < tests.size(); ++i) {
 		cout << "\tTest " << (i+1) << "/" << tests.size() << ": ";
-		cout << tests[i]->getDescription() << " ... ";
-		if (tests[i]->runTest()) {
+		cout << testDescriptions[i] << " ... ";
+
+		if (tests[i]()) {
 			cout << " OK." << endl;
 		} else {
 			cout << " FAIL!" << endl;

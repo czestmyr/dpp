@@ -1,16 +1,17 @@
-#include "TestCases.h"
+#include "UseCases.h"
 
 #include "Tests.h"
 #include "Arglib.h"
+#include "TestFunction.h"
 #include <iostream>
 
 using namespace std;
 
-void TestCases::addTestsTo(Tests* testSet) {
-	testSet->addTest(new UseCaseShortOptionTest);
+void UseCases::addTestsTo(Tests* testSet) {
+	testSet->addTest(&UseCases::runShortOptionsTest, "Short option use case (should not throw anything): \"-v -u -p 20\"");
 }
 
-bool TestCases::UseCaseShortOptionTest::runTest() {
+bool UseCases::runShortOptionsTest() {
 	const char* arg1 = "-v";
 	const char* arg2 = "-u";
 	const char* arg3 = "-p";
@@ -38,9 +39,5 @@ bool TestCases::UseCaseShortOptionTest::runTest() {
 	}
 
 	return true;
-}
-
-const char* TestCases::UseCaseShortOptionTest::getDescription() {
-	return "Short option use case (should not throw anything): \"-v -u -p 20\"";
 }
 

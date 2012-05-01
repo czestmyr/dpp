@@ -1,4 +1,4 @@
-OBJECTS=main.o TestCases.o Tests.o
+OBJECTS=main.o UseCases.o Tests.o ShortOptions.o
 NAME=arglib_test
 CXXFLAGS=-I../src
 .PHONY : all
@@ -15,5 +15,5 @@ ${NAME}: ${OBJECTS}
 	g++ ${CXXFLAGS} -c $< -o $@
 
 clean:
-	rm -rf ${OBJECTS} ${NAME}
+	rm -rf ${OBJECTS}
 
