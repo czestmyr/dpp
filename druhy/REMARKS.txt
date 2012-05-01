@@ -5,6 +5,7 @@ pouzival, nechce-li. Stejne tak StringParser.h bude mozna pouzivan uzivatelem, a
 
 TODO:
 
+-> Pridat moznost vypnout (nebo zapnout?) exceptions - pozor, at to nerozbije testy
 -> Vse zdokumentovat. U kazde tridy napsat, k cemu slouzi. Popsat metody a datove membery
 -> Pridat hyperlinky do dokumentace
 -> Uzavrit kod do namespace arglib (nebo tak nejak)
