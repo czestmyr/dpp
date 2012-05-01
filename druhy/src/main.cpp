@@ -5,7 +5,7 @@
 #include "ArgumentData.h"
 #include "types/Integer.h"
 
-#include "ArgumentsHandler.h"
+#include "FrontEnd.h"
 
 #include "tests/Tests.h"
 
@@ -33,6 +33,6 @@ int main(int argc, char* argv[]) {
 	ArgumentParser p(&s, &ad);
 	p.parse(argc, argv);
 
-	ArgumentsHandler h;
+	FrontEnd h;
 	return 0;
 }

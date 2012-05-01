@@ -1,5 +1,5 @@
-#ifndef _ARGLIB_ARGUMENTS_HANDLER_H_
-#define _ARGLIB_ARGUMENTS_HANDLER_H_
+#ifndef _ARGLIB_FRONT_END_H_
+#define _ARGLIB_FRONT_END_H_
 
 #include <string>
 #include <vector>
@@ -8,15 +8,15 @@
 #include "ArgumentParser.h"
 
 
-class ArgumentsHandler {
+class FrontEnd {
 	public:
-		ArgumentsHandler();
+		FrontEnd();
 
 		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* paramType = NULL, const std::string& helpString = "");
 		void addSynonym(const std::string& original, const std::string& synonym);
 
 		void writeHelp();
-		void parse(int argc, char* argv[]);
+		void parse(int argc, const char* argv[]);
 
 		bool isOptionSet(const std::string& optionName) const;
 		Value getOptionParameter(const std::string& optionName) const;

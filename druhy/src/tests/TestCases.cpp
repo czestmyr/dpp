@@ -3,7 +3,7 @@
 #include "../types/Integer.h"
 
 bool UseCaseShortOptionTest::runTest() {
-	ArgumentsHandler h;
+	FrontEnd h;
 	h.addOption("v");
 	h.addSynonym("v","u");
 
