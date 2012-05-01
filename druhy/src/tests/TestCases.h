@@ -4,10 +4,21 @@
 #include "../FrontEnd.h"
 #include "AbstractTest.h"
 
-class UseCaseShortOptionTest : public AbstractTest {
+class Tests;
+
+class TestCases {
 	public:
-		bool runTest();
-	private:	
+		/// Adds the test cases to the given test set.
+		static void addTestsTo(Tests* testSet);
+
+	private:
+		class UseCaseShortOptionTest : public AbstractTest {
+			public:
+				~UseCaseShortOptionTest() {};
+				bool runTest();
+				const char* getDescription();
+			private:
+		};
 };
 
 #endif

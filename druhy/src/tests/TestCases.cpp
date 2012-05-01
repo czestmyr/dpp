@@ -1,8 +1,13 @@
 #include "TestCases.h"
+#include "Tests.h"
 
 #include "../types/Integer.h"
 
-bool UseCaseShortOptionTest::runTest() {
+void TestCases::addTestsTo(Tests* testSet) {
+	testSet->addTest(new UseCaseShortOptionTest);
+}
+
+bool TestCases::UseCaseShortOptionTest::runTest() {
 	FrontEnd h;
 	h.addOption("v");
 	h.addSynonym("v","u");
@@ -24,3 +29,8 @@ bool UseCaseShortOptionTest::runTest() {
 
 	h.parse(4,argv);
 }
+
+const char* TestCases::UseCaseShortOptionTest::getDescription() {
+	return "Short option use case (should not throw anything): \"-v -u -p 20\"";
+}
+
