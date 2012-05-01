@@ -3,19 +3,22 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "Value.h"
 
 class ArgumentData {
 	public:
 		bool addArgument(const std::string& argument);
 
-		bool isOptionSet(const std::string& optionName);
+		void setOption(unsigned int optionId, const Value& parameter);
+		bool isOptionSet(unsigned int optionId);
 
-		Value getOptionParameter(const std::string& optionName);
+		Value getOptionParameter(unsigned int optionId);
 
 		const std::vector<std::string>& getArguments() const { return arguments; }
 	private:
 		std::vector<std::string> arguments;
+		std::map<unsigned int, Value> options;
 };
 
 #endif

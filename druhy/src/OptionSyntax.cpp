@@ -18,36 +18,27 @@ void OptionSyntax::addSynonym(const std::string& original, const std::string& sy
 }
 
 ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
-	if (ids.count(option) == 0) {
-		throw ArgumentException("Unknown option: " + option);
-	}
-
-	// Find will not fail here, because we tested presence of the option
-	// in ID map and attributes will always have an entry for existing id
-	unsigned int id = (*ids.find(option)).second;
+	unsigned int id = getId(option);
 	return (*attributes.find(id)).second;
 }
 
 const IType* OptionSyntax::getType(const std::string& option) const {
-	if (ids.count(option) == 0) {
-		throw ArgumentException("Unknown option: " + option);
-	}
-
-	// Find will not fail here, because we tested presence of the option
-	// in ID map and types will always have an entry for existing id
-	unsigned int id = (*ids.find(option)).second;
+	unsigned int id = getId(option);
 	return (*types.find(id)).second;
 }
 
 const std::string& OptionSyntax::getHelp(const std::string& option) const {
+	unsigned int id = getId(option);
+	return (*helpStrings.find(id)).second;
+}
+
+unsigned int OptionSyntax::getId(const std::string& option) const {
 	if (ids.count(option) == 0) {
 		throw ArgumentException("Unknown option: " + option);
 	}
 
-	// Find will not fail here, because we tested presence of the option
-	// in ID map and helpStrings will always have an entry for existing id
-	unsigned int id = (*ids.find(option)).second;
-	return (*helpStrings.find(id)).second;
+	// Find will not fail here, because we tested presence of the option in ID map
+	return (*ids.find(option)).second;
 }
 
 unsigned int OptionSyntax::getUnusedId() {

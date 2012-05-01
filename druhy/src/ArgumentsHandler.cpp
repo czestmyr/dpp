@@ -20,11 +20,13 @@ void ArgumentsHandler::parse(int argc, char* argv[]) {
 }
 
 bool ArgumentsHandler::isOptionSet(const std::string& optionName) {
-	data.isOptionSet(optionName);
+	unsigned int id = syntax.getId(optionName);
+	data.isOptionSet(id);
 }
 
 Value ArgumentsHandler::getOptionParameter(const std::string& optionName) {
-	data.getOptionParameter(optionName);
+	unsigned int id = syntax.getId(optionName);
+	data.getOptionParameter(id);
 }
 
 const std::vector<std::string>& ArgumentsHandler::getRegularArguments() {

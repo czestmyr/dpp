@@ -17,6 +17,8 @@ class OptionSyntax {
 		ParameterAttribute getAttribute(const std::string& option) const;
 		const IType* getType(const std::string& option) const;
 		const std::string& getHelp(const std::string& option) const;
+
+		unsigned int getId(const std::string& option) const;
 	private:
 		unsigned int getUnusedId();
 		unsigned int lastId;

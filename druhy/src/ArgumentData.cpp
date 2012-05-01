@@ -4,10 +4,14 @@ bool ArgumentData::addArgument(const std::string& argument) {
 	arguments.push_back(argument);
 }
 
-bool ArgumentData::isOptionSet(const std::string& optionName){
+void ArgumentData::setOption(unsigned int optionId, const Value& parameter) {
+
+}
+
+bool ArgumentData::isOptionSet(unsigned int optionId){
 	// TODO: implement
 }
 
-Value ArgumentData::getOptionParameter(const std::string& optionName){
+Value ArgumentData::getOptionParameter(unsigned int optionId){
 	// TODO: implement
 }
