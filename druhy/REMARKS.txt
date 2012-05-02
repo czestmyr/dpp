@@ -13,3 +13,5 @@ TODO:
 	-> Zkontrolovat, zda je const vsude tam, kde ma byt
 	-> Zkontrolovat, zda nejsou v kodu ponechany nejake TODO komentare (pomoci listtodos.sh)
 	-> Sjednotit "using namespace std;" na zacatku kazdeho zdrojaku
+-> Rozmyslet si, jestli je opravdu potreba metoda OptionSyntax::getHelp(...). Staci prece vypsat dokumentaci ke vsem volbam
+
