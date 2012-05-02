@@ -22,11 +22,11 @@ ArgList& ArgList::push(const char* argument) {
 	return *this;
 }
 
-const char** ArgList::getArguments() {
+const char** ArgList::getArguments() const {
 	return array;
 }
 
-int ArgList::getCount() {
+int ArgList::getCount() const {
 	return currentCount;
 }
 

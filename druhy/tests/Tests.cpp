@@ -1,4 +1,6 @@
 #include "Tests.h"
+#include "Arglib.h"
+#include "ArgList.h"
 
 #include <iostream>
 
@@ -30,6 +32,28 @@ bool Tests::runTests(){
 	}
 
 	return success;
+}
+
+bool Tests::parseMustThrow(FrontEnd& arglib, const ArgList& arguments) {
+	try {
+		arglib.parse(arguments.getCount(), arguments.getArguments());
+	} catch (ArgumentException e) {
+		cout << "Exception: " << e.what();
+		return true;
+	}
+
+	return false;
+}
+
+bool Tests::parseMustNotThrow(FrontEnd& arglib, const ArgList& arguments) {
+	try {
+		arglib.parse(arguments.getCount(), arguments.getArguments());
+	} catch (ArgumentException e) {
+		cout << "Exception: " << e.what();
+		return false;
+	}
+
+	return true;
 }
 
 Tests Tests::instance = Tests();

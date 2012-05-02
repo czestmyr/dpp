@@ -28,21 +28,9 @@ bool IntegerTests::upperLimitTest() {
 	intType->setHighBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 
-	try {
-		arglib.parse(args1.getCount(), args1.getArguments());
-	} catch (ArgumentException e) {
-		cout << "Exception: " << e.what();
-		return false;
-	}
-
-	try {
-		arglib.parse(args2.getCount(), args2.getArguments());
-	} catch (ArgumentException e) {
-		cout << "Exception: " << e.what();
-		return true;
-	}
-
-	return false;
+	return
+		Tests::parseMustNotThrow(arglib, args1) &&
+		Tests::parseMustThrow(arglib, args2);
 }
 
 bool IntegerTests::lowerLimitTest() {

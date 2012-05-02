@@ -19,51 +19,32 @@ bool ShortOptionTests::definedShortOptionTest() {
 	ArgList args;
 	args.push("program").push("-h");
 
-	try {
-		FrontEnd arglib;
-		arglib.addOption("h");
-		arglib.parse(args.getCount(), args.getArguments());
-	} catch (ArgumentException e) {
-		cout << "Exception: " << e.what();
-		return false;
-	}
+	FrontEnd arglib;
+	arglib.addOption("h");
 
-	return true;
+	return Tests::parseMustNotThrow(arglib, args);
 }
 
 bool ShortOptionTests::undefinedShortOptionTest() {
 	ArgList args;
 	args.push("program").push("-h");
 
-	try {
-		FrontEnd arglib;
-		arglib.addOption("q");
-		arglib.parse(args.getCount(), args.getArguments());
-	} catch (ArgumentException e) {
-		cout << "Exception: " <<  e.what();
-		return true;
-	}
+	FrontEnd arglib;
+	arglib.addOption("q");
 
-	return false;
+	return Tests::parseMustThrow(arglib, args);
 }
 
 bool ShortOptionTests::shortSynonymTest() {
 	ArgList args;
 	args.push("program").push("-a");
 
-	try {
-		FrontEnd arglib;
-		arglib.addOption("a");
-		arglib.addSynonym("a", "b");
-		arglib.parse(args.getCount(), args.getArguments());
-		if (!arglib.isOptionSet("b")) {
-			return false;
-		}
-	} catch (ArgumentException e) {
-		cout << "Exception: " <<  e.what();
-		return false;
-	}
+	FrontEnd arglib;
+	arglib.addOption("a");
+	arglib.addSynonym("a", "b");
 
-	return true;
+	return
+		Tests::parseMustNotThrow(arglib, args) &&
+		arglib.isOptionSet("b");
 }
 

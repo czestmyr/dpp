@@ -7,8 +7,8 @@ class ArgList {
 		~ArgList();
 
 		ArgList& push(const char* argument);
-		const char** getArguments();
-		int getCount();
+		const char** getArguments() const;
+		int getCount() const;
 
 	private:
 		ArgList(const ArgList& other) {};
