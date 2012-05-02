@@ -9,6 +9,7 @@
 class OptionSyntax {
 	public:
 		OptionSyntax();
+		~OptionSyntax();
 
 		// TODO: So far, type will be owned by the OptionSyntax. Make it better in the future
 		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, IType* paramType = NULL, const std::string& helpString = "");

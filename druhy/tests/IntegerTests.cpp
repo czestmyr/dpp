@@ -28,7 +28,6 @@ bool IntegerTests::upperLimitTest() {
 	intType->setHighBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 
-	
 	try {
 		arglib.parse(args1.getCount(), args1.getArguments());
 	} catch (ArgumentException e) {

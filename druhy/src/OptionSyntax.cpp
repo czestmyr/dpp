@@ -5,6 +5,16 @@ using namespace std;
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
+OptionSyntax::~OptionSyntax() {
+	// TODO: Remove/modify this when the types are refcounted
+	// Delete all the types
+	map<unsigned int, IType*>::iterator it = types.begin();
+	while (it != types.end()) {
+		delete (*it).second;
+		it++;
+	}
+}
+
 void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute attrib, IType* paramType, const string& helpString) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<std::string, unsigned int>(optionName, id));
