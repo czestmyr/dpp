@@ -33,6 +33,9 @@ bool IntegerTests::upperLimitTest() {
 		Tests::parseMustThrow(arglib, args2);
 }
 
+// TODO: Following tests will probably need one type inserted multiple times.
+// Finish them as soon as types are refcounted
+
 bool IntegerTests::lowerLimitTest() {
 	return false;
 }
