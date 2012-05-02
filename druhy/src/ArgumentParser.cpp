@@ -7,9 +7,6 @@
 #include "ArgumentException.h"
 #include "Value.h"
 
-// TODO: Remove this before handing in
-#include <iostream>
-
 using namespace std;
 
 ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData):
