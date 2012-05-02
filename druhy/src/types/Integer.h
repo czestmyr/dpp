@@ -1,9 +1,8 @@
 #ifndef _ARGLIB_INTEGER_TYPE_H_
 #define _ARGLIB_INTEGER_TYPE_H_
 
-// TODO: include value header, check method names...
-
 #include "../IType.h"
+#include "../Value.h"
 
 class Integer: public IType {
 	public:
