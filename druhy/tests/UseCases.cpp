@@ -8,8 +8,9 @@
 
 using namespace std;
 
-void UseCases::addTestsTo(Tests* testSet) {
-	testSet->addTest(&UseCases::runShortOptionsTest, "Short option use case (should not throw anything): \"-v -u -p 20\"");
+void UseCases::prepareTests() {
+	Tests& testSet = Tests::inst();
+	testSet.addTest(&UseCases::runShortOptionsTest, "Short option use case (should not throw anything): \"-v -u -p 20\"");
 }
 
 bool UseCases::runShortOptionsTest() {

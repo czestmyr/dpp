@@ -8,12 +8,13 @@
 
 using namespace std;
 
-void IntegerTests::addTestsTo(Tests* testSet) {
-	testSet->addTest(&IntegerTests::upperLimitTest, "Testing whether integer upper limit is correctly tested");
-	testSet->addTest(&IntegerTests::lowerLimitTest, "Testing whether integer lower limit is correctly tested");
-	testSet->addTest(&IntegerTests::unlimitedTest, "Testing whether unlimited integer is really unlimited");
-	testSet->addTest(&IntegerTests::correctTest, "Testing a set of correctly formed integers");
-	testSet->addTest(&IntegerTests::malformedTest, "Testing refusal of malformed integers");
+void IntegerTests::prepareTests() {
+	Tests& testSet = Tests::inst();
+	testSet.addTest(&IntegerTests::upperLimitTest, "Testing whether integer upper limit is correctly tested");
+	testSet.addTest(&IntegerTests::lowerLimitTest, "Testing whether integer lower limit is correctly tested");
+	testSet.addTest(&IntegerTests::unlimitedTest, "Testing whether unlimited integer is really unlimited");
+	testSet.addTest(&IntegerTests::correctTest, "Testing a set of correctly formed integers");
+	testSet.addTest(&IntegerTests::malformedTest, "Testing refusal of malformed integers");
 }
 
 bool IntegerTests::upperLimitTest() {

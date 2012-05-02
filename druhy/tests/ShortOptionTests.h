@@ -5,8 +5,7 @@ class Tests;
 
 class ShortOptionTests {
 	public:
-		/// Adds the use cases to the given test set.
-		static void addTestsTo(Tests* testSet);
+		static void prepareTests();
 
 	private:
 		static bool definedShortOptionTest();

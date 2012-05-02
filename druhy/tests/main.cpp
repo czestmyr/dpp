@@ -9,13 +9,12 @@
 using namespace std;
 
 int main(int argc, const char* argv[]) {
+	// Prepare the tests
+	UseCases::prepareTests();
+	ShortOptionTests::prepareTests();
+	IntegerTests::prepareTests();
+
 	Tests& tests = Tests::inst();
-
-	// Add the tests
-	UseCases::addTestsTo(&tests);
-	ShortOptionTests::addTestsTo(&tests);
-	IntegerTests::addTestsTo(&tests);
-
 	tests.runTests();
 	return 0;
 }

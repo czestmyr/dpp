@@ -16,6 +16,7 @@ class Tests {
 
 		/// Runs all the tests that have been registered so far.
 		void runTests();
+
 	private:
 		std::vector<TestFunctionPtr> tests;
 		std::vector<std::string> testDescriptions;

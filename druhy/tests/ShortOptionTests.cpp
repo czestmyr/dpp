@@ -8,10 +8,11 @@
 
 using namespace std;
 
-void ShortOptionTests::addTestsTo(Tests* testSet) {
-	testSet->addTest(&ShortOptionTests::definedShortOptionTest, "Testing whether defined option gets recognized");
-	testSet->addTest(&ShortOptionTests::undefinedShortOptionTest, "Testing whether undefined option throws exception");
-	testSet->addTest(&ShortOptionTests::shortSynonymTest, "Testing whether synonyms for short options work");
+void ShortOptionTests::prepareTests() {
+	Tests& testSet = Tests::inst();
+	testSet.addTest(&ShortOptionTests::definedShortOptionTest, "Testing whether defined option gets recognized");
+	testSet.addTest(&ShortOptionTests::undefinedShortOptionTest, "Testing whether undefined option throws exception");
+	testSet.addTest(&ShortOptionTests::shortSynonymTest, "Testing whether synonyms for short options work");
 }
 
 bool ShortOptionTests::definedShortOptionTest() {
