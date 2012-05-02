@@ -1,4 +1,4 @@
-OBJECTS=main.o UseCases.o Tests.o ShortOptions.o ArgList.o
+OBJECTS=main.o UseCases.o Tests.o ShortOptionTests.o IntegerTests.o ArgList.o
 NAME=arglib_test
 CXXFLAGS=-I../src
 .PHONY : all

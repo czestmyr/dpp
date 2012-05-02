@@ -1,4 +1,4 @@
-#include "ShortOptions.h"
+#include "ShortOptionTests.h"
 
 #include "Tests.h"
 #include "ArgList.h"
@@ -8,13 +8,13 @@
 
 using namespace std;
 
-void ShortOptions::addTestsTo(Tests* testSet) {
-	testSet->addTest(&ShortOptions::definedShortOptionTest, "Testing whether defined option gets recognized");
-	testSet->addTest(&ShortOptions::undefinedShortOptionTest, "Testing whether undefined option throws exception");
-	testSet->addTest(&ShortOptions::shortSynonymTest, "Testing whether synonyms for short options work");
+void ShortOptionTests::addTestsTo(Tests* testSet) {
+	testSet->addTest(&ShortOptionTests::definedShortOptionTest, "Testing whether defined option gets recognized");
+	testSet->addTest(&ShortOptionTests::undefinedShortOptionTest, "Testing whether undefined option throws exception");
+	testSet->addTest(&ShortOptionTests::shortSynonymTest, "Testing whether synonyms for short options work");
 }
 
-bool ShortOptions::definedShortOptionTest() {
+bool ShortOptionTests::definedShortOptionTest() {
 	ArgList args;
 	args.push("program").push("-h");
 
@@ -30,7 +30,7 @@ bool ShortOptions::definedShortOptionTest() {
 	return true;
 }
 
-bool ShortOptions::undefinedShortOptionTest() {
+bool ShortOptionTests::undefinedShortOptionTest() {
 	ArgList args;
 	args.push("program").push("-h");
 
@@ -46,7 +46,7 @@ bool ShortOptions::undefinedShortOptionTest() {
 	return false;
 }
 
-bool ShortOptions::shortSynonymTest() {
+bool ShortOptionTests::shortSynonymTest() {
 	ArgList args;
 	args.push("program").push("-a");
 

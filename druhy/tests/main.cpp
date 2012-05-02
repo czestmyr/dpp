@@ -1,6 +1,7 @@
 #include "Tests.h"
 #include "UseCases.h"
-#include "ShortOptions.h"
+#include "ShortOptionTests.h"
+#include "IntegerTests.h"
 
 #include <string>
 #include <iostream>
@@ -12,7 +13,8 @@ int main(int argc, const char* argv[]) {
 
 	// Add the tests
 	UseCases::addTestsTo(&tests);
-	ShortOptions::addTestsTo(&tests);
+	ShortOptionTests::addTestsTo(&tests);
+	IntegerTests::addTestsTo(&tests);
 
 	tests.runTests();
 	return 0;
