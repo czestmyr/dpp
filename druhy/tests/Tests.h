@@ -15,7 +15,7 @@ class Tests {
 		void addTest(TestFunctionPtr test, const char* testDescription);
 
 		/// Runs all the tests that have been registered so far.
-		void runTests();
+		bool runTests();
 
 	private:
 		std::vector<TestFunctionPtr> tests;

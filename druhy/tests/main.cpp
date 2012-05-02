@@ -15,7 +15,11 @@ int main(int argc, const char* argv[]) {
 	IntegerTests::prepareTests();
 
 	Tests& tests = Tests::inst();
-	tests.runTests();
-	return 0;
+	if (tests.runTests()) {
+		return 0;
+	} else {
+		cerr << "One or more tests failed!" << endl;
+		return 1;
+	}
 }
 

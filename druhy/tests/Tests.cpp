@@ -13,7 +13,7 @@ void Tests::addTest(TestFunctionPtr test, const char* testDescription) {
 	testDescriptions.push_back(testDescription);
 }
 
-void Tests::runTests(){
+bool Tests::runTests(){
 	cout << "Running tests..." << endl;
 	bool success = true;
 
@@ -25,8 +25,11 @@ void Tests::runTests(){
 			cout << " ... OK." << endl;
 		} else {
 			cout << " ... FAIL!" << endl;
+			success = false;
 		}
 	}
+
+	return success;
 }
 
 Tests Tests::instance = Tests();
