@@ -1,17 +1,17 @@
 #ifndef _ARGLIB_INTEGER_TYPE_H_
 #define _ARGLIB_INTEGER_TYPE_H_
 
-#include "../IType.h"
+#include "../Type.h"
 #include "../Value.h"
 
-class Integer: public IType {
+class IntegerType: public Type {
 	public:
-		Integer();
+		IntegerType();
 		void setLowBound(int bound);
 		void setHighBound(int bound);
 
 		Value fromString(const std::string& argument) const;
-		IType* clone() const;
+		Type* clone() const;
 
 	private:
 		bool hasLowBound;

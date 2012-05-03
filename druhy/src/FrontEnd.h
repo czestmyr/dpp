@@ -6,7 +6,7 @@
 
 #include "ParameterAttribute.h"
 #include "Value.h"
-#include "IType.h"
+#include "Type.h"
 #include "types/DummyType.h"
 
 class OptionSyntax;
@@ -25,7 +25,7 @@ class FrontEnd {
 			const DerivedType& paramType,
 			const std::string& helpString = ""
 		) {
-			IType* typeCopy = IType::getClone(paramType);
+			Type* typeCopy = Type::getClone(paramType);
 			addOptionInternal(optionName, attrib, typeCopy, helpString);
 		}
 
@@ -46,7 +46,7 @@ class FrontEnd {
 		const std::vector<std::string>& getRegularArguments() const;
 
 	private:
-		void addOptionInternal(const std::string& optionName, ParameterAttribute attrib, IType* paramType, const std::string& helpString);
+		void addOptionInternal(const std::string& optionName, ParameterAttribute attrib, Type* paramType, const std::string& helpString);
 
 		OptionSyntax* syntax;	
 		ArgumentData* data;

@@ -7,18 +7,18 @@ OptionSyntax::OptionSyntax(): lastId(0) {}
 
 OptionSyntax::~OptionSyntax() {
 	// Delete all the types
-	map<unsigned int, IType*>::iterator it = types.begin();
+	map<unsigned int, Type*>::iterator it = types.begin();
 	while (it != types.end()) {
 		delete (*it).second;
 		it++;
 	}
 }
 
-void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute attrib, IType* paramType, const string& helpString) {
+void OptionSyntax::addOption(const std::string& optionName, ParameterAttribute attrib, Type* paramType, const string& helpString) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<std::string, unsigned int>(optionName, id));
 	attributes.insert(pair<unsigned int, ParameterAttribute>(id, attrib));
-	types.insert(pair<unsigned int, IType*>(id, paramType));
+	types.insert(pair<unsigned int, Type*>(id, paramType));
 	helpStrings.insert(pair<unsigned int, std::string>(id, helpString));
 }
 
@@ -32,7 +32,7 @@ ParameterAttribute OptionSyntax::getAttribute(const std::string& option) const {
 	return (*attributes.find(id)).second;
 }
 
-const IType* OptionSyntax::getType(const std::string& option) const {
+const Type* OptionSyntax::getType(const std::string& option) const {
 	unsigned int id = getId(option);
 	return (*types.find(id)).second;
 }

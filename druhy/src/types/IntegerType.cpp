@@ -1,25 +1,25 @@
 #include <cstdlib>
-#include "Integer.h"
+#include "IntegerType.h"
 #include "../StringParser.h"
 
 using namespace std;
 
-Integer::Integer() {
+IntegerType::IntegerType() {
 	hasLowBound = false;
 	hasHighBound = false;
 }
 
-void Integer::setLowBound(int bound) {
+void IntegerType::setLowBound(int bound) {
 	hasLowBound = true;
 	lowBound = bound;
 }
 
-void Integer::setHighBound(int bound) {
+void IntegerType::setHighBound(int bound) {
 	hasHighBound = true;
 	highBound = bound;
 }
 
-Value Integer::fromString(const string& argument) const {
+Value IntegerType::fromString(const string& argument) const {
 	Value val;
 
 	StringParser argParser(argument);
@@ -65,7 +65,7 @@ Value Integer::fromString(const string& argument) const {
 	return val;
 }
 
-IType* Integer::clone() const {
-	return new Integer(*this);
+Type* IntegerType::clone() const {
+	return new IntegerType(*this);
 }
 

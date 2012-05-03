@@ -24,7 +24,7 @@ bool IntegerTests::upperLimitTest() {
 	args2.push("program").push("-i").push("1");
 
 	FrontEnd arglib;
-	Integer intType = Integer();
+	IntegerType intType = IntegerType();
 	intType.setHighBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 
@@ -40,7 +40,7 @@ bool IntegerTests::lowerLimitTest() {
 	args2.push("program").push("-i").push("0");
 
 	FrontEnd arglib;
-	Integer intType = Integer();
+	IntegerType intType = IntegerType();
 	intType.setLowBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 

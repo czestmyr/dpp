@@ -40,7 +40,7 @@ const std::vector<std::string>& FrontEnd::getRegularArguments() const {
 	data->getArguments();
 }
 
-void FrontEnd::addOptionInternal(const std::string& optionName, ParameterAttribute attrib, IType* paramType, const std::string& helpString) {
+void FrontEnd::addOptionInternal(const std::string& optionName, ParameterAttribute attrib, Type* paramType, const std::string& helpString) {
 	syntax->addOption(optionName, attrib, paramType, helpString);
 }
 

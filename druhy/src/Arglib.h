@@ -8,8 +8,8 @@
 
 #include "ArgumentParser.h"
 
-#include "IType.h"
-#include "types/Integer.h"
+#include "Type.h"
+#include "types/IntegerType.h"
 
 #endif
 

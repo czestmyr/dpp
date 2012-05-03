@@ -1,4 +1,4 @@
-OBJECTS=StringParser.o ArgumentParser.o types/Integer.o Value.o OptionSyntax.o ArgumentData.o ArgumentException.o FrontEnd.o
+OBJECTS=StringParser.o ArgumentParser.o types/IntegerType.o Value.o OptionSyntax.o ArgumentData.o ArgumentException.o FrontEnd.o
 NAME=arglib.a
 CXXFLAGS=-g
 
