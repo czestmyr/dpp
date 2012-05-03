@@ -4,7 +4,10 @@
 #include "../Value.h"
 
 class FloatValue : public Value {
-
+	public:
+		FloatValue(float newValue):value(newValue);
+	private:
+		float value;
 
 }
 #endif
