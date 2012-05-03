@@ -4,6 +4,10 @@
 #include "../Value.h"
 
 class LongValue : public Value {
+	public:
+		LongValue(long newValue):value(newValue);
+	private:
+		float value;
 
 
 }

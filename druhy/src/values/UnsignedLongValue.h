@@ -4,6 +4,10 @@
 #include "../Value.h"
 
 class UnsignedLongValue : public Value {
+	public:
+		UnsignedLongValue(unsigned long newValue):value(newValue);
+	private:
+		unsigned long value;
 
 
 }

@@ -4,6 +4,10 @@
 #include "../Value.h"
 
 class DoubleValue : public Value {
+	public:
+		DoubleValue(double newValue):value(newValue);
+	private:
+		double value;
 
 
 }
