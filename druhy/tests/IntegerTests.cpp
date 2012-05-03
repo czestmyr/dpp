@@ -24,8 +24,8 @@ bool IntegerTests::upperLimitTest() {
 	args2.push("program").push("-i").push("1");
 
 	FrontEnd arglib;
-	Integer* intType = new Integer();
-	intType->setHighBound(0);
+	Integer intType = Integer();
+	intType.setHighBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 
 	return

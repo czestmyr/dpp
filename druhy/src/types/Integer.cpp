@@ -65,3 +65,7 @@ Value Integer::fromString(const string& argument) const {
 	return val;
 }
 
+IType* Integer::clone() const {
+	return new Integer(*this);
+}
+

@@ -117,9 +117,6 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 	// Try to cast the value of the option to its type
 	if (value != NULL) {
 		const IType* type = optionSyntax->getType(option);
-		if (type == NULL) {
-			throw ArgumentException(string("Type for option ") + option + " was not specified");
-		}
 		Value castValue = type->fromString(*value);
 
 		// If the value could not be cast from string, throw an exception

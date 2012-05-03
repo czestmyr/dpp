@@ -11,6 +11,7 @@ class Integer: public IType {
 		void setHighBound(int bound);
 
 		Value fromString(const std::string& argument) const;
+		IType* clone() const;
 
 	private:
 		bool hasLowBound;

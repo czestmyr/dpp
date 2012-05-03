@@ -21,9 +21,9 @@ bool UseCases::runShortOptionsTest() {
 	arglib.addOption("v");
 	arglib.addSynonym("v", "u");
 
-	Integer* integer = new Integer;
-	integer->setHighBound(100);
-	integer->setLowBound(0);
+	Integer integer = Integer();
+	integer.setHighBound(100);
+	integer.setLowBound(0);
 	arglib.addOption("p", REQUIRED, integer, "Help for the integer option");
 
 	return Tests::parseMustNotThrow(arglib, args);
