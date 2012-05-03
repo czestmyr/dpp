@@ -13,8 +13,8 @@ class Type {
 		/// \note In subclasses, if the returned value should be of
 		/// your own type, create a new instance of the value and
 		/// return it to the caller. The ownership of the value is
-		/// transferred to the caller.
-		virtual Value fromString(const std::string& argument) const = 0;
+		/// transferred to the caller and is reference counted further on.
+		virtual Value* fromString(const std::string& argument) const = 0;
 
 		/// Makes a clone of this type.
 		/// The method should return the new object's pointer cast to Type*
