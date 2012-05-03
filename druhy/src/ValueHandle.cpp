@@ -1,18 +1,46 @@
 #include "ValueHandle.h"
+
+ValueHandle::ValueHandle(Value* newValue) {
+	if (newValue != NULL) {
+		newValue->grab();
+	}
+	valuePtr = newValue;
+}
+
 ValueHandle::ValueHandle() {
 	valuePtr = NULL;	
 }
+
+ValueHandle::~ValueHandle() {
+	if (valuePtr != NULL) {
+		valuePtr->drop();
+	}
+}
+
 ValueHandle::ValueHandle(const ValueHandle& other) {
-	valuePtr->grab();
+	if (other.valuePtr != NULL) {
+		other.valuePtr->grab();
+	}
+	valuePtr = other.valuePtr;
 }
-ValueHandle::operator=(const ValueHandle& other) {
-	valuePtr->grab();
+
+ValueHandle& ValueHandle::operator=(const ValueHandle& other) {
+	setValue(other.valuePtr);
 }
+
 void ValueHandle::setValue(Value* newValue) {
-	if(valuePtr!=NULL){
+	if (valuePtr != NULL) {
 		// We already point to some value
 		valuePtr->drop();
 	}
+
+	if (newValue != NULL) {
+		newValue->grab();
+	}
 	valuePtr = newValue;
-	valuePtr->grab();
 }
+
+bool ValueHandle::isEmpty() {
+	return valuePtr == NULL;
+}
+

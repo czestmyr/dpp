@@ -31,11 +31,6 @@ bool FrontEnd::isOptionSet(const std::string& optionName) const {
 	data->isOptionSet(id);
 }
 
-Value FrontEnd::getOptionParameter(const std::string& optionName) const {
-	unsigned int id = syntax->getId(optionName);
-	data->getOptionParameter(id);
-}
-
 const std::vector<std::string>& FrontEnd::getRegularArguments() const {
 	data->getArguments();
 }

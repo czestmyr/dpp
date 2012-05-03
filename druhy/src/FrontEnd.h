@@ -5,12 +5,11 @@
 #include <vector>
 
 #include "ParameterAttribute.h"
-#include "Value.h"
+#include "ValueHandle.h"
 #include "Type.h"
 #include "types/DummyType.h"
-
-class OptionSyntax;
-class ArgumentData;
+#include "OptionSyntax.h"
+#include "ArgumentData.h"
 
 class FrontEnd {
 	public:
@@ -42,7 +41,20 @@ class FrontEnd {
 		void parse(int argc, const char* argv[]);
 
 		bool isOptionSet(const std::string& optionName) const;
-		Value getOptionParameter(const std::string& optionName) const;
+
+		// TODO: What to do with the cast exception?
+		template <class ValueType>
+		ValueType getOptionParameter(const std::string& optionName) const {
+			unsigned int id = syntax->getId(optionName);
+			ValueHandle valueHandle = data->getOptionParameter(id);
+		
+			if (valueHandle.isEmpty()) {
+				// TODO: throw exception
+			}
+
+			return valueHandle.getValue<ValueType>();
+		}
+
 		const std::vector<std::string>& getRegularArguments() const;
 
 	private:

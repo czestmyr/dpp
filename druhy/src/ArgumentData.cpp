@@ -6,18 +6,18 @@ bool ArgumentData::addArgument(const string& argument) {
 	arguments.push_back(argument);
 }
 
-void ArgumentData::setOption(unsigned int optionId, const Value& parameter) {
-	options.insert(pair<unsigned int, Value>(optionId, parameter));
+void ArgumentData::setOption(unsigned int optionId, ValueHandle parameter) {
+	options.insert(pair<unsigned int, ValueHandle>(optionId, parameter));
 }
 
 bool ArgumentData::isOptionSet(unsigned int optionId) const {
 	return options.count(optionId) != 0;
 }
 
-Value ArgumentData::getOptionParameter(unsigned int optionId) const {
-	map<unsigned int, Value>::const_iterator it = options.find(optionId);
+ValueHandle ArgumentData::getOptionParameter(unsigned int optionId) const {
+	map<unsigned int, ValueHandle>::const_iterator it = options.find(optionId);
 	if (it == options.end()) {
-		return Value();
+		return ValueHandle();
 	} else {
 		return (*it).second;
 	}

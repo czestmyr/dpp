@@ -5,14 +5,18 @@
 
 class ValueHandle {
 	public:
-		ValueHandle();
+		ValueHandle(Value* newValue = NULL);
 		ValueHandle(const ValueHandle& other);
-		operator=(const ValueHandle& other);
+
+		~ValueHandle();
+
+		ValueHandle& operator=(const ValueHandle& other);
+
 		void setValue(Value* newValue);
 		template <class T>
-		T getValue() {
-			
-		}
+		T getValue();
+
+		bool isEmpty();
 	private:
 		Value* valuePtr;
 };

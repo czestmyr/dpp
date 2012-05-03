@@ -10,7 +10,7 @@ class IntegerType: public Type {
 		void setLowBound(int bound);
 		void setHighBound(int bound);
 
-		Value fromString(const std::string& argument) const;
+		Value* fromString(const std::string& argument) const;
 		Type* clone() const;
 
 	private:

@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include "IntegerType.h"
+#include "../values/Values.h"
 #include "../StringParser.h"
 
 using namespace std;
@@ -19,8 +20,7 @@ void IntegerType::setHighBound(int bound) {
 	highBound = bound;
 }
 
-Value IntegerType::fromString(const string& argument) const {
-	Value val;
+Value* IntegerType::fromString(const string& argument) const {
 
 	StringParser argParser(argument);
 
@@ -61,7 +61,7 @@ Value IntegerType::fromString(const string& argument) const {
 	}
 
 	// Set and return the correct value
-	val.setInt(intValue);
+	IntValue* val = new IntValue(intValue);
 	return val;
 }
 

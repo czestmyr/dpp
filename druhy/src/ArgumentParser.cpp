@@ -121,20 +121,21 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 	// Try to cast the value of the option to its type
 	if (value != NULL) {
 		const Type* type = optionSyntax->getType(option);
-		Value castValue = type->fromString(*value);
+		Value* optionValue = type->fromString(*value);
+		ValueHandle valueHandle(optionValue);
 
 		// If the value could not be cast from string, throw an exception
-		if (!castValue.isValid()) {
+		if (valueHandle.isEmpty()) {
 			throw ArgumentException(string("Parsing the value ") + *value + " unsuccessful!");
 		}
 
 		// Save the option into argument data
 		unsigned int id = optionSyntax->getId(option);
-		argData->setOption(id, castValue);
+		argData->setOption(id, valueHandle);
 	} else {
 		// Save the option into argument data with a default-constructed invalid Value
 		unsigned int id = optionSyntax->getId(option);
-		argData->setOption(id, Value());
+		argData->setOption(id, ValueHandle());
 	}
 }
 
