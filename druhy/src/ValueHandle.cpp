@@ -7,10 +7,6 @@ ValueHandle::ValueHandle(Value* newValue) {
 	valuePtr = newValue;
 }
 
-ValueHandle::ValueHandle() {
-	valuePtr = NULL;	
-}
-
 ValueHandle::~ValueHandle() {
 	if (valuePtr != NULL) {
 		valuePtr->drop();

@@ -1,6 +1,7 @@
 #ifndef _ARGLIB_VALUE_HANDLE_H_
 #define _ARGLIB_VALUE_HANDLE_H_
 
+#include <cstring>
 #include "Value.h"
 
 class ValueHandle {
