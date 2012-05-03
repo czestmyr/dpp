@@ -14,4 +14,5 @@ TODO:
 	-> Zkontrolovat, zda nejsou v kodu ponechany nejake TODO komentare (pomoci listtodos.sh)
 	-> Sjednotit "using namespace std;" na zacatku kazdeho zdrojaku
 -> Rozmyslet si, jestli je opravdu potreba metoda OptionSyntax::getHelp(...). Staci prece vypsat dokumentaci ke vsem volbam
+-> Otestovat pripady, kdy se v blbym poradi volaji metody FrontEndu - napr. synonymum pred definovanim originalu apod.
 
