@@ -4,39 +4,28 @@
 class Value {
 	public:
 		Value();
-
-		int getInt();
-		unsigned int getUnsignedInt();
-		long getLong();
-		unsigned long getUnsignedLong();
-		float getFloat();
-		double getDouble();
-
-		template <class T> T* getPointer() {
-			return (T*)ptr;
-		}
-	
-		void setInt(int newValue);
-		void setUnsignedInt(unsigned int newValue);
-		void setLong(long newValue);
-		void setUnsignedLong(unsigned long newValue);
-		void setFloat(float newValue);
-		void setDouble(double newValue);
-		void setPointer(void* pointer);
-
-		bool isValid() { return valid; }
 	private:
-		bool valid;
+		/// Private copy constructor.
+		/// This is private because values won't be copiable
+		Value(const Value& other) {};
+	protected:
+		/// Destructor is protected because Values are refcounted.
+		/// Protected destructor ensures that Value instances cannot be created on stack
+		virtual ~Value();
+	
+	public:
+		/// Increases the reference counter.
+		/// After calling this function, it is safe to assume that this instance won't
+		/// be deleted until drop() is called.
+		void grab();
 
-		union {
-			int i;
-			unsigned int ui;
-			long l;
-			unsigned long ul;
-			float f;
-			double d;
-			void* ptr;
-		};
+		/// Decreases the reference counter.
+		/// This means that we don't want to work with this instance anymore.
+		/// If the refcount drops to zero, the object is destroyed.
+		void drop();
+
+	private:
+		int refCount;
 };
 
 #endif
