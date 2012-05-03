@@ -33,10 +33,20 @@ bool IntegerTests::upperLimitTest() {
 		Tests::parseMustThrow(arglib, args2);
 }
 
-// TODO: Following tests will probably need one type inserted multiple times.
-// Finish them as soon as types are refcounted
-
 bool IntegerTests::lowerLimitTest() {
+	ArgList args1;
+	args1.push("program").push("-i=-1");
+	ArgList args2;
+	args2.push("program").push("-i").push("0");
+
+	FrontEnd arglib;
+	Integer intType = Integer();
+	intType.setLowBound(0);
+	arglib.addOption("i", REQUIRED, intType);
+
+	return
+		Tests::parseMustThrow(arglib, args1) &&
+		Tests::parseMustNotThrow(arglib, args2);
 	return false;
 }
 
