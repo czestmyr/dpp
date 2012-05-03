@@ -66,18 +66,22 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 	size_t equalSignPos = option.find("=");
 	int parsedArguments = 1;
 	if (equalSignPos == string::npos) {
+		// The attribute can sometimes affect parsing
+		ParameterAttribute attrib = optionSyntax->getAttribute(option);
 		// There is no next argument to use as a parameter
 		if (argIndex + 1 >= arguments.size()) {
 			saveOption(option, NULL);
 			parsedArguments = 1;
+		// If a parameter is required, eat up anything that comes next
+		} else if (attrib == REQUIRED) {
+			saveOption(option, &arguments[argIndex + 1]);
+			parsedArguments = 2;
 		// Next argument is not a regular argument
 		} else if (determineType(arguments[argIndex + 1]) != REGULAR_ARGUMENT) {
 			saveOption(option, NULL);
 			parsedArguments = 1;
 		// Next argument is a regular argument, we could use it as a parameter value
 		} else {
-			// The syntax has to be queried here prematurely to prevent fail
-			ParameterAttribute attrib = optionSyntax->getAttribute(option);
 			// If parameters are forbidden, don't eat them up
 			if (attrib == FORBIDDEN) {
 				saveOption(option, NULL);
