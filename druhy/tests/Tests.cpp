@@ -6,6 +6,16 @@
 
 using namespace std;
 
+#ifdef COLORS
+	#define GREEN_BEGIN "\e[0;32m"
+	#define RED_BEGIN "\e[0;31m"
+	#define COLOR_END "\e[0m"
+#else
+	#define GREEN_BEGIN ""
+	#define RED_BEGIN ""
+	#define COLOR_END ""
+#endif
+
 Tests& Tests::inst() {
 	return instance;
 }
@@ -24,9 +34,9 @@ bool Tests::runTests(){
 		cout << testDescriptions[i] << " | ";
 
 		if (tests[i]()) {
-			cout << " ... OK." << endl;
+			cout << " ..." << GREEN_BEGIN << " OK." << COLOR_END << endl;
 		} else {
-			cout << " ... FAIL!" << endl;
+			cout << " ..." << RED_BEGIN << " FAIL!" << COLOR_END << endl;
 			success = false;
 		}
 	}
