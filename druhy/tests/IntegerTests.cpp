@@ -5,8 +5,6 @@
 #include "Arglib.h"
 #include "TestFunction.h"
 #include <iostream>
-#include <sstream>
-#include <climits>
 
 using namespace std;
 
@@ -58,12 +56,8 @@ bool IntegerTests::lowerLimitTest() {
 }
 
 bool IntegerTests::unlimitedTest() {
-	stringstream strStreamMin;
-	stringstream strStreamMax;
-	strStreamMin << INT_MIN;
-	strStreamMax << INT_MAX;
 	ArgList args;
-	args.push("program").push("-i").push(strStreamMin.str().c_str()).push("-i").push(strStreamMax.str().c_str());
+	args.push("program").push("-i").push("-2147483648").push("-i").push("2147483647");
 
 	args.dump(cout);
 
