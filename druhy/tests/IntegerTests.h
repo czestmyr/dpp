@@ -11,6 +11,7 @@ class IntegerTests {
 		static bool upperLimitTest();
 		static bool lowerLimitTest();
 		static bool unlimitedTest();
+		static bool overflowTest();
 		static bool correctTest();
 		static bool malformedTest();
 };

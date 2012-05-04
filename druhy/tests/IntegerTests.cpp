@@ -5,6 +5,7 @@
 #include "Arglib.h"
 #include "TestFunction.h"
 #include <iostream>
+#include <climits>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ void IntegerTests::prepareTests() {
 	testSet.addTest(&IntegerTests::upperLimitTest, "Testing whether integer upper limit is correctly tested");
 	testSet.addTest(&IntegerTests::lowerLimitTest, "Testing whether integer lower limit is correctly tested");
 	testSet.addTest(&IntegerTests::unlimitedTest, "Testing whether unlimited integer is really unlimited");
+	testSet.addTest(&IntegerTests::overflowTest, "Integer overflow must return MIN_INT or MAX_INT");
 	testSet.addTest(&IntegerTests::correctTest, "Testing a set of correctly formed integers");
 	testSet.addTest(&IntegerTests::malformedTest, "Testing refusal of malformed integers");
 }
@@ -66,6 +68,21 @@ bool IntegerTests::unlimitedTest() {
 
 	return
 		Tests::parseMustNotThrow(arglib, args);
+}
+
+bool IntegerTests::overflowTest() {
+	ArgList args;
+	args.push("program").push("--max").push("123456789123456789");
+	args.push("--min").push("-123456789123456789");
+
+	FrontEnd arglib;
+	arglib.addOption("min", REQUIRED, IntegerType());
+	arglib.addOption("max", REQUIRED, IntegerType());
+
+	return
+		Tests::parseMustNotThrow(arglib, args) &&
+		arglib.getOptionParameter<int>("max") == INT_MAX &&
+		arglib.getOptionParameter<int>("min") == INT_MIN;
 }
 
 bool IntegerTests::correctTest() {
