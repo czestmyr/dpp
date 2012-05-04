@@ -5,6 +5,8 @@
 #include "Arglib.h"
 #include "TestFunction.h"
 #include <iostream>
+#include <sstream>
+#include <climits>
 
 using namespace std;
 
@@ -28,6 +30,9 @@ bool IntegerTests::upperLimitTest() {
 	intType.setHighBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 
+	args1.dump(cout);
+	args2.dump(cout);
+
 	return
 		Tests::parseMustNotThrow(arglib, args1) &&
 		Tests::parseMustThrow(arglib, args2);
@@ -44,14 +49,29 @@ bool IntegerTests::lowerLimitTest() {
 	intType.setLowBound(0);
 	arglib.addOption("i", REQUIRED, intType);
 
+	args1.dump(cout);
+	args2.dump(cout);
+
 	return
 		Tests::parseMustThrow(arglib, args1) &&
 		Tests::parseMustNotThrow(arglib, args2);
-	return false;
 }
 
 bool IntegerTests::unlimitedTest() {
-	return false;
+	stringstream strStreamMin;
+	stringstream strStreamMax;
+	strStreamMin << INT_MIN;
+	strStreamMax << INT_MAX;
+	ArgList args;
+	args.push("program").push("-i").push(strStreamMin.str().c_str()).push("-i").push(strStreamMax.str().c_str());
+
+	args.dump(cout);
+
+	FrontEnd arglib;
+	arglib.addOption("i", REQUIRED, IntegerType());
+
+	return
+		Tests::parseMustNotThrow(arglib, args);
 }
 
 bool IntegerTests::correctTest() {

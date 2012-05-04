@@ -30,6 +30,13 @@ int ArgList::getCount() const {
 	return currentCount;
 }
 
+void ArgList::dump(std::ostream& stream) {
+	for (int i = 0; i < currentCount; ++i) {
+		stream << array[i] << " ";
+	}
+	stream << "| ";
+}
+
 void ArgList::alloc(int size) {
 	array = new const char*[size];
 	arraySize = size;
