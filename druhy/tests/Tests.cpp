@@ -34,9 +34,9 @@ bool Tests::runTests(){
 		cout << testDescriptions[i] << " | ";
 
 		if (tests[i]()) {
-			cout << " ..." << GREEN_BEGIN << " OK." << COLOR_END << endl;
+			cout << endl << "\t" << GREEN_BEGIN << "[ Test OK ]" << COLOR_END << endl;
 		} else {
-			cout << " ..." << RED_BEGIN << " FAIL!" << COLOR_END << endl;
+			cout << endl << "\t" << RED_BEGIN <<   "[ FAILED! ]" << COLOR_END << endl;
 			success = false;
 		}
 	}

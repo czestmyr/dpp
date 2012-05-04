@@ -75,6 +75,8 @@ bool IntegerTests::overflowTest() {
 	args.push("program").push("--max").push("123456789123456789");
 	args.push("--min").push("-123456789123456789");
 
+	args.dump(cout);
+
 	FrontEnd arglib;
 	arglib.addOption("min", REQUIRED, IntegerType());
 	arglib.addOption("max", REQUIRED, IntegerType());
@@ -86,10 +88,34 @@ bool IntegerTests::overflowTest() {
 }
 
 bool IntegerTests::correctTest() {
-	return false;
+	ArgList args;
+	args.push("program");
+	args.push("-i").push("1");
+	args.push("-i").push("+1");
+	args.push("-i").push(" + 15");
+	args.push("-i").push(" - 42");
+	args.push("-i").push("   1456   ");
+
+	args.dump(cout);
+
+	FrontEnd arglib;
+	arglib.addOption("i", REQUIRED, IntegerType());
+
+	return
+		Tests::parseMustNotThrow(arglib, args);
 }
 
 bool IntegerTests::malformedTest() {
-	return false;
+	ArgList args;
+	args.push("program");
+	args.push("-i").push("1.4");
+
+	args.dump(cout);
+
+	FrontEnd arglib;
+	arglib.addOption("i", REQUIRED, IntegerType());
+
+	return
+		Tests::parseMustThrow(arglib, args);
 }
 
