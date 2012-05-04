@@ -53,7 +53,7 @@ void ArgumentParser::parse(int argc, const char* argv[]) {
 
 int ArgumentParser::parseShortOption(const string& option, const vector<string>& arguments, int argIndex) {
 	// Incorrect format of short option
-	if (option.size() != 1) {
+	if (option.size() != 1 && option[1] != '=') {
 		throw ArgumentException("Short option has incorrect format");
 	}
 
