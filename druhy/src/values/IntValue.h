@@ -3,6 +3,7 @@
 
 #include "../Value.h"
 #include "../ValueHandle.h"
+#include "../ArgumentException.h"
 
 class IntValue: public Value {
 	public:
