@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "StringType.h"
 #include "../values/Values.h"
+#include "../values/StringValue.h"
 #include "../StringParser.h"
 
 using namespace std;
