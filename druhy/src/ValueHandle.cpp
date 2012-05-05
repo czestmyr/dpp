@@ -22,6 +22,8 @@ ValueHandle::ValueHandle(const ValueHandle& other) {
 
 ValueHandle& ValueHandle::operator=(const ValueHandle& other) {
 	setValue(other.valuePtr);
+
+	return *this;
 }
 
 void ValueHandle::setValue(Value* newValue) {

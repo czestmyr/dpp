@@ -6,6 +6,8 @@
 class LongValue : public Value {
 	public:
 		LongValue(long newValue):value(newValue);
+		~LongValue() {}
+
 	private:
 		float value;
 

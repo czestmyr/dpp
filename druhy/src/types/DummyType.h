@@ -8,6 +8,8 @@ using namespace std;
 
 class DummyType: public Type {
 	public:
+		~DummyType() {}
+
 		Value* fromString(const string& argument) const {
 			throw ArgumentException(string("Option parameter \"") + argument + "\" would have an unspecified type");
 		};

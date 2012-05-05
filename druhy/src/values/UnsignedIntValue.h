@@ -6,6 +6,8 @@
 class UnsignedIntValue : public Value {
 	public:
 		UnsignedIntValue(unsigned int newValue):value(newValue);
+		UnsignedIntValue() {}
+
 	private:
 		unsigned int value;
 

@@ -7,6 +7,8 @@
 class IntegerType: public Type {
 	public:
 		IntegerType();
+		~IntegerType() {}
+
 		void setLowBound(int bound);
 		void setHighBound(int bound);
 

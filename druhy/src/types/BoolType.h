@@ -7,6 +7,7 @@
 class BoolType: public Type {
 	public:
 		BoolType();
+		~BoolType() {}
 
 		Value* fromString(const std::string& argument) const;
 		Type* clone() const;

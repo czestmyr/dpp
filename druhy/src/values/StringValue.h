@@ -8,8 +8,9 @@
 class StringValue : public Value {
 	public:
 		StringValue(std::string newValue):value(newValue){}
-		~StringValue(){}
-				void set(std::string newValue) { value = newValue; }
+		~StringValue() {}
+
+		void set(std::string newValue) { value = newValue; }
 		std::string get() { return value; }
 	private:
 		std::string value;

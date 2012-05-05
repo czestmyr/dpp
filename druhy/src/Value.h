@@ -7,8 +7,8 @@ class Value {
 	private:
 		/// Private copy constructor.
 		/// This is private because values won't be copiable
-		Value(const Value& other) {};
-	protected:
+		Value(const Value& other) {}
+	public:
 		/// Destructor is protected because Values are refcounted.
 		/// Protected destructor ensures that Value instances cannot be created on stack
 		virtual ~Value();

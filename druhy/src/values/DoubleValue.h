@@ -6,6 +6,8 @@
 class DoubleValue : public Value {
 	public:
 		DoubleValue(double newValue):value(newValue);
+		DoubleValue() {}
+
 	private:
 		double value;
 
