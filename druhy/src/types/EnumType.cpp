@@ -8,11 +8,11 @@ using namespace std;
 EnumType::EnumType() {
 }
 
-void EnumType::AddAllowedStrings(const std::vector<std::string>& newStrings) {
+void EnumType::addAllowedStrings(const std::vector<std::string>& newStrings) {
 	allowedStrings.insert(newStrings.begin(),newStrings.end());
 }
 
-void EnumType::AddAllowedString(const std::string& newString) {
+void EnumType::addAllowedString(const std::string& newString) {
 	allowedStrings.insert(newString);
 }
 Value* EnumType::fromString(const string& argument) const {

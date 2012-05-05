@@ -11,8 +11,8 @@ class EnumType: public Type {
 	public:
 		EnumType();
 		
-		void AddAllowedStrings(const std::vector<std::string>& newStrings);
-		void AddAllowedString(const std::string& newString);
+		void addAllowedStrings(const std::vector<std::string>& newStrings);
+		void addAllowedString(const std::string& newString);
 
 
 		Value* fromString(const std::string& argument) const;

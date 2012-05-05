@@ -42,7 +42,7 @@ bool ObscureTests::twoCallsOfParseFunctionTest() {
 	bool noExceptionArgs1 = Tests::parseMustNotThrow(arglib, args1);
 	bool isOptionSetArgs1 = arglib.isOptionSet("t");
 	if(!isOptionSetArgs1) {
-		cout << "Option isn't yet set";
+		cout << "Option isn't set yet";
 	}
 
 	bool noExceptionArgs2 = Tests::parseMustNotThrow(arglib, args2);

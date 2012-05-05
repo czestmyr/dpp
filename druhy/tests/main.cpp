@@ -5,6 +5,7 @@
 #include "ObscureTests.h"
 #include "StringTests.h"
 #include "BoolTests.h"
+#include "EnumTests.h"
 
 #include <string>
 #include <iostream>
@@ -19,6 +20,7 @@ int main(int argc, const char* argv[]) {
 	StringTests::prepareTests();
 	BoolTests::prepareTests();
 	UseCases::prepareTests();
+	EnumTests::prepareTests();
 
 	Tests& tests = Tests::inst();
 	if (tests.runTests()) {
