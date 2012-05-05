@@ -6,6 +6,8 @@
 
 class Type {
 	public:
+		virtual ~Type() {};
+
 		/// Interprets the string as a value of this type.
 		/// If the argument is invalid, an invalid value is returned.
 		/// \param argument The argument string to be cast to this type

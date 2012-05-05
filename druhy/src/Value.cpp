@@ -10,7 +10,7 @@ void Value::grab() {
 
 void Value::drop() {
 	refCount--;
-	if (refCount < 0) {
+	if (refCount <= 0) {
 		delete this;
 	}
 }

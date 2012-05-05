@@ -21,7 +21,6 @@ void IntegerType::setHighBound(int bound) {
 }
 
 Value* IntegerType::fromString(const string& argument) const {
-
 	StringParser argParser(argument);
 
 	// Parse some whitespace, followed by a plus or minus sign and some

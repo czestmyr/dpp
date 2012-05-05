@@ -6,6 +6,8 @@
 class UnsignedLongValue : public Value {
 	public:
 		UnsignedLongValue(unsigned long newValue):value(newValue);
+		~UnsignedLongValue() {}
+
 	private:
 		unsigned long value;
 

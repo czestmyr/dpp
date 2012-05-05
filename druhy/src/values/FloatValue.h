@@ -6,6 +6,8 @@
 class FloatValue : public Value {
 	public:
 		FloatValue(float newValue):value(newValue);
+		~FloatValue() {}
+
 	private:
 		float value;
 

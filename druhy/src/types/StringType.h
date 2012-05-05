@@ -7,6 +7,7 @@
 class StringType: public Type {
 	public:
 		StringType();
+		~StringType() {}
 
 		Value* fromString(const std::string& argument) const;
 		Type* clone() const;

@@ -10,6 +10,7 @@
 class EnumType: public Type {
 	public:
 		EnumType();
+		~EnumType() {}
 		
 		void addAllowedStrings(const std::vector<std::string>& newStrings);
 		void addAllowedString(const std::string& newString);
