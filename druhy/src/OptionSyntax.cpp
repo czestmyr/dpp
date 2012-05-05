@@ -21,6 +21,9 @@ OptionSyntax::~OptionSyntax() {
 }
 
 void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
+	if(isOptionDefined(optionName)) {
+		throw ArgumentException("Option: " + optionName + "has been already defined");
+	}
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
 	synonyms.insert(pair<unsigned int, string>(id, optionName));
@@ -33,6 +36,9 @@ void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAtt
 }
 
 void OptionSyntax::addSynonym(const string& original, const string& synonym) {
+	if(isOptionDefined(synonym)) {
+		throw ArgumentException("Option: " + synonym + "has been already defined");
+	}
 	unsigned int id = getId(original);
 	ids.insert(pair<string, unsigned int>(synonym, id));
 	synonyms.insert(pair<unsigned int, string>(id, synonym));
@@ -102,6 +108,10 @@ const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
 unsigned int OptionSyntax::getUnusedId() {
 	lastId++;
 	return lastId;
+}
+
+bool OptionSyntax::isOptionDefined(const string& optionName) const {
+	return (ids.find(optionName) != ids.end());
 }
 
 void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {

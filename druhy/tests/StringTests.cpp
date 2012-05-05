@@ -12,7 +12,7 @@ using namespace std;
 
 void StringTests::prepareTests() {
 	Tests& testSet = Tests::inst();
-	testSet.addTest(&StringTests::correctTest, "Testing whether string value is correctly read");
+	testSet.addTest(&StringTests::correctTest, "Testing whether string value is correctly read in 2 following parses");
 }
 
 bool StringTests::correctTest() {

@@ -23,3 +23,7 @@ ValueHandle ArgumentData::getOptionParameter(unsigned int optionId) const {
 	}
 }
 
+void ArgumentData::resetToEmpty() {
+	arguments.clear();
+	options.clear();
+}

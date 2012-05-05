@@ -10,7 +10,12 @@ class ObscureTests {
 
 	private:
 		static bool sameOptionTwiceTest();
+		static bool sameSynonymTwiceTest();
+		static bool synonymSameAsOriginalTest();
 		static bool twoCallsOfParseFunctionTest();
+		static bool twoCallsOfParseFunctionArgumentsTest();
+		static bool wrongOptionSynonymCallOrder();
+		
 };
 
 #endif

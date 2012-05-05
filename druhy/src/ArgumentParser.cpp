@@ -13,6 +13,8 @@ ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData)
 	allRegular(false), optionSyntax(syntax), argData(argumentData) {}
 
 void ArgumentParser::parse(int argc, const char* argv[]) {
+	// Before parsing reset dataStorage to empty state
+	argData->resetToEmpty();
 	// Convert arguments to std::strings for better manipulation
 	vector<string> arguments;
 	for (int i = 1; i < argc; ++i) {

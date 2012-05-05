@@ -16,6 +16,8 @@ class ArgumentData {
 		ValueHandle getOptionParameter(unsigned int optionId) const;
 
 		const std::vector<std::string>& getArguments() const { return arguments; }
+
+		void resetToEmpty();
 	private:
 		std::vector<std::string> arguments;
 		std::map<unsigned int, ValueHandle> options;
