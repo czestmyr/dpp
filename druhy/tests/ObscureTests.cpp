@@ -10,6 +10,8 @@ using namespace std;
 void ObscureTests::prepareTests() {
 	Tests& testSet = Tests::inst();
 	testSet.addTest(&ObscureTests::sameOptionTwiceTest, "Adding the same option twice should throw an exception");
+	testSet.addTest(&ObscureTests::sameSynonymTwiceTest, "Adding synonym with same name as existing option should throw an exception");
+	testSet.addTest(&ObscureTests::synonymSameAsOriginalTest, "Adding synonym with same name as original option should throw an exception");
 	testSet.addTest(&ObscureTests::twoCallsOfParseFunctionTest, "Options parsed in last call should be reset in the new call of parse");
 	testSet.addTest(&ObscureTests::twoCallsOfParseFunctionArgumentsTest, "Regular arguments parsed in last call should be reset in the new call of parse");
 	testSet.addTest(&ObscureTests::wrongOptionSynonymCallOrder, "Synonyms must not be defined before basic options");
@@ -21,6 +23,35 @@ bool ObscureTests::sameOptionTwiceTest() {
 
 	try {
 		arglib.addOption("i");
+	} catch (ArgumentException e) {
+		cout << "Exception: " << e.what();
+		return true;
+	}
+
+	return false;
+}
+
+bool ObscureTests::sameSynonymTwiceTest() {
+	FrontEnd arglib;
+	arglib.addOption("i");
+	arglib.addOption("j");
+
+	try {
+		arglib.addSynonym("i","j");
+	} catch (ArgumentException e) {
+		cout << "Exception: " << e.what();
+		return true;
+	}
+
+	return false;
+}
+
+bool ObscureTests::synonymSameAsOriginalTest() {
+	FrontEnd arglib;
+	arglib.addOption("i");
+
+	try {
+		arglib.addSynonym("i","i");
 	} catch (ArgumentException e) {
 		cout << "Exception: " << e.what();
 		return true;
