@@ -1,8 +1,9 @@
 #include "OptionSyntax.h"
 #include "ArgumentException.h"
+#include "StringParser.h"
 
 #include <set>
-#include <sstream>
+#include <list>
 
 using namespace std;
 
@@ -79,14 +80,71 @@ void OptionSyntax::writeHelp(ostream& stream) const {
 			}
 			stream << endl;
 
-			// Print the help string
+			// Get the help string
 			map<unsigned int, string>::const_iterator helpIt;
 			helpIt = helpStrings.find(id);
+			string helpString;
 			if (helpIt == helpStrings.end()) {
-				stream << "\t\t" << "Help for this option not available";
+				helpString = "Help for this option not available";
 			} else {
-				stream << "\t\t" << helpIt->second;
+				helpString = helpIt->second;
 			}
+
+			// Divide the help string into words
+			StringParser parser(helpString);
+			parser.parseMany(WHITESPACE);
+			size_t wordBegin = parser.getPosition();
+			size_t wordLen = parser.parseMany(WHITESPACE, INVERSED);
+			list<string> words;
+			while (wordLen != 0) {
+				words.push_back(helpString.substr(wordBegin, wordLen));
+
+				parser.parseMany(WHITESPACE);
+				wordBegin = parser.getPosition();
+				wordLen = parser.parseMany(WHITESPACE, INVERSED);
+			}
+
+			//TODO: Add terminal width as a user-defined parameter
+			int terminalWidth = 80;
+			int availableSize = terminalWidth - 16;
+			int wordsLength = 0;
+			int wordNum = 0;
+			list<string>::iterator wordIt = words.begin();
+			list<string>::iterator lineBegin = wordIt;
+			while (wordIt != words.end()) {
+				// If the next word would overflow the line, don't add it.
+				if (wordsLength + wordIt->length() + (wordNum-1) > availableSize && wordNum != 0) {
+					list<string>::iterator it = lineBegin;
+					stream << "\t\t";
+					while (it != wordIt) {
+						if (it != lineBegin) {
+							stream << " ";
+						}
+						stream << *it;
+						it++;
+					}
+					stream << endl;
+
+					lineBegin = wordIt;
+					wordsLength = 0;
+					wordNum = 0;
+				}
+
+				wordsLength += wordIt->length();
+				wordNum++;
+				wordIt++;
+			}
+			// Print the last remaining line
+			list<string>::iterator it = lineBegin;
+			stream << "\t\t";
+			while (it != wordIt) {
+				if (it != lineBegin) {
+					stream << " ";
+				}
+				stream << *it;
+				it++;
+			}
+
 			stream << endl;
 		}
 
