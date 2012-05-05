@@ -4,7 +4,6 @@
 #include <string>
 #include "../Value.h"
 #include "../ValueHandle.h"
-#include "../ArgumentException.h"
 
 class StringValue : public Value {
 	public:
@@ -17,14 +16,7 @@ class StringValue : public Value {
 
 };
 
-//TODO: Add proper information to this exception!
 template <>
-std::string ValueHandle::getValue<std::string>() {
-		StringValue* stringValue = dynamic_cast<StringValue*>(valuePtr);
-		if( stringValue == NULL ) {
-			throw ArgumentException("Type defined with this option doesn't match type required by this function.");
-		}
-		return stringValue->get();
+std::string ValueHandle::getValue<std::string>();
 
-};
 #endif
