@@ -12,6 +12,7 @@
 #include "types/IntegerType.h"
 #include "types/StringType.h"
 #include "types/BoolType.h"
+#include "types/EnumType.h"
 
 #endif
 

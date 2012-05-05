@@ -15,4 +15,4 @@ TODO:
 	-> Sjednotit "using namespace std;" na zacatku kazdeho zdrojaku
 -> Rozmyslet si, jestli je opravdu potreba metoda OptionSyntax::getHelp(...). Staci prece vypsat dokumentaci ke vsem volbam
 -> Otestovat pripady, kdy se v blbym poradi volaji metody FrontEndu - napr. synonymum pred definovanim originalu apod.
-
+-> Prejmenovat typ IntegerType na IntType, pro sjednoceni pojmenovavani
