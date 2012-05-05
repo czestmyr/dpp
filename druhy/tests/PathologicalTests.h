@@ -1,10 +1,10 @@
-#ifndef _ARGLIB_OBSCURE_TESTS_H_
-#define _ARGLIB_OBSCURE_TESTS_H_
+#ifndef _ARGLIB_PATHOLOGICAL_TESTS_H_
+#define _ARGLIB_PATHOLOGICAL_TESTS_H_
 
 class Tests;
 
 /// This test class contains tests for various obscure cases when the input is incorrect
-class ObscureTests {
+class PathologicalTests {
 	public:
 		static void prepareTests();
 

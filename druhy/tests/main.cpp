@@ -2,7 +2,7 @@
 #include "UseCases.h"
 #include "ShortOptionTests.h"
 #include "IntegerTests.h"
-#include "ObscureTests.h"
+#include "PathologicalTests.h"
 #include "StringTests.h"
 #include "BoolTests.h"
 #include "EnumTests.h"
@@ -14,7 +14,7 @@ using namespace std;
 
 int main(int argc, const char* argv[]) {
 	// Prepare the tests
-	ObscureTests::prepareTests();
+	PathologicalTests::prepareTests();
 	ShortOptionTests::prepareTests();
 	IntegerTests::prepareTests();
 	StringTests::prepareTests();
