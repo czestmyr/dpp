@@ -16,10 +16,12 @@ void StringTests::prepareTests() {
 }
 
 bool StringTests::correctTest() {
+	string param1 = "abcdefgh";
 	ArgList args1;
-	args1.push("program").push("-s").push("abcdefgh");
+	args1.push("program").push("-s").push(param1.c_str());
+	string param2 = "!@#$%^&*()_+";
 	ArgList args2;
-	args2.push("program").push("-s").push("!@#$%^&*()_+");
+	args2.push("program").push("-s").push(param2.c_str());
 
 	FrontEnd arglib;
 	StringType stringType = StringType();
@@ -28,23 +30,14 @@ bool StringTests::correctTest() {
 	args1.dump(cout);
 	args2.dump(cout);
 
-	bool withoutException = Tests::parseMustNotThrow(arglib, args1) &&
-		Tests::parseMustNotThrow(arglib, args2);
+	bool firstParseWithoutException = Tests::parseMustNotThrow(arglib, args1);
+	bool isParam1OK = (param1 == arglib.getOptionParameter<string>("s"));
+	bool secondParseWithoutException = Tests::parseMustNotThrow(arglib, args2);
+	bool isParam2OK = (param2 == arglib.getOptionParameter<string>("s"));
 
-	arglib.parse(args1.getCount(), args1.getArguments());
-	string paramName = "s";
-	string param1 = arglib.getOptionParameter<string>(paramName);
-	bool isParam1OK = (param1 == "abcdefgh");
-	if (!isParam1OK) {
-		cout << "Param1: " << param1;
-	}
-
-	arglib.parse(args2.getCount(), args2.getArguments());
-	string param2 = arglib.getOptionParameter<string>("s");
-	bool isParam2OK = (param2 == "!@#$%^&*()_+");
-	if (!isParam2OK) {
-		cout << "Param2: " << param2;
-	}
-
-	return withoutException && isParam1OK && isParam2OK;
+	return
+		firstParseWithoutException &&
+		secondParseWithoutException &&
+		isParam1OK &&
+		isParam2OK;
 }

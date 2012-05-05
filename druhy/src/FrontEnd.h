@@ -38,7 +38,7 @@ class FrontEnd {
 
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		void writeOptionHelp(std::ostream& stream);
+		void writeOptionHelp(std::ostream& stream, int terminalSize = 80);
 		void parse(int argc, const char* argv[]);
 
 		bool isOptionSet(const std::string& optionName) const;
