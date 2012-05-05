@@ -3,6 +3,7 @@
 
 #include "IntValue.h"
 #include "StringValue.h"
+#include "BoolValue.h"
 
 #endif
 
