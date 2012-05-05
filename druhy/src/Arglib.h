@@ -10,6 +10,7 @@
 
 #include "Type.h"
 #include "types/IntegerType.h"
+#include "types/StringType.h"
 
 #endif
 

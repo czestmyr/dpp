@@ -1,4 +1,4 @@
-OBJECTS=main.o UseCases.o Tests.o ShortOptionTests.o IntegerTests.o ArgList.o
+OBJECTS=main.o UseCases.o Tests.o ShortOptionTests.o IntegerTests.o ArgList.o StringTests.o
 NAME=arglib_test
 CXXFLAGS=-I../src -DCOLORS
 # Change CXXFLAGS to following if your shell does not support colors
