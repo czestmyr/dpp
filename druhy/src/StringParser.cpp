@@ -5,26 +5,26 @@ using namespace std;
 
 StringParser::StringParser(const string& toParse): parsedString(toParse), position(0) {}
 
-int StringParser::parseMany(const string& chars) {
+int StringParser::parseMany(const string& chars, CharMatchingLogic logic) {
 	int parsedChars = 0;
   
 	// Repeatedly try to parse one character and return the number of successes
-	while (parseOneInternal(chars)) {
+	while (parseOneInternal(chars, logic)) {
 		parsedChars++;
 	}
 
 	return parsedChars;
 }
 
-int StringParser::parseOne(const string& chars) {
-	return parseOneInternal(chars);
+int StringParser::parseOne(const string& chars, CharMatchingLogic logic) {
+	return parseOneInternal(chars, logic);
 }
 
-int StringParser::parseExact(int howMany, const std::string& chars) {
+int StringParser::parseExact(int howMany, const std::string& chars, CharMatchingLogic logic) {
 	int parsedChars = 0;
 
 	// Repeatedly try to parse one character and return the number of successes
-	while (parseOneInternal(chars) && parsedChars < howMany) {
+	while (parseOneInternal(chars, logic) && parsedChars < howMany) {
 		parsedChars++;
 	}
 
@@ -43,7 +43,7 @@ size_t StringParser::getPosition() {
 	return position;
 }
 
-int StringParser::parseOneInternal(const string& chars) {
+int StringParser::parseOneInternal(const string& chars, CharMatchingLogic logic) {
 	// If there is nothing to parse, return
 	if (reachedEnd()) {
 		return 0;
@@ -51,11 +51,20 @@ int StringParser::parseOneInternal(const string& chars) {
 
 	for (int i = 0; i < chars.length(); ++i) {
 		if (parsedString[position] == chars[i]) {
-			position++;
-			return 1;
+			if (logic == NORMAL) {
+				position++;
+				return 1;
+			} else {  // logic = INVERSED
+				return 0;
+			}
 		}
 	}
-	
-	return 0;
+
+	if (logic == NORMAL) {	
+		return 0;
+	} else {  // logic = INVERSED
+		position++;
+		return 1;
+	}
 }
 
