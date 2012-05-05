@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Type.h"
 #include "ParameterAttribute.h"
+#include "OptionAttribute.h"
 
 typedef std::list<std::string>::iterator StrListIt;
 
@@ -15,12 +16,13 @@ class OptionSyntax {
 		OptionSyntax();
 		~OptionSyntax();
 
-		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, Type* paramType = NULL, const std::string& helpString = "");
+		void addOption(const std::string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib);
 		void addSynonym(const std::string& original, const std::string& synonym);
 
 		ParameterAttribute getAttribute(const std::string& option) const;
 		const Type* getType(const std::string& option) const;
 
+		void setOptionHelp(const std::string& option, const std::string& helpString);
 		void writeHelp(std::ostream& stream, int terminalSize) const;
 
 		unsigned int getId(const std::string& option) const;
@@ -34,7 +36,8 @@ class OptionSyntax {
 
 		std::map<std::string, unsigned int> ids;
 		std::multimap<unsigned int, std::string> synonyms;
-		std::map<unsigned int, ParameterAttribute> attributes;
+		std::map<unsigned int, OptionAttribute> optionAttributes; 
+		std::map<unsigned int, ParameterAttribute> paramAttributes;
 		std::map<unsigned int, Type*> types;
 		std::map<unsigned int, std::string> helpStrings;
 };

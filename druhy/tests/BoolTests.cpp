@@ -25,8 +25,8 @@ bool BoolTests::trueFalseTest(){
 	
 	FrontEnd arglib;
 	BoolType boolType = BoolType();
-	arglib.addOption("t", REQUIRED, boolType);
-	arglib.addOption("false", ALLOWED, boolType);
+	arglib.addOption("t", OPTION_ALLOWED, boolType, PARAM_REQUIRED);
+	arglib.addOption("false", OPTION_ALLOWED, boolType, PARAM_ALLOWED);
 
 	args.dump(cout);
 	
@@ -35,18 +35,20 @@ bool BoolTests::trueFalseTest(){
 		arglib.getOptionParameter<bool>("false") == false;
 
 }
+
 bool BoolTests::badInputTest(){
 	ArgList args;
 	args.push("program").push("-t").push("abcd");
 	
 	FrontEnd arglib;
 	BoolType boolType = BoolType();
-	arglib.addOption("t", REQUIRED, boolType);
+	arglib.addOption("t", OPTION_ALLOWED, boolType, PARAM_REQUIRED);
 
 	args.dump(cout);
 	
 	return Tests::parseMustThrow(arglib, args);
 }
+
 bool BoolTests::noInputTest(){
 	ArgList args;
 	args.push("program").push("--false");
@@ -54,9 +56,10 @@ bool BoolTests::noInputTest(){
 	FrontEnd arglib;
 	BoolType boolType = BoolType();
 	string optionName = "false";
-	arglib.addOption(optionName, ALLOWED, boolType);
+	arglib.addOption(optionName, OPTION_ALLOWED, boolType, PARAM_ALLOWED);
 
 	args.dump(cout);
 	return Tests::parseMustNotThrow(arglib, args)&&
 		Tests::getOptionValueMustThrow<bool>(arglib, "false"); 
 }
+

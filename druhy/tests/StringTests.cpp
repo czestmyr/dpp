@@ -25,7 +25,7 @@ bool StringTests::correctTest() {
 
 	FrontEnd arglib;
 	StringType stringType = StringType();
-	arglib.addOption("s", REQUIRED, stringType);
+	arglib.addOption("s", OPTION_ALLOWED, stringType, PARAM_REQUIRED);
 
 	args1.dump(cout);
 	args2.dump(cout);

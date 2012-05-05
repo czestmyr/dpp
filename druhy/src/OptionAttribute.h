@@ -1,0 +1,10 @@
+#ifndef _ARGLIB_OPTION_ATTRIBUTE_H_
+#define _ARGLIB_OPTION_ATTRIBUTE_H_
+
+enum OptionAttribute {
+	OPTION_REQUIRED,
+	OPTION_ALLOWED
+};
+
+#endif
+

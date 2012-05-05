@@ -27,7 +27,7 @@ bool IntegerTests::upperLimitTest() {
 	FrontEnd arglib;
 	IntegerType intType = IntegerType();
 	intType.setHighBound(0);
-	arglib.addOption("i", REQUIRED, intType);
+	arglib.addOption("i", OPTION_ALLOWED, intType, PARAM_REQUIRED);
 
 	args1.dump(cout);
 	args2.dump(cout);
@@ -46,7 +46,7 @@ bool IntegerTests::lowerLimitTest() {
 	FrontEnd arglib;
 	IntegerType intType = IntegerType();
 	intType.setLowBound(0);
-	arglib.addOption("i", REQUIRED, intType);
+	arglib.addOption("i", OPTION_ALLOWED, intType, PARAM_REQUIRED);
 
 	args1.dump(cout);
 	args2.dump(cout);
@@ -63,7 +63,7 @@ bool IntegerTests::unlimitedTest() {
 	args.dump(cout);
 
 	FrontEnd arglib;
-	arglib.addOption("i", REQUIRED, IntegerType());
+	arglib.addOption("i", OPTION_ALLOWED, IntegerType(), PARAM_REQUIRED);
 
 	return
 		Tests::parseMustNotThrow(arglib, args);
@@ -77,8 +77,8 @@ bool IntegerTests::overflowTest() {
 	args.dump(cout);
 
 	FrontEnd arglib;
-	arglib.addOption("min", REQUIRED, IntegerType());
-	arglib.addOption("max", REQUIRED, IntegerType());
+	arglib.addOption("min", OPTION_ALLOWED, IntegerType(), PARAM_REQUIRED);
+	arglib.addOption("max", OPTION_ALLOWED, IntegerType(), PARAM_REQUIRED);
 
 	return
 		Tests::parseMustNotThrow(arglib, args) &&
@@ -98,7 +98,7 @@ bool IntegerTests::correctTest() {
 	args.dump(cout);
 
 	FrontEnd arglib;
-	arglib.addOption("i", REQUIRED, IntegerType());
+	arglib.addOption("i", OPTION_ALLOWED, IntegerType(), PARAM_REQUIRED);
 
 	return
 		Tests::parseMustNotThrow(arglib, args);
@@ -112,7 +112,7 @@ bool IntegerTests::malformedTest() {
 	args.dump(cout);
 
 	FrontEnd arglib;
-	arglib.addOption("i", REQUIRED, IntegerType());
+	arglib.addOption("i", OPTION_ALLOWED, IntegerType(), PARAM_REQUIRED);
 
 	return
 		Tests::parseMustThrow(arglib, args);

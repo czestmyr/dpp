@@ -6,8 +6,8 @@
 
 using namespace std;
 
-typedef multimap<unsigned int, string> synonym_map;
-typedef pair<synonym_map::const_iterator, synonym_map::const_iterator> const_synonym_range;
+typedef multimap<unsigned int, string> SynonymMap;
+typedef pair<SynonymMap::const_iterator, SynonymMap::const_iterator> ConstSynonymRange;
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
@@ -20,15 +20,13 @@ OptionSyntax::~OptionSyntax() {
 	}
 }
 
-void OptionSyntax::addOption(const string& optionName, ParameterAttribute attrib, Type* paramType, const string& helpString) {
+void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
 	synonyms.insert(pair<unsigned int, string>(id, optionName));
-	attributes.insert(pair<unsigned int, ParameterAttribute>(id, attrib));
+	optionAttributes.insert(pair<unsigned int, OptionAttribute>(id, optionAttrib));
+	paramAttributes.insert(pair<unsigned int, ParameterAttribute>(id, paramAttrib));
 	types.insert(pair<unsigned int, Type*>(id, paramType));
-	if (!helpString.empty()) {
-		helpStrings.insert(pair<unsigned int, string>(id, helpString));
-	}
 }
 
 void OptionSyntax::addSynonym(const string& original, const string& synonym) {
@@ -39,12 +37,17 @@ void OptionSyntax::addSynonym(const string& original, const string& synonym) {
 
 ParameterAttribute OptionSyntax::getAttribute(const string& option) const {
 	unsigned int id = getId(option);
-	return attributes.find(id)->second;
+	return paramAttributes.find(id)->second;
 }
 
 const Type* OptionSyntax::getType(const string& option) const {
 	unsigned int id = getId(option);
 	return types.find(id)->second;
+}
+
+void OptionSyntax::setOptionHelp(const string& option, const string& helpString) {
+	unsigned int id = getId(option);
+	helpStrings.insert(pair<unsigned int, string>(id, helpString));
 }
 
 void OptionSyntax::writeHelp(ostream& stream, int terminalSize) const {
@@ -98,8 +101,8 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 	stream << "\t";
 
 	// Find the range of synonyms in the synonym multimap
-	synonym_map::const_iterator synIt = synonyms.find(id);
-	const_synonym_range synRange = synonyms.equal_range(id);
+	SynonymMap::const_iterator synIt = synonyms.find(id);
+	ConstSynonymRange synRange = synonyms.equal_range(id);
 
 	// Write out the list of the synonyms, prepended with dashes and divided by commas
 	for (synIt = synRange.first; synIt != synRange.second; synIt++) {

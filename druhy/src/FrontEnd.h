@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "ParameterAttribute.h"
+#include "OptionAttribute.h"
 #include "ValueHandle.h"
 #include "Type.h"
 #include "types/DummyType.h"
@@ -21,24 +22,25 @@ class FrontEnd {
 		template <class DerivedType>
 		void addOption(
 			const std::string& optionName,
-			ParameterAttribute attrib,
+			OptionAttribute optionAttrib,
 			const DerivedType& paramType,
-			const std::string& helpString = ""
+			ParameterAttribute paramAttrib
 		) {
 			Type* typeCopy = Type::getClone(paramType);
-			addOptionInternal(optionName, attrib, typeCopy, helpString);
+			addOptionInternal(optionName, optionAttrib, typeCopy, paramAttrib);
 		}
 
 		/// Special case of addOption method when only option name is specified.
 		/// This method has to be here because without a type specification, the compiler
 		/// does not know, which template instance of addOption it has to create.
-		void addOption(const std::string& optionName) {
-			addOption(optionName, FORBIDDEN, DummyType(), "");
+		void addOption(const std::string& optionName, OptionAttribute optionAttrib = OPTION_ALLOWED) {
+			addOption(optionName, optionAttrib, DummyType(), PARAM_FORBIDDEN);
 		}
 
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		void writeOptionHelp(std::ostream& stream, int terminalSize = 80);
+		void setOptionHelp(const std::string& option, const std::string& help);
+		void writeHelp(std::ostream& stream, int terminalSize = 80) const;
 		void parse(int argc, const char* argv[]);
 
 		bool isOptionSet(const std::string& optionName) const;
@@ -59,7 +61,7 @@ class FrontEnd {
 		const std::vector<std::string>& getRegularArguments() const;
 
 	private:
-		void addOptionInternal(const std::string& optionName, ParameterAttribute attrib, Type* paramType, const std::string& helpString);
+		void addOptionInternal(const std::string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute attrib);
 
 		OptionSyntax* syntax;	
 		ArgumentData* data;
