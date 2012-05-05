@@ -9,7 +9,7 @@ EnumType::EnumType() {
 }
 
 void EnumType::AddAllowedStrings(const std::vector<std::string>& newStrings) {
-	// TODO: implement
+	allowedStrings.insert(newStrings.begin(),newStrings.end());
 }
 
 void EnumType::AddAllowedString(const std::string& newString) {

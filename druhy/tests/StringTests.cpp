@@ -6,6 +6,7 @@
 #include "TestFunction.h"
 #include <iostream>
 #include <climits>
+#include <string>
 
 using namespace std;
 
@@ -27,7 +28,23 @@ bool StringTests::correctTest() {
 	args1.dump(cout);
 	args2.dump(cout);
 
-	return
-		Tests::parseMustNotThrow(arglib, args1) &&
+	bool withoutException = Tests::parseMustNotThrow(arglib, args1) &&
 		Tests::parseMustNotThrow(arglib, args2);
+
+	arglib.parse(args1.getCount(), args1.getArguments());
+	string paramName = "s";
+	string param1 = arglib.getOptionParameter<string>(paramName);
+	bool isParam1OK = (param1 == "abcdefgh");
+	if (!isParam1OK) {
+		cout << "Param1: " << param1;
+	}
+
+	arglib.parse(args2.getCount(), args2.getArguments());
+	string param2 = arglib.getOptionParameter<string>("s");
+	bool isParam2OK = (param2 == "!@#$%^&*()_+");
+	if (!isParam2OK) {
+		cout << "Param2: " << param2;
+	}
+
+	return withoutException && isParam1OK && isParam2OK;
 }
