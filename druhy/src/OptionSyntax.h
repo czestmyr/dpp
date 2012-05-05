@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <iostream>
 #include "Type.h"
 #include "ParameterAttribute.h"
 
@@ -16,7 +17,8 @@ class OptionSyntax {
 
 		ParameterAttribute getAttribute(const std::string& option) const;
 		const Type* getType(const std::string& option) const;
-		const std::string& getHelp(const std::string& option) const;
+
+		void writeHelp(std::ostream& stream) const;
 
 		unsigned int getId(const std::string& option) const;
 	private:
@@ -24,6 +26,7 @@ class OptionSyntax {
 		unsigned int lastId;
 
 		std::map<std::string, unsigned int> ids;
+		std::multimap<unsigned int, std::string> synonyms;
 		std::map<unsigned int, ParameterAttribute> attributes;
 		std::map<unsigned int, Type*> types;
 		std::map<unsigned int, std::string> helpStrings;
