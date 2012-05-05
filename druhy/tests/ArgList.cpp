@@ -32,7 +32,7 @@ int ArgList::getCount() const {
 
 void ArgList::dump(std::ostream& stream) {
 	for (int i = 0; i < currentCount; ++i) {
-		stream << array[i] << " ";
+		stream << "\"" << array[i] << "\" ";
 	}
 	stream << "| ";
 }
