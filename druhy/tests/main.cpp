@@ -2,6 +2,7 @@
 #include "UseCases.h"
 #include "ShortOptionTests.h"
 #include "IntegerTests.h"
+#include "ObscureTests.h"
 
 #include <string>
 #include <iostream>
@@ -10,9 +11,10 @@ using namespace std;
 
 int main(int argc, const char* argv[]) {
 	// Prepare the tests
-	UseCases::prepareTests();
+	ObscureTests::prepareTests();
 	ShortOptionTests::prepareTests();
 	IntegerTests::prepareTests();
+	UseCases::prepareTests();
 
 	Tests& tests = Tests::inst();
 	if (tests.runTests()) {
