@@ -24,8 +24,8 @@ bool EnumTests::emptyEnumTest(){
 	
 	FrontEnd arglib;
 	EnumType enumType = EnumType();
-	arglib.addOption("e", REQUIRED, enumType);
-	arglib.addOption("f", ALLOWED, enumType);
+	arglib.addOption("e", OPTION_ALLOWED, enumType, PARAM_REQUIRED);
+	arglib.addOption("f", OPTION_ALLOWED, enumType, PARAM_ALLOWED);
 
 	args.dump(cout);
 	
@@ -40,8 +40,8 @@ bool EnumTests::stringInEnumTest(){
 	EnumType enumType = EnumType();
 	enumType.addAllowedString("ANO");
 	enumType.addAllowedString("NE");
-	arglib.addOption("e", REQUIRED, enumType);
-	arglib.addOption("f", ALLOWED, enumType);
+	arglib.addOption("e", OPTION_ALLOWED, enumType, PARAM_REQUIRED);
+	arglib.addOption("f", OPTION_ALLOWED, enumType, PARAM_ALLOWED);
 
 	args.dump(cout);
 	
@@ -62,9 +62,9 @@ bool EnumTests::multipleStringsInEnumTest(){
 	enumType.addAllowedStrings(allowed);
 
 	FrontEnd arglib;
-	arglib.addOption("e", REQUIRED, enumType);
-	arglib.addOption("f", ALLOWED, enumType);
-	arglib.addOption("g", REQUIRED, enumType);
+	arglib.addOption("e", OPTION_ALLOWED, enumType, PARAM_REQUIRED);
+	arglib.addOption("f", OPTION_ALLOWED, enumType, PARAM_ALLOWED);
+	arglib.addOption("g", OPTION_ALLOWED, enumType, PARAM_REQUIRED);
 
 	args.dump(cout);
 	
