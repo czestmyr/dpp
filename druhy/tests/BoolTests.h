@@ -11,7 +11,6 @@ class BoolTests {
 		static bool trueFalseTest();
 		static bool badInputTest();
 		static bool noInputTest();
-		static bool trailingCharacterTest();
 };
 
 #endif

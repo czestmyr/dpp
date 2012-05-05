@@ -28,7 +28,28 @@ bool ObscureTests::sameOptionTwiceTest() {
 }
 
 bool ObscureTests::twoCallsOfParseFunctionTest() {
-	// TODO: implement
 	// // should test if status is reset before second call of that function
-	return false;
+	ArgList args1;
+	args1.push("program").push("-t");
+	
+	ArgList args2;
+	args2.push("program");
+
+	FrontEnd arglib;
+	StringType stringType = StringType();
+	arglib.addOption("t", ALLOWED, stringType);
+	
+	bool noExceptionArgs1 = Tests::parseMustNotThrow(arglib, args1);
+	bool isOptionSetArgs1 = arglib.isOptionSet("t");
+	if(!isOptionSetArgs1) {
+		cout << "Option isn't yet set";
+	}
+
+	bool noExceptionArgs2 = Tests::parseMustNotThrow(arglib, args2);
+	bool isOptionSetArgs2 = arglib.isOptionSet("t");
+	if(isOptionSetArgs2) {
+		cout << "Option is still set";
+	}
+
+	return noExceptionArgs1 && noExceptionArgs2 && isOptionSetArgs1 && !isOptionSetArgs2;
 }
