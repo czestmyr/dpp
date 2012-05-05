@@ -2,6 +2,7 @@
 #define _ARGLIB_OPTION_SYNTAX_H_
 
 #include <string>
+#include <set>
 #include <map>
 #include <list>
 #include <iostream>
@@ -26,6 +27,8 @@ class OptionSyntax {
 		void writeHelp(std::ostream& stream, int terminalSize) const;
 
 		unsigned int getId(const std::string& option) const;
+
+		const std::set<unsigned int>& getRequiredOptions() const;
 	private:
 		unsigned int getUnusedId();
 		unsigned int lastId;
@@ -36,10 +39,11 @@ class OptionSyntax {
 
 		std::map<std::string, unsigned int> ids;
 		std::multimap<unsigned int, std::string> synonyms;
-		std::map<unsigned int, OptionAttribute> optionAttributes; 
 		std::map<unsigned int, ParameterAttribute> paramAttributes;
 		std::map<unsigned int, Type*> types;
 		std::map<unsigned int, std::string> helpStrings;
+
+		std::set<unsigned int> requiredOptions;
 };
 
 #endif

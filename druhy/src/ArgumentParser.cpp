@@ -49,6 +49,16 @@ void ArgumentParser::parse(int argc, const char* argv[]) {
 		}
 		argIndex += indexIncrement;
 	}
+
+	// Check that all the required options are specified
+	const set<unsigned int>& requiredOptions = optionSyntax->getRequiredOptions();
+	set<unsigned int>::const_iterator it = requiredOptions.begin();
+	while (it != requiredOptions.end()) {
+		if (!argData->isOptionSet(*it)) {
+			throw ArgumentException("A required option was not specified");
+		}
+		it++;
+	}
 }
 
 int ArgumentParser::parseShortOption(const string& option, const vector<string>& arguments, int argIndex) {

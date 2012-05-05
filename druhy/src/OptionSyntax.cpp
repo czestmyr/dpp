@@ -24,9 +24,12 @@ void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAtt
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
 	synonyms.insert(pair<unsigned int, string>(id, optionName));
-	optionAttributes.insert(pair<unsigned int, OptionAttribute>(id, optionAttrib));
 	paramAttributes.insert(pair<unsigned int, ParameterAttribute>(id, paramAttrib));
 	types.insert(pair<unsigned int, Type*>(id, paramType));
+
+	if (optionAttrib == OPTION_REQUIRED) {
+		requiredOptions.insert(id);
+	}
 }
 
 void OptionSyntax::addSynonym(const string& original, const string& synonym) {
@@ -90,6 +93,10 @@ unsigned int OptionSyntax::getId(const string& option) const {
 
 	// Find will not fail here, because we tested presence of the option in ID map
 	return ids.find(option)->second;
+}
+
+const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
+	return requiredOptions;
 }
 
 unsigned int OptionSyntax::getUnusedId() {
