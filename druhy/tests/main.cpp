@@ -2,6 +2,7 @@
 #include "UseCases.h"
 #include "ShortOptionTests.h"
 #include "IntegerTests.h"
+#include "StringTests.h"
 
 #include <string>
 #include <iostream>
@@ -13,6 +14,7 @@ int main(int argc, const char* argv[]) {
 	UseCases::prepareTests();
 	ShortOptionTests::prepareTests();
 	IntegerTests::prepareTests();
+	StringTests::prepareTests();
 
 	Tests& tests = Tests::inst();
 	if (tests.runTests()) {
