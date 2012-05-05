@@ -3,6 +3,7 @@
 #include "ShortOptionTests.h"
 #include "IntegerTests.h"
 #include "StringTests.h"
+#include "BoolTests.h"
 
 #include <string>
 #include <iostream>
@@ -15,6 +16,7 @@ int main(int argc, const char* argv[]) {
 	ShortOptionTests::prepareTests();
 	IntegerTests::prepareTests();
 	StringTests::prepareTests();
+	BoolTests::prepareTests();
 
 	Tests& tests = Tests::inst();
 	if (tests.runTests()) {

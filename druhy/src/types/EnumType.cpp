@@ -19,11 +19,9 @@ Value* EnumType::fromString(const string& argument) const {
 
 	StringParser argParser(argument);
 	
-	// Parse some whitespace, followed by a plus or minus sign and some
-	// whitespace again. Then, parse numbers followed by trailing whitespace.
 	argParser.parseMany(WHITESPACE);  //WHITESPACE constant in parser function header
 
-	// Fail if no numbers could be parsed
+	// Fail if no word could be parsed
 	size_t wordBegin = argParser.getPosition();
 	if (argParser.parseMany(WORD_LETTERS) == 0) {
 		argParser.raiseException("No word addded as parameter");
@@ -35,7 +33,7 @@ Value* EnumType::fromString(const string& argument) const {
 	if (!argParser.reachedEnd()) {
 		argParser.raiseException("Parameter containst more words with whitespaces inbetween");
 	}
-	// Parse the number itself
+	// Exacts the word from argument
 	string cleanedArgument = argument.substr(wordBegin, wordEnd);
 
 	set<string>::iterator it = allowedStrings.find(cleanedArgument);
@@ -48,7 +46,6 @@ Value* EnumType::fromString(const string& argument) const {
 }
 
 Type* EnumType::clone() const {
-	// TODO: is set properly deep copied?
 	return new EnumType(*this);
 }
 
