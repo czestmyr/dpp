@@ -17,8 +17,8 @@ void FrontEnd::addSynonym(const std::string& original, const std::string& synony
 	syntax->addSynonym(original, synonym);
 }
 
-void FrontEnd::writeHelp() {
-	//TODO: Implement
+void FrontEnd::writeOptionHelp(std::ostream& stream) {
+	syntax->writeHelp(stream);
 }
 
 void FrontEnd::parse(int argc, const char* argv[]) {

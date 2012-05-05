@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "ParameterAttribute.h"
 #include "ValueHandle.h"
@@ -37,7 +38,7 @@ class FrontEnd {
 
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		void writeHelp();
+		void writeOptionHelp(std::ostream& stream);
 		void parse(int argc, const char* argv[]);
 
 		bool isOptionSet(const std::string& optionName) const;

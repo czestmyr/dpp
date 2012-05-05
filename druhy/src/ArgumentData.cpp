@@ -19,7 +19,7 @@ ValueHandle ArgumentData::getOptionParameter(unsigned int optionId) const {
 	if (it == options.end()) {
 		return ValueHandle();
 	} else {
-		return (*it).second;
+		return it->second;
 	}
 }
 

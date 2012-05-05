@@ -25,6 +25,9 @@ bool UseCases::runShortOptionsTest() {
 	integer.setLowBound(0);
 	arglib.addOption("p", REQUIRED, integer, "Help for the integer option");
 
+	cout << endl;
+	arglib.writeOptionHelp(cout);
+
 	return Tests::parseMustNotThrow(arglib, args);
 }
 
