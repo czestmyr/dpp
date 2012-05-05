@@ -6,8 +6,8 @@
 
 using namespace std;
 
-typedef multimap<unsigned int, string> synonym_map;
-typedef pair<synonym_map::const_iterator, synonym_map::const_iterator> const_synonym_range;
+typedef multimap<unsigned int, string> SynonymMap;
+typedef pair<SynonymMap::const_iterator, SynonymMap::const_iterator> ConstSynonymRange;
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
@@ -98,8 +98,8 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 	stream << "\t";
 
 	// Find the range of synonyms in the synonym multimap
-	synonym_map::const_iterator synIt = synonyms.find(id);
-	const_synonym_range synRange = synonyms.equal_range(id);
+	SynonymMap::const_iterator synIt = synonyms.find(id);
+	ConstSynonymRange synRange = synonyms.equal_range(id);
 
 	// Write out the list of the synonyms, prepended with dashes and divided by commas
 	for (synIt = synRange.first; synIt != synRange.second; synIt++) {
