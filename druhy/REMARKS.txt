@@ -5,9 +5,9 @@ pouzival, nechce-li. Stejne tak StringParser.h bude mozna pouzivan uzivatelem, a
 
 TODO:
 
+KOD:
+-> Projet exceptiony a lip je zaobalovat, aby tam byly vsechny informace
 -> Pridat moznost vypnout (nebo zapnout?) exceptions - pozor, at to nerozbije testy
--> Vse zdokumentovat. U kazde tridy napsat, k cemu slouzi. Popsat metody a datove membery
--> Pridat hyperlinky do dokumentace
 -> Uzavrit kod do namespace arglib (nebo tak nejak)
 -> Sjednotit style:
 	-> Zkontrolovat, zda je const vsude tam, kde ma byt
@@ -15,4 +15,9 @@ TODO:
 	-> Sjednotit "using namespace std;" na zacatku kazdeho zdrojaku
 -> Rozmyslet si, jestli je opravdu potreba metoda OptionSyntax::getHelp(...). Staci prece vypsat dokumentaci ke vsem volbam
 -> Otestovat pripady, kdy se v blbym poradi volaji metody FrontEndu - napr. synonymum pred definovanim originalu apod.
+-> Predelat definy na okomentovany enumy
+
+DOKUMENTACE:
+-> Vse zdokumentovat. U kazde tridy napsat, k cemu slouzi. Popsat metody a datove membery
+-> Pridat hyperlinky do dokumentace
 
