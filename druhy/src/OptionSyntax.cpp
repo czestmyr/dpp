@@ -20,15 +20,12 @@ OptionSyntax::~OptionSyntax() {
 	}
 }
 
-void OptionSyntax::addOption(const string& optionName, ParameterAttribute attrib, Type* paramType, const string& helpString) {
+void OptionSyntax::addOption(const string& optionName, ParameterAttribute attrib, Type* paramType) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
 	synonyms.insert(pair<unsigned int, string>(id, optionName));
 	attributes.insert(pair<unsigned int, ParameterAttribute>(id, attrib));
 	types.insert(pair<unsigned int, Type*>(id, paramType));
-	if (!helpString.empty()) {
-		helpStrings.insert(pair<unsigned int, string>(id, helpString));
-	}
 }
 
 void OptionSyntax::addSynonym(const string& original, const string& synonym) {
@@ -45,6 +42,11 @@ ParameterAttribute OptionSyntax::getAttribute(const string& option) const {
 const Type* OptionSyntax::getType(const string& option) const {
 	unsigned int id = getId(option);
 	return types.find(id)->second;
+}
+
+void OptionSyntax::setOptionHelp(const string& option, const string& helpString) {
+	unsigned int id = getId(option);
+	helpStrings.insert(pair<unsigned int, string>(id, helpString));
 }
 
 void OptionSyntax::writeHelp(ostream& stream, int terminalSize) const {

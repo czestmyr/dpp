@@ -15,12 +15,13 @@ class OptionSyntax {
 		OptionSyntax();
 		~OptionSyntax();
 
-		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, Type* paramType = NULL, const std::string& helpString = "");
+		void addOption(const std::string& optionName, ParameterAttribute attrib = FORBIDDEN, Type* paramType = NULL);
 		void addSynonym(const std::string& original, const std::string& synonym);
 
 		ParameterAttribute getAttribute(const std::string& option) const;
 		const Type* getType(const std::string& option) const;
 
+		void setOptionHelp(const std::string& option, const std::string& helpString);
 		void writeHelp(std::ostream& stream, int terminalSize) const;
 
 		unsigned int getId(const std::string& option) const;

@@ -22,23 +22,23 @@ class FrontEnd {
 		void addOption(
 			const std::string& optionName,
 			ParameterAttribute attrib,
-			const DerivedType& paramType,
-			const std::string& helpString = ""
+			const DerivedType& paramType
 		) {
 			Type* typeCopy = Type::getClone(paramType);
-			addOptionInternal(optionName, attrib, typeCopy, helpString);
+			addOptionInternal(optionName, attrib, typeCopy);
 		}
 
 		/// Special case of addOption method when only option name is specified.
 		/// This method has to be here because without a type specification, the compiler
 		/// does not know, which template instance of addOption it has to create.
 		void addOption(const std::string& optionName) {
-			addOption(optionName, FORBIDDEN, DummyType(), "");
+			addOption(optionName, FORBIDDEN, DummyType());
 		}
 
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		void writeOptionHelp(std::ostream& stream, int terminalSize = 80);
+		void setOptionHelp(const std::string& option, const std::string& help);
+		void writeHelp(std::ostream& stream, int terminalSize = 80) const;
 		void parse(int argc, const char* argv[]);
 
 		bool isOptionSet(const std::string& optionName) const;
@@ -59,7 +59,7 @@ class FrontEnd {
 		const std::vector<std::string>& getRegularArguments() const;
 
 	private:
-		void addOptionInternal(const std::string& optionName, ParameterAttribute attrib, Type* paramType, const std::string& helpString);
+		void addOptionInternal(const std::string& optionName, ParameterAttribute attrib, Type* paramType);
 
 		OptionSyntax* syntax;	
 		ArgumentData* data;
