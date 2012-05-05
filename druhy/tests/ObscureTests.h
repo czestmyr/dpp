@@ -10,6 +10,7 @@ class ObscureTests {
 
 	private:
 		static bool sameOptionTwiceTest();
+		static bool twoCallsOfParseFunctionTest();
 };
 
 #endif

@@ -10,6 +10,7 @@ class BoolTests {
 	private:
 		static bool trueFalseTest();
 		static bool badInputTest();
+		static bool noInputTest();
 		static bool trailingCharacterTest();
 };
 

@@ -16,21 +16,25 @@ Value* BoolType::fromString(const string& argument) const {
 	
 	// Fail if no numbers could be parsed
 	size_t keyWordBegin = argParser.getPosition();
-	if (argParser.parseExact(4,"true") != 4) {// && argParser.parseExact(5,"false") == 0 ) {
-		argParser.raiseException("No true in the boolean: " + argument);
-	}
+	argParser.parseMany(LETTERS);
 	size_t keyWordEnd = argParser.getPosition();
+
 	argParser.parseMany(WHITESPACE);
 	
 	// Fail if there are any trailing characters
 	if (!argParser.reachedEnd()) {
-		argParser.raiseException("Trailing characters in an boolean: =" + argument + "=");
+		argParser.raiseException("There is more than one keyword in boolean argument: " + argument);
 	}
-	// TODO: Explain properly what this does
-	bool isTrueParsed = ((keyWordEnd-keyWordBegin) == 4); 
+
+	string keyWord = argument.substr(keyWordBegin,keyWordEnd);
+	if ((keyWord != "true") && (keyWord != "false")) {
+		argParser.raiseException("The given keyword is'nt \"true\" nor \"false\". It's: " + argument);
+	}
+
+	bool isKeyWordTrue = (keyWord == "true"); 
 
 	// Set and return the correct value
-	BoolValue* val = new BoolValue(isTrueParsed);
+	BoolValue* val = new BoolValue(isKeyWordTrue);
 	return val;
 }
 

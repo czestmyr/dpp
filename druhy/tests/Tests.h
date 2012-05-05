@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include "Arglib.h"
 
 #include "TestFunction.h"
 
@@ -27,6 +28,35 @@ class Tests {
 		/// Parse the argument list with the instance of arguments library.
 		/// This method succeedes when the parsing does not throw an exception
 		static bool parseMustNotThrow(FrontEnd& arglib, const ArgList& arguments);
+
+		/// Queries the instance of arguments library to specified option 
+		/// This method succeedes when the parsing throws an exception
+		template <class returnType, class nameType>
+		static bool getOptionValueMustThrow(FrontEnd& arglib, nameType optionName) {
+			try {
+				arglib.getOptionParameter<returnType>(optionName);
+			} catch (ArgumentException e) {
+				cout << "Exception: " << e.what();
+				return true;
+			}
+
+			return false;
+		};
+
+		/// Queries the instance of arguments library to specified option 
+		/// This method succeedes when the parsing does not throw an exception
+		template <class returnType, class nameType>
+		static bool getOptionValueMustNotThrow(FrontEnd& arglib, nameType optionName) {
+			try {
+				arglib.getOptionParameter<returnType>(optionName);
+			} catch (ArgumentException e) {
+				cout << "Exception: " << e.what();
+				return false;
+			}
+
+			return true;
+		};
+
 	private:
 		std::vector<TestFunctionPtr> tests;
 		std::vector<std::string> testDescriptions;
