@@ -73,7 +73,7 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 			saveOption(option, NULL);
 			parsedArguments = 1;
 		// If a parameter is required, eat up anything that comes next
-		} else if (attrib == REQUIRED) {
+		} else if (attrib == PARAM_REQUIRED) {
 			saveOption(option, &arguments[argIndex + 1]);
 			parsedArguments = 2;
 		// Next argument is not a regular argument
@@ -83,7 +83,7 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 		// Next argument is a regular argument, we could use it as a parameter value
 		} else {
 			// If parameters are forbidden, don't eat them up
-			if (attrib == FORBIDDEN) {
+			if (attrib == PARAM_FORBIDDEN) {
 				saveOption(option, NULL);
 				parsedArguments = 1;
 			} else {
@@ -103,18 +103,18 @@ int ArgumentParser::parseOption(const string& option, const vector<string>& argu
 }
 
 void ArgumentParser::saveOption(const std::string& option, const std::string* value) {
-	// NOTE: We don't need to test whether the option was allowed, because
+	// NOTE: We don't need to test whether the parameter was allowed, because
 	// exceptions will take care of that in the following function calls.
 
 	ParameterAttribute attrib = optionSyntax->getAttribute(option);
 
 	// If the value is specified and the option forbids it, complain
-	if (value != NULL && attrib == FORBIDDEN) {
+	if (value != NULL && attrib == PARAM_FORBIDDEN) {
 		throw ArgumentException(string("Option ") + option + " does not allow parameters, but value " + *value + " was given!");
 	}
 
 	// If the value is not specified and the option requires it, complain
-	if (value == NULL && attrib == REQUIRED) {
+	if (value == NULL && attrib == PARAM_REQUIRED) {
 		throw ArgumentException(string("Option ") + option + " requires a parameter, but none was given!");
 	}
 

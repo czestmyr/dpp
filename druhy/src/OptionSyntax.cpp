@@ -20,11 +20,12 @@ OptionSyntax::~OptionSyntax() {
 	}
 }
 
-void OptionSyntax::addOption(const string& optionName, ParameterAttribute attrib, Type* paramType) {
+void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
 	synonyms.insert(pair<unsigned int, string>(id, optionName));
-	attributes.insert(pair<unsigned int, ParameterAttribute>(id, attrib));
+	optionAttributes.insert(pair<unsigned int, OptionAttribute>(id, optionAttrib));
+	paramAttributes.insert(pair<unsigned int, ParameterAttribute>(id, paramAttrib));
 	types.insert(pair<unsigned int, Type*>(id, paramType));
 }
 
@@ -36,7 +37,7 @@ void OptionSyntax::addSynonym(const string& original, const string& synonym) {
 
 ParameterAttribute OptionSyntax::getAttribute(const string& option) const {
 	unsigned int id = getId(option);
-	return attributes.find(id)->second;
+	return paramAttributes.find(id)->second;
 }
 
 const Type* OptionSyntax::getType(const string& option) const {

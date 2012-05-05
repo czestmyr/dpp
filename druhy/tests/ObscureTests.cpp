@@ -37,7 +37,7 @@ bool ObscureTests::twoCallsOfParseFunctionTest() {
 
 	FrontEnd arglib;
 	StringType stringType = StringType();
-	arglib.addOption("t", ALLOWED, stringType);
+	arglib.addOption("t", OPTION_ALLOWED, stringType, PARAM_ALLOWED);
 	
 	bool noExceptionArgs1 = Tests::parseMustNotThrow(arglib, args1);
 	bool isOptionSetArgs1 = arglib.isOptionSet("t");

@@ -41,7 +41,7 @@ const vector<string>& FrontEnd::getRegularArguments() const {
 	data->getArguments();
 }
 
-void FrontEnd::addOptionInternal(const string& optionName, ParameterAttribute attrib, Type* paramType) {
-	syntax->addOption(optionName, attrib, paramType);
+void FrontEnd::addOptionInternal(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
+	syntax->addOption(optionName, optionAttrib, paramType, paramAttrib);
 }
 
