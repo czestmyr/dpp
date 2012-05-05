@@ -24,6 +24,7 @@ class OptionSyntax {
 		unsigned int lastId;
 
 		std::map<std::string, unsigned int> ids;
+		std::map<unsigned int, std::string> synonyms;
 		std::map<unsigned int, ParameterAttribute> attributes;
 		std::map<unsigned int, Type*> types;
 		std::map<unsigned int, std::string> helpStrings;
