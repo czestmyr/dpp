@@ -15,7 +15,6 @@ void BoolTests::prepareTests() {
 	testSet.addTest(&BoolTests::trueFalseTest, "Testing whether boolean values true and false are correctly handled");
 	testSet.addTest(&BoolTests::badInputTest, "Testing whether bad boolean inputs aren't parsed");
 	testSet.addTest(&BoolTests::noInputTest, "Empty boolean argument can't be queried");
-	//testSet.addTest(&BoolTests::trailingCharacterTest, "Testing whether only values true or false are accepted");
 
 }
 
@@ -60,8 +59,4 @@ bool BoolTests::noInputTest(){
 	args.dump(cout);
 	return Tests::parseMustNotThrow(arglib, args)&&
 		Tests::getOptionValueMustThrow<bool>(arglib, "false"); 
-}
-bool BoolTests::trailingCharacterTest(){
-	// TODO: implement
-	return false;
 }
