@@ -3,11 +3,21 @@
 
 #include <string>
 
+<<<<<<< HEAD
 #define WHITESPACE std::string(" \t\n\r")
 #define NUMBERS std::string("0123456789")
 #define LOWERCASE_LETTERS std::string("abcdefghijklmnopqrstuvwxyz")
 #define UPPERCASE_LETTERS std::string("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 #define LETTERS (LOWERCASE_LETTERS + UPPERCASE_LETTERS)
+=======
+#define WHITESPACE " \t\n\r"
+#define NUMBERS "0123456789"
+#define LOWERCASE_LETTERS "abcdefghijklmnopqrstuvwxyz"
+#define UPPERCASE_LETTERS "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define LETTERS LOWERCASE_LETTERS UPPERCASE_LETTERS
+#define WORD_DELIMITERS "_-"
+#define WORD_LETTERS LETTERS WORD_DELIMITERS
+>>>>>>> values
 
 /// Defines whether the parsing functions in StringMatcher will parse until they
 /// find a character outside the given set (NORMAL) or from the given set (INVERSED)

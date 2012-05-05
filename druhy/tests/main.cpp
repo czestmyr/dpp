@@ -3,6 +3,8 @@
 #include "ShortOptionTests.h"
 #include "IntegerTests.h"
 #include "ObscureTests.h"
+#include "StringTests.h"
+#include "BoolTests.h"
 
 #include <string>
 #include <iostream>
@@ -14,6 +16,8 @@ int main(int argc, const char* argv[]) {
 	ObscureTests::prepareTests();
 	ShortOptionTests::prepareTests();
 	IntegerTests::prepareTests();
+	StringTests::prepareTests();
+	BoolTests::prepareTests();
 	UseCases::prepareTests();
 
 	Tests& tests = Tests::inst();
