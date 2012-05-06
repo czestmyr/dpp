@@ -37,12 +37,12 @@ Value* EnumType::fromString(const string& argument) const {
 	if (!argParser.reachedEnd()) {
 		argParser.raiseException("Parameter containst more words with whitespaces inbetween");
 	}
-	// Exacts the word from argument
+	// Extracts the word from argument
 	string cleanedArgument = argument.substr(wordBegin, wordEnd);
 
 	set<string>::iterator it = allowedStrings.find(cleanedArgument);
 	if (it == allowedStrings.end()){
-		argParser.raiseException("Argument value: " + cleanedArgument + " isn't allowed in this option");
+		argParser.raiseException("Parameter value: " + cleanedArgument + " isn't allowed in this option");
 	}
 	// Set and return the correct value
 	StringValue* val = new StringValue(cleanedArgument);

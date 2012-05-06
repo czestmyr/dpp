@@ -55,10 +55,10 @@ Value* IntType::fromString(const string& argument) const {
 	int intValue = atoi(cleanedArgument.c_str());
 
 	// Check for bound compliance
-	if (hasHighBound && intValue > highBound) {
+	if (hasHighBound && (intValue > highBound)) {
 		argParser.raiseException("Integer value out of bounds");
 	}
-	if (hasLowBound && intValue < lowBound) {
+	if (hasLowBound && (intValue < lowBound)) {
 		argParser.raiseException("Integer value out of bounds");
 	}
 
