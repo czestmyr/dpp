@@ -16,7 +16,9 @@ int main(int argc, const char* argv[]) {
 	FormatType formatType = FormatType();
 	arglib.addOption("f", OPTION_ALLOWED, formatType, PARAM_REQUIRED);
 	arglib.addSynonym("f","format");
-	arglib.setOptionHelp("f", "Specify output format, possibly overriding the format specified in the environment variable TIME.");
+	string formatHelp = "Specify output format, possibly overriding the format ";
+	formatHelp+="specified in the environment variable TIME.";
+	arglib.setOptionHelp("f", formatHelp);
 
 	arglib.addOption("p");
 	arglib.addSynonym("p","portability");
@@ -42,9 +44,20 @@ int main(int argc, const char* argv[]) {
 	arglib.addSynonym("V","version");
 	arglib.setOptionHelp("V", "Print version information on standard output, then exit successfully.");
 
-	arglib.parse(argc, argv);
+	try {
+		arglib.parse(argc, argv);
+	} catch (ArgumentException e) {
+		cerr << "ls: " << e.what() << endl;
+		return 1;
+	}
+
+	// Ask which options were defined and possibly ask arguments
 	if (arglib.isOptionSet("help")) {
+		cout << "time - time a simple command or give resource usage" << endl << endl;
+		cout << "\tSynopsis:" << endl;
+		cout << "\t\ttime [OPTIONS] command [ARGUMENT(s)]..." << endl << endl;
 		arglib.writeHelp(cout);
+		return 0;
 	}
 	if (arglib.isOptionSet("f")) {
 		string val = arglib.getOptionParameter<string>("f");
@@ -67,8 +80,12 @@ int main(int argc, const char* argv[]) {
 		cout << "Option: " << "V" << " was set." << endl; 
 	}
 
-	cout << "Program got this arguments:";
 	vector<string> args = arglib.getRegularArguments();
+	if (args.size() == 0) {
+		cerr << "No command specified, try --help for help" << endl;
+		return -1;
+	}
+	cout << "Program got this arguments:";
 	for( vector<string>::iterator it = args.begin(); it!=args.end();++it){
 		cout<< " " << (*it);
 	}

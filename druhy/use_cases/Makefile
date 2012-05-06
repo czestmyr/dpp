@@ -1,6 +1,6 @@
 OBJECTS=FormatType.o FileType.o
-NAME_TIME=arglib_use_case_time
-NAME_LS=arglib_use_case_ls
+NAME_TIME=test_time
+NAME_LS=test_ls
 CXXFLAGS=-I../src -DCOLORS
 # Change CXXFLAGS to following if your shell does not support colors
 #CXXFLAGS=-I../src
