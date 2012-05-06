@@ -2,6 +2,10 @@
 
 all: use_cases run_tests
 clean: clean_library clean_tests clean_use_cases
+
+doxy:
+	cd doc; doxygen
+
 library:
 	cd src; ${MAKE} ${MFLAGS}
 

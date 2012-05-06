@@ -9,12 +9,12 @@ namespace Arglib {
 template <>
 string ValueHandle::getValue<string>() {
 	if (isEmpty()) {
-		throw ArgumentException("No parametr were added to this option.");
+		throw ArgumentException("No parameter specified.");
 	}
 
 	StringValue* stringValue = dynamic_cast<StringValue*>(valuePtr);
 	if( stringValue == NULL ) {
-		throw ArgumentException("Type defined with this option doesn't match type required by this function.");
+		throw ArgumentException("This option has a different type than specified in template function");
 	}
 	return stringValue->get();
 

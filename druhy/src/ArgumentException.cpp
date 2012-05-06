@@ -8,6 +8,10 @@ ArgumentException::ArgumentException(const string& exceptionMessage): message(ex
 
 ArgumentException::~ArgumentException() throw() {}
 
+void ArgumentException::prepend(const std::string& moreInfo) {
+	message = moreInfo + message;
+}
+
 const char* ArgumentException::what() const throw() {
 	return message.c_str();
 }

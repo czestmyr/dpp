@@ -110,10 +110,15 @@ class FrontEnd {
 			unsigned int id = syntax->getId(optionName);
 			ValueHandle valueHandle = data->getOptionParameter(id);
 			if (valueHandle.isEmpty()) {
-				throw ArgumentException("No parameter was added to this option.");
+				throw ArgumentException(string("No parameter was added to option ")+optionName);
 			}
 		
-			return valueHandle.getValue<ValueType>();
+			try {
+				return valueHandle.getValue<ValueType>();
+			} catch (ArgumentException e) {
+				e.prepend(string("Could not get parameter of option ")+optionName);
+				throw e;
+			}
 		}
 
 		/// Returns all regular arguments parsed in last call of function parse.
