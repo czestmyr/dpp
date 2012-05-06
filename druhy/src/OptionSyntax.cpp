@@ -74,6 +74,12 @@ void OptionSyntax::writeHelp(ostream& stream, int terminalSize) const {
 			processedIds.insert(id);
 
 			writeSynonyms(id, stream);
+			
+			// Write out option attribute if necessarry
+			if (requiredOptions.count(id) > 0) {
+				stream << "; REQUIRED";
+			}
+			stream << endl;
 
 			// Get the help string
 			map<unsigned int, string>::const_iterator helpIt;
@@ -134,7 +140,6 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 		}
 		stream << synIt->second;
 	}
-	stream << endl;
 }
 
 void OptionSyntax::writeWithLimit(string& str, int limit, ostream& stream) const {

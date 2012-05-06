@@ -17,7 +17,7 @@ bool UseCases::runShortOptionsTest() {
 	args.push("program").push("-v").push("-u").push("-p").push("20");
 
 	FrontEnd arglib;
-	arglib.addOption("v");
+	arglib.addOption("v", OPTION_REQUIRED);
 	arglib.addSynonym("v", "u");
 
 	IntegerType integer = IntegerType();
