@@ -13,6 +13,8 @@
 #include "OptionSyntax.h"
 #include "ArgumentData.h"
 
+namespace Arglib {
+
 /// Class that serves as an input point to this library for users. 
 /// It provides all methods to normal using of this library. As the name says, it serves as a FrontEnd
 /// to classes which are used to represent all necessary data structures.
@@ -136,5 +138,7 @@ class FrontEnd {
 		OptionSyntax* syntax; ///< Stores syntax of options defined by the user.
 		ArgumentData* data; ///< Stores all regular arguments given in parameters.
 };
+
+} // End namespace Arglib
 
 #endif

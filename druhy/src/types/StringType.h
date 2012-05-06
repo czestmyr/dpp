@@ -4,6 +4,8 @@
 #include "../Type.h"
 #include "../Value.h"
 
+namespace Arglib {
+
 class StringType: public Type {
 	public:
 		StringType();
@@ -14,5 +16,7 @@ class StringType: public Type {
 
 	private:
 };
+
+} // End namespace Arglib
 
 #endif

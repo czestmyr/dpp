@@ -1,6 +1,8 @@
 #include "IntValue.h"
 #include "../ArgumentException.h"
 
+namespace Arglib {
+
 //TODO: Add proper information to this exception!
 //TODO: change test valuePtr == NULL za isEmpty()
 template <> int ValueHandle::getValue<int>() {
@@ -15,4 +17,6 @@ template <> int ValueHandle::getValue<int>() {
 		return intValue->get();
 
 };
+
+} // End namespace Arglib
 

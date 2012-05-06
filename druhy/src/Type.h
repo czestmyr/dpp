@@ -4,6 +4,8 @@
 #include <string>
 #include "Value.h"
 
+namespace Arglib {
+
 class Type {
 	public:
 		virtual ~Type() {};
@@ -44,6 +46,8 @@ class Type {
 	protected:
 		std::string parameterName;
 };
+
+} // End namespace Arglib
 
 #endif
 

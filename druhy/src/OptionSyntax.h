@@ -10,6 +10,8 @@
 #include "ParameterAttribute.h"
 #include "OptionAttribute.h"
 
+namespace Arglib {
+
 typedef std::list<std::string>::iterator StrListIt;
 
 /// \brief Class that holds information about syntax of the options.
@@ -132,6 +134,8 @@ class OptionSyntax {
 
 		std::set<unsigned int> requiredOptions; ///< Set of options that have to be set for a successful parse.
 };
+
+} // End namespace Arglib
 
 #endif
 

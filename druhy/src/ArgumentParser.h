@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+namespace Arglib {
+
 class OptionSyntax;
 class ArgumentData;
 
@@ -65,6 +67,8 @@ class ArgumentParser {
 		/// ArgumentData object that is used to save the options and their parameters
 		ArgumentData* argData;
 };
+
+} // End namespace Arglib
 
 #endif
 

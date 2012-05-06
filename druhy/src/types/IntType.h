@@ -4,6 +4,8 @@
 #include "../Type.h"
 #include "../Value.h"
 
+namespace Arglib {
+
 class IntType: public Type {
 	public:
 		IntType();
@@ -21,5 +23,7 @@ class IntType: public Type {
 		int lowBound;
 		int highBound;
 };
+
+} // End namespace Arglib
 
 #endif

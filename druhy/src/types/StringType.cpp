@@ -6,6 +6,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 StringType::StringType() {
 	parameterName = "STRING";	
 }
@@ -19,4 +21,6 @@ Value* StringType::fromString(const string& argument) const {
 Type* StringType::clone() const {
 	return new StringType(*this);
 }
+
+} // End namespace Arglib
 

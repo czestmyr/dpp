@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+namespace Arglib {
+
 class EnumType: public Type {
 	public:
 		EnumType();
@@ -22,5 +24,7 @@ class EnumType: public Type {
 	private:
 		std::set<std::string> allowedStrings;
 };
+
+} // End namespace Arglib
 
 #endif

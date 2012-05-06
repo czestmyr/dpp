@@ -6,6 +6,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 class DummyType: public Type {
 	public:
 		~DummyType() {}
@@ -18,6 +20,8 @@ class DummyType: public Type {
 			return new DummyType(*this);
 		}
 };
+
+} // End namespace Arglib
 
 #endif
 

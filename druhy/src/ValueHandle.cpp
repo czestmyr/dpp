@@ -1,5 +1,7 @@
 #include "ValueHandle.h"
 
+namespace Arglib {
+
 ValueHandle::ValueHandle(Value* newValue) {
 	if (newValue != NULL) {
 		newValue->grab();
@@ -41,4 +43,6 @@ void ValueHandle::setValue(Value* newValue) {
 bool ValueHandle::isEmpty() {
 	return valuePtr == NULL;
 }
+
+} // End namespace Arglib
 

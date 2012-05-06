@@ -4,6 +4,8 @@
 #include <cstring>
 #include "Value.h"
 
+namespace Arglib {
+
 class ValueHandle {
 	public:
 		/// Konstructs new instance of the handle and set handled Value to newValue.
@@ -40,6 +42,8 @@ class ValueHandle {
 	private:
 		Value* valuePtr;/// Pointer to value of type derived from Value
 };
+
+} // End namespace Arglib
 
 #endif
 

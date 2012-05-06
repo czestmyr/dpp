@@ -9,6 +9,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 ArgumentParser::ArgumentParser(OptionSyntax* syntax, ArgumentData* argumentData):
 	allRegular(false), optionSyntax(syntax), argData(argumentData) {}
 
@@ -171,4 +173,6 @@ ArgumentParser::ArgumentType ArgumentParser::determineType(const std::string& ar
 		return LONG_OPTION;
 	}
 }
+
+} // End namespace Arglib
 

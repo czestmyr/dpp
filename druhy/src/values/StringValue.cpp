@@ -3,6 +3,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 //TODO: Add proper information to this exception!
 template <>
 string ValueHandle::getValue<string>() {
@@ -17,4 +19,6 @@ string ValueHandle::getValue<string>() {
 		return stringValue->get();
 
 };
+
+} // End namespace Arglib
 

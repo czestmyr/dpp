@@ -4,6 +4,8 @@
 #include "../Type.h"
 #include "../Value.h"
 
+namespace Arglib {
+
 /// Represents boolean parameter of an option in command line parameters.
 /// It's class derived from Type and overrides methods fromString() and clone().
 /// Using method fromString it parses string parametr and converts them to
@@ -27,5 +29,7 @@ class BoolType: public Type {
 
 	private:
 };
+
+} // End namespace Arglib
 
 #endif

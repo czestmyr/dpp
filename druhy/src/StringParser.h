@@ -18,6 +18,8 @@
 /// A set of letters that can be inside a word in enums
 #define WORD_LETTERS (LETTERS + WORD_DELIMITERS)
 
+namespace Arglib {
+
 /// Character matching logic for the StringParser.
 /// Defines whether the parsing functions in StringMatcher will parse until they
 /// find a character outside the given set (NORMAL) or from the given set (INVERSED)
@@ -88,5 +90,7 @@ class StringParser {
 		const std::string& parsedString; ///< Reference to the parsed string.
 		size_t position; ///< Internal position counter.
 };
+
+} // End namespace Arglib
 
 #endif

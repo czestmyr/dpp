@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 FrontEnd::FrontEnd() {
 	syntax = new OptionSyntax();
 	data = new ArgumentData();
@@ -62,4 +64,6 @@ const vector<string>& FrontEnd::getRegularArguments() const {
 void FrontEnd::addOptionInternal(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
 	syntax->addOption(optionName, optionAttrib, paramType, paramAttrib);
 }
+
+} // End namespace Arglib
 

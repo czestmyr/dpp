@@ -6,6 +6,8 @@
 #include <map>
 #include "ValueHandle.h"
 
+namespace Arglib {
+
 /// Class that holds data parsed from the arguments, options and their parameters.
 /// It stores all the given options with their respective parameters as well as other arguments (which we call
 /// regular arguments).
@@ -44,6 +46,8 @@ class ArgumentData {
 		std::vector<std::string> arguments; ///< List of already stored regular arguments.
 		std::map<unsigned int, ValueHandle> options; ///< List of all optionArguments acessible by optionId
 };
+
+} // End namespace Arglib
 
 #endif
 

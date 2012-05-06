@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 BoolType::BoolType() {
 }
 
@@ -41,4 +43,6 @@ Value* BoolType::fromString(const string& argument) const {
 Type* BoolType::clone() const {
 	return new BoolType(*this);
 }
+
+} // End namespace Arglib
 
