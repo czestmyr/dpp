@@ -12,6 +12,8 @@ class PathologicalTests {
 		static bool sameOptionTwiceTest();
 		static bool sameSynonymTwiceTest();
 		static bool synonymSameAsOriginalTest();
+		static bool undefinedOptionSetHelpTest();
+		static bool requiredOptionNotSetTest();
 		static bool twoCallsOfParseFunctionTest();
 		static bool twoCallsOfParseFunctionArgumentsTest();
 		static bool wrongOptionSynonymCallOrder();
