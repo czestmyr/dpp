@@ -24,7 +24,7 @@ class Type {
 
 		/// Returns a string that will be printed in OptionSyntax help for options with
 		/// parameters with this type.
-		virtual const char* syntaxHelpPlaceholder() const {
+		virtual const char* syntaxHelpPlaceHolder() const {
 			return "PARAM";
 		}
 

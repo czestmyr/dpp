@@ -204,7 +204,7 @@ void OptionSyntax::writeParameter(unsigned int id, std::ostream& stream) const {
 		stream << "[ ";
 	}
 	Type* paramType = typeIt->second;
-	stream << paramType->syntaxHelpPlaceholder();
+	stream << paramType->syntaxHelpPlaceHolder();
 	if (attrib == PARAM_ALLOWED) {
 		stream << " ]";
 	}
