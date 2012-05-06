@@ -1,0 +1,25 @@
+Zdůvodnění návrhu knihovny Arglib
+Knihovna se skládá z několika hlavních tříd, které se starají o jednotlivé podůkoly při parsování parametrů. Těmi podúkoly jsou naparsování vstupních stringů a jejich rozdělení na jednotlivé tokeny, o to se stará třída ArgumentParser. Dále je třeba uchovat naparsovaná data, tento úkol řeší třída ArgumentData. Dříve než je ovšem možné parsovat je třeba nastavit a uložit syntaxi, kterou daný program vyžaduje, to zajišťuje třída OptionSyntax.
+Je tedy zřejmé, že třída ArgumentParser při parsování vstupu využívá informací ze třídy OptionSyntax a ArgumentData. Vzhledem k tomu, že se zde komunikuje pouze se dvěma třídami, jsou tyto odkazovány přímo z ArgumentParseru a není použit návrhový vzor Mediator.
+Při parsování je dále vyuřívána třída StringParser, která obsahuje pomocné funkce pro parsovaní řetězců.
+Pro zjednodušní práce s knihovnou je celá tato struktura zastřešena třído FrontEnd, která poskytuje metody potřebné pro práci s knihovnou. Veškeré základní operace jako definování parametrů, či zjišťování jestli byl daný parametr nastaven se provádí skrz ní.
+
+Definování voleb, jejich parametrů, či případných synonym se provádí srz volání metod na zastřešující třídě. Tento způsob byl zvolen, díky možnosti okamžité kontroly zadávaných hodnot vůči již definovaným volbám. Což by při použití zastřešující struktury pro volbu a nastavování parametrů přímo na ní nebylo možné. Druhým důvodem bylo, že nám tento způsob přišel přehlednější.
+
+Reakci na předání volby ve formě callbacků jsme zavrhli, jelikož parsování argumentů probíhá většinou spíše na začátku programu. Přičemž callbacky by byly vhodnější pro volání v celém průběhu programu. Přičemž by se pomocí nich stejně pouze nastavovaly jen nějaké nejspíše globální proměnné.
+Při použítí procházení seznamu zadaných voleb by si uživatel pak stejně musel, zjišťovat které volby byly zadány. Proto jsme mu umožnili ptát se na  to jestli volba byla definována přímo naší knihovny.
+
+Pro definování typu parametru jsme využili dědění od základního typu Type, který definuje potřebné operace, využívané naší knihovnou. Tento způsob jsme zvolili z důvodu velmi jednoduchého rozšiřování knihovny o nové typy možných argumentů pro pokročilejší uživatele.
+
+Kontrolu voleb parametrů a jejich typů provádí knihovna implicitně. Jelikož pokud parametry předané programu nebudou korektní, nemá cenu v práci s programem dále pokračovat.
+
+Pro ohlašování chyb jsme použili výjimky, jelikož umožňují používat jednodušší rozhranní funkcí, které provádějí jednotlivé operace na vnitřních trídách. V opačném případě by bylo nutné pro funkce vracející hodnotou vracet informaci o úspěchu pomocí reference v parametrech či kódováním do návratové hodnoty.
+
+Při použití výjimek jsme použili vlastní typ výjimky s odpovídajícím názvem pro práci při zpracování agrumentů. Vzhledem k malému rozsahu jsme definovali pouze jeden typ a přesnější určení provádíme v rámci textového popisu, který je součástí výjimky.
+
+Hlášení uživateli programu knihovna přímo nevypisuje, všechny chyby hlásí pomocí výjimek, jak na ně bude reagovat uživatel programátor je čistě na jeho volbě.
+
+
+ 
+
+

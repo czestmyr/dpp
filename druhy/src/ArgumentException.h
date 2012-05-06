@@ -11,6 +11,11 @@ class ArgumentException: public std::exception {
 	public:
 		ArgumentException(const std::string& exceptionMessage);
 		virtual ~ArgumentException() throw();
+
+		/// Prepends more information to the exception.
+		/// @param moreInfo The string that will be prepended to the exception
+		void prepend(const std::string& moreInfo);
+
 		virtual const char* what() const throw();
 	private:
 		std::string message;

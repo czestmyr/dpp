@@ -7,12 +7,12 @@ namespace Arglib {
 template <>
 bool ValueHandle::getValue<bool>() {
 	if (isEmpty()) {
-		throw ArgumentException("No parametr were added to this option.");
+		throw ArgumentException("No parameter specified.");
 	}
 
 	BoolValue* boolValue = dynamic_cast<BoolValue*>(valuePtr);
 	if( boolValue == NULL ) {
-		throw ArgumentException("Type defined with this option doesn't match type required by this function.");
+		throw ArgumentException("This option has a different type than specified in template function");
 	}
 	return boolValue->get();
 

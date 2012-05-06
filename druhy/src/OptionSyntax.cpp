@@ -29,10 +29,10 @@ OptionSyntax& OptionSyntax::operator=(const OptionSyntax& other) {
 }
 
 void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
-	if(isOptionDefined(optionName)) {
+	if (isOptionDefined(optionName)) {
 		// Prevent type memory leaking by deleting the newly copied type
 		delete paramType;
-		throw ArgumentException("Option: " + optionName + "has been already defined");
+		throw ArgumentException("Option: " + optionName + " has been already defined");
 	}
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
@@ -47,8 +47,8 @@ void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAtt
 }
 
 void OptionSyntax::addSynonym(const string& original, const string& synonym) {
-	if(isOptionDefined(synonym)) {
-		throw ArgumentException("Option: " + synonym + "has been already defined");
+	if (isOptionDefined(synonym)) {
+		throw ArgumentException("Option: " + synonym + " has been already defined");
 	}
 	unsigned int id = getId(original);
 	ids.insert(pair<string, unsigned int>(synonym, id));
@@ -121,6 +121,11 @@ unsigned int OptionSyntax::getId(const string& option) const {
 	return ids.find(option)->second;
 }
 
+std::string OptionSyntax::getOptionName(unsigned int id) const {
+	ConstSynonymRange synRange = synonyms.equal_range(id);
+	return synRange.first->second;
+}
+
 const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
 	return requiredOptions;
 }
@@ -164,7 +169,7 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 	stream << " ";
 
 	// Find the range of synonyms in the synonym multimap
-	SynonymMap::const_iterator synIt = synonyms.find(id);
+	SynonymMap::const_iterator synIt;
 	ConstSynonymRange synRange = synonyms.equal_range(id);
 
 	// Write out the list of the synonyms, prepended with dashes and divided by commas

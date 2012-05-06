@@ -59,7 +59,9 @@ void ArgumentParser::parse(int argc, const char* argv[]) {
 	set<unsigned int>::const_iterator it = requiredOptions.begin();
 	while (it != requiredOptions.end()) {
 		if (!argData->isOptionSet(*it)) {
-			throw ArgumentException("A required option was not specified");
+			string message = string("A required option was not specified: ") +
+				optionSyntax->getOptionName(*it);
+			throw ArgumentException(message);
 		}
 		it++;
 	}
