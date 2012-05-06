@@ -14,12 +14,14 @@
 #include "ArgumentData.h"
 
 /// Class that serves as an input point to this library for users. 
-/// It provides all methods to normal using of this library. As the name says it serves as an FrontEnd
+/// It provides all methods to normal using of this library. As the name says, it serves as a FrontEnd
 /// to classes which are used to represent all necessary data structures.
 /// Using this class it's possible to specify options and their properties.
-/// Method parse then parse commandline arguments given to the program.
-/// The last part allows to get informations which options were given to the program through command line.
-/// What were their arguments and what were regular arguments of the program.
+/// Method parse then parses command-line arguments given to the program.
+/// The last part allows to get informations about options that were given to the program through the command-line.
+/// What their parameters were and what regular arguments were provided to the program.
+///
+/// The FrontEnd can be copied in order to save its state.
 class FrontEnd {
 	public:
 		FrontEnd();
@@ -29,9 +31,8 @@ class FrontEnd {
 		FrontEnd& operator=(const FrontEnd& other);
 
 		/// Adds new option with all its properties specified by the user.
-		/// 
-		/// @param DerivedType Type specifiing which arguments can be added to the option.
-		///	It must be class derived from class Type.
+		/// DerivedType template parameter is a class type specifying the type of values of the option's
+		/// parameter. It must be a class derived from class Type.
 		/// @param optionName Name of option to be added to set of known options.
 		/// @param optionAttrib Specifier defining if option is allowed or required.
 		///	Possible values are OPTION_ALLOWED and OPTION_REQUIRED.
@@ -50,7 +51,7 @@ class FrontEnd {
 		}
 
 		/// Special case of addOption method when only option name is specified.
-		/// This method adds options which can't have any parameters.
+		/// This method adds options which don't have any parameters.
 		/// This method has to be here because without a type specification, the compiler
 		/// does not know, which template instance of addOption it has to create.
 		/// @param optionName Name of option to be added to set of known options.
@@ -69,7 +70,7 @@ class FrontEnd {
 		/// @param synonym Name of option which should be synonym for original.
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		/// Assignss help to option specified by optionName.
+		/// Assigns help to option specified by optionName.
 		/// @param optionName Name of option to which add the help.
 		/// @param help Text of help to assign.
 		void setOptionHelp(const std::string& optionName, const std::string& help);
@@ -84,7 +85,7 @@ class FrontEnd {
 		/// @param argc Number of tokens in argv.
 		/// @param argv Command line parameters given to the program.
 		/// 	They have to start with name of the program,
-		///	because this is common for agguments in C++.
+		///	because this is common for arguments in C++.
 		void parse(int argc, const char* argv[]);
 
 		/// Checks if the option optionName was given.
@@ -99,7 +100,7 @@ class FrontEnd {
 
 		/// This method gets parameter of option specified by optionName.
 		/// It returns the value of the argument transformed to ValueType specified by the user.
-		/// @param ValueType Specifies a type of return value expected by the user.
+		/// ValueType template parameter specifies a type of return value expected by the user.
 		/// @param optionName Name of the option to which return the argument. 
 		/// @return Value of the argument casted to type ValueType
 		template <class ValueType>
@@ -107,7 +108,7 @@ class FrontEnd {
 			unsigned int id = syntax->getId(optionName);
 			ValueHandle valueHandle = data->getOptionParameter(id);
 			if (valueHandle.isEmpty()) {
-				throw ArgumentException("No parametr were added to this option.");
+				throw ArgumentException("No parameter was added to this option.");
 			}
 		
 			return valueHandle.getValue<ValueType>();
