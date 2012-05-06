@@ -13,11 +13,11 @@ class BoolType: public Type {
 		BoolType();
 		~BoolType() {}
 
-		/// Parses option parameter from it's string representation to our representation of boolean.
+		/// Parses option parameter from it's string representation to inner representation of boolean.
 		/// If the argument is invalid, an invalid value is returned.
-		/// @param argument String representation of boolean value to be cast to this type.
+		/// @param argument String representation of boolean value to be cast to BoolValue type.
 		/// return Pointer to BoolValue parsed from given string representation.
-		/// @note The ownership of the Boolvalue is
+		/// @note The ownership of the BoolValue is
 		/// transferred to the caller and is reference counted further on.
 		Value* fromString(const std::string& argument) const;
 		
