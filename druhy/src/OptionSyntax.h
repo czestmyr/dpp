@@ -12,7 +12,7 @@
 
 typedef std::list<std::string>::iterator StrListIt;
 
-/// Class that holds information about syntax of the options.
+/// \brief Class that holds information about syntax of the options.
 /// This class can be used to set new options together with their parameters. It is also able to print help for all
 /// the options that were defined.
 class OptionSyntax {
@@ -85,7 +85,7 @@ class OptionSyntax {
 		/// Internal deinitializing function. Called e.g. in the destructor.
 		void deinit();
 		/// Initializes the data members from another object.
-		/// @param other. The object to copy the data from.
+		/// @param other The object to copy the data from.
 		void initFrom(const OptionSyntax& other);
 
 		/// Returns a new and unique Id number that can be used in a new option.
@@ -112,7 +112,7 @@ class OptionSyntax {
 		/// Writes a string into the given stream obeying the character limit. The string is divided into words
 		/// separated by whitespace and these words are written into the stream so that the length of each line
 		/// does not exceed the given limit. Used in OptionSyntax::writeHelp().
-		/// @param id the unique Id for the option.
+		/// @param string the string that should be written into the stream
 		/// @param limit How many characters can fit into one line.
 		/// @param stream output stream for the write.
 		void writeWithLimit(std::string& string, int limit, std::ostream& stream) const;
