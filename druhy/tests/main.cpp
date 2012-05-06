@@ -24,10 +24,8 @@ int main(int argc, const char* argv[]) {
 
 	Tests& tests = Tests::inst();
 	if (tests.runTests()) {
-		cout << "All tests passed!" << endl;
 		return 0;
 	} else {
-		cout << "One or more tests failed!" << endl;
 		return 1;
 	}
 }

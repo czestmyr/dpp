@@ -41,6 +41,12 @@ bool Tests::runTests(){
 		}
 	}
 
+	if (success) {
+		cout << GREEN_BEGIN << "All tests passed!" << COLOR_END << endl;
+	} else {
+		cout << RED_BEGIN << "Some tests failed!" << COLOR_END << endl;
+	}
+
 	return success;
 }
 
