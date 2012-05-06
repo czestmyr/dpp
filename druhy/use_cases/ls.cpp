@@ -39,16 +39,22 @@ int main(int argc, const char* argv[]) {
 
 
 	arglib.parse(argc, argv);
+
+	// Ask which options were defined and possibly ask arguments
 	if (arglib.isOptionSet("help")) {
 		arglib.writeHelp(cout);
 	}
 	if (arglib.isOptionSet("block-size")) {
-		int val = arglib.getOptionParameter<int>("block-size");
-		cout << "Option: " << "block-size" << " has param: " << val << endl; 
+		if (arglib.isOptionParameterSet("block-size")) {
+			int val = arglib.getOptionParameter<int>("block-size");
+			cout << "Option: " << "block-size" << " has param: " << val << endl; 
+		}
 	}
 	if (arglib.isOptionSet("w")) {
-		int val = arglib.getOptionParameter<int>("w");
-		cout << "Option: " << "w" << " has param: " << val << endl; 
+		if (arglib.isOptionParameterSet("w")) {
+			int val = arglib.getOptionParameter<int>("w");
+			cout << "Option: " << "w" << " has param: " << val << endl; 
+		}
 	}
 	if (arglib.isOptionSet("a")) {
 		cout << "Option: " << "a" << " was set." << endl; 

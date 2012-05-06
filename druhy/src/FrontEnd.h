@@ -86,6 +86,11 @@ class FrontEnd {
 		/// @return If option optionName was given.
 		bool isOptionSet(const std::string& optionName) const;
 
+		/// Tests if the parameter to option @param optionName was given.
+		/// @param optionName Name of the option to be tested for parameter.
+		/// @return If a parameter to option optionName was given.
+		bool isOptionParameterSet(const std::string& optionName) const;
+
 		/// This method gets parameter of option specified by optionName.
 		/// It returns the value of the argument transformed to ValueType specified by the user.
 		/// @param ValueType Specifies a type of return value expected by the user.
