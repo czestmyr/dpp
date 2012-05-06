@@ -6,9 +6,10 @@
 
 namespace Arglib {
 
+/// Wrapper class for a pointer to the reference-counted Value class.
 class ValueHandle {
 	public:
-		/// Konstructs new instance of the handle and set handled Value to newValue.
+		/// Constructs new instance of the handle and set handled Value to newValue.
 		/// @param newValue Value to be stored in this instance of ValueHandle.
 		///	Default Value is NULL to reprezent no Value.
 		ValueHandle(Value* newValue = NULL);

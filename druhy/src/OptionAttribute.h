@@ -3,9 +3,11 @@
 
 namespace Arglib {
 
+/// Attribute of an option.
+/// Defines whether the option is required or not
 enum OptionAttribute {
-	OPTION_REQUIRED,
-	OPTION_ALLOWED
+	OPTION_REQUIRED, ///< Option is required
+	OPTION_ALLOWED ///< Option is allowed but not required
 };
 
 } // End namespace Arglib

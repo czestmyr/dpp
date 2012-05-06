@@ -6,6 +6,7 @@
 
 namespace Arglib {
 
+/// Base class for all parameter types.
 class Type {
 	public:
 		virtual ~Type() {};
