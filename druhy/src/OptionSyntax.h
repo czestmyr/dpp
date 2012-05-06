@@ -80,6 +80,11 @@ class OptionSyntax {
 		/// @return Id of the option.
 		unsigned int getId(const std::string& option) const;
 
+		/// Returns the first found synonymous name for the given option.
+		/// @param id The id of the option whose name is to be returned.
+		/// @return name of the option
+		std::string getOptionName(unsigned int id) const;
+
 		/// Returns a set of the options that have to be set in order for the parsing to succeed.
 		/// @return A std::set of the required option Ids (see OptionSyntax::getId()).
 		const std::set<unsigned int>& getRequiredOptions() const;

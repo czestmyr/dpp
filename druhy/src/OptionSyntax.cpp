@@ -121,6 +121,11 @@ unsigned int OptionSyntax::getId(const string& option) const {
 	return ids.find(option)->second;
 }
 
+std::string OptionSyntax::getOptionName(unsigned int id) const {
+	ConstSynonymRange synRange = synonyms.equal_range(id);
+	return synRange.first->second;
+}
+
 const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
 	return requiredOptions;
 }
@@ -164,7 +169,7 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 	stream << " ";
 
 	// Find the range of synonyms in the synonym multimap
-	SynonymMap::const_iterator synIt = synonyms.find(id);
+	SynonymMap::const_iterator synIt;
 	ConstSynonymRange synRange = synonyms.equal_range(id);
 
 	// Write out the list of the synonyms, prepended with dashes and divided by commas
