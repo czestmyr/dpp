@@ -10,7 +10,6 @@ using namespace std;
 using namespace Arglib;
 
 int main(int argc, const char* argv[]) {
-	//TODO: proc jsme vlastne pro Option neudelali vlastni tridu?
 	FrontEnd arglib;
 
 	FormatType formatType = FormatType();
@@ -47,7 +46,7 @@ int main(int argc, const char* argv[]) {
 	try {
 		arglib.parse(argc, argv);
 	} catch (ArgumentException e) {
-		cerr << "ls: " << e.what() << endl;
+		cerr << "time: " << e.what() << endl;
 		return 1;
 	}
 
