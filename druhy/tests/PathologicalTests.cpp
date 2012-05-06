@@ -12,6 +12,8 @@ void PathologicalTests::prepareTests() {
 	testSet.addTest(&PathologicalTests::sameOptionTwiceTest, "Adding the same option twice should throw an exception");
 	testSet.addTest(&PathologicalTests::sameSynonymTwiceTest, "Adding synonym with same name as existing option should throw an exception");
 	testSet.addTest(&PathologicalTests::synonymSameAsOriginalTest, "Adding synonym with same name as original option should throw an exception");
+	testSet.addTest(&PathologicalTests::undefinedOptionSetHelpTest, "Adding help to undefined option should throw an exception");
+	testSet.addTest(&PathologicalTests::requiredOptionNotSetTest, "Required option which weren't set should throw an exception");
 	testSet.addTest(&PathologicalTests::twoCallsOfParseFunctionTest, "Options parsed in last call should be reset in the new call of parse");
 	testSet.addTest(&PathologicalTests::twoCallsOfParseFunctionArgumentsTest, "Regular arguments parsed in last call should be reset in the new call of parse");
 	testSet.addTest(&PathologicalTests::wrongOptionSynonymCallOrder, "Synonyms must not be defined before basic options");
@@ -59,6 +61,28 @@ bool PathologicalTests::synonymSameAsOriginalTest() {
 
 	return false;
 }
+bool PathologicalTests::undefinedOptionSetHelpTest(){
+	FrontEnd arglib;
+
+	try {
+		arglib.setOptionHelp("i","Help to undefined option");
+	} catch (ArgumentException e) {
+		cout << "Exception: " << e.what();
+		return true;
+	}
+
+	return false;
+}
+
+bool PathologicalTests::requiredOptionNotSetTest() {
+	ArgList args;
+	args.push("program");
+
+	FrontEnd arglib;
+	arglib.addOption("t", OPTION_REQUIRED);
+
+	return Tests::parseMustThrow(arglib, args);
+}
 
 bool PathologicalTests::twoCallsOfParseFunctionTest() {
 	// TODO: check if option parameters are reseted as well
@@ -87,6 +111,7 @@ bool PathologicalTests::twoCallsOfParseFunctionTest() {
 
 	return noExceptionArgs1 && noExceptionArgs2 && isOptionSetArgs1 && !isOptionSetArgs2;
 }
+
 bool PathologicalTests::twoCallsOfParseFunctionArgumentsTest() {
 	// TODO: test if regular arguments are correctly read
 	ArgList args1;
