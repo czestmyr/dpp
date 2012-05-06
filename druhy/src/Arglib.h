@@ -1,6 +1,9 @@
 #ifndef _ARGLIB_H_
 #define _ARGLIB_H_
 
+/// Namespace for the whole Arglib library
+namespace Arglib {}
+
 #include "ArgumentException.h"
 #include "Value.h"
 #include "ParameterAttribute.h"
