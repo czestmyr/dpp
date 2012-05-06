@@ -92,7 +92,7 @@ class OptionSyntax {
 		/// @return a unique option Id.
 		unsigned int getUnusedId();
 
-		unsigned int lastId; /// Recently assigned unique option Id.
+		unsigned int lastId; ///< Recently assigned unique option Id.
 
 		/// Tells, whether the given option was already defined with the OptionSyntax::addOption() method.
 		/// @param optionName Any of the synonymous names for the option.
@@ -124,13 +124,13 @@ class OptionSyntax {
 		/// @param stream output stream to write into.
 		void writeOutLine(StrListIt lineBegin, StrListIt lineEnd, std::ostream& stream) const;
 
-		std::map<std::string, unsigned int> ids;                    /// Map of all option names to unique Ids
-		std::multimap<unsigned int, std::string> synonyms;          /// Map of synonymous names for each Id
-		std::map<unsigned int, ParameterAttribute> paramAttributes; /// Parameter attributes for each option
-		std::map<unsigned int, Type*> types;                        /// Parameter types for each option
-		std::map<unsigned int, std::string> helpStrings;            /// Help strings for each option
+		std::map<std::string, unsigned int> ids;                    ///< Map of all option names to unique Ids
+		std::multimap<unsigned int, std::string> synonyms;          ///< Map of synonymous names for each Id
+		std::map<unsigned int, ParameterAttribute> paramAttributes; ///< Parameter attributes for each option
+		std::map<unsigned int, Type*> types;                        ///< Parameter types for each option
+		std::map<unsigned int, std::string> helpStrings;            ///< Help strings for each option
 
-		std::set<unsigned int> requiredOptions; /// Set of options that have to be set for a successful parse.
+		std::set<unsigned int> requiredOptions; ///< Set of options that have to be set for a successful parse.
 };
 
 #endif
