@@ -6,6 +6,7 @@
 
 namespace Arglib {
 
+/// Class IntValue encapsulates the primitive type int.
 class IntValue: public Value {
 	public:
 		IntValue(int newValue): value(newValue) {}
@@ -14,10 +15,12 @@ class IntValue: public Value {
 		void set(int newValue) { value = newValue; }
 		int get() { return value; }
 	private:
-		int value;
+		int value; ///< field to hold the value
 };
 
-template <> int ValueHandle::getValue<int>();
+template <>
+int ValueHandle::getValue<int>();
+
 
 } // End namespace Arglib
 

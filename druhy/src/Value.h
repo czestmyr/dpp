@@ -3,6 +3,10 @@
 
 namespace Arglib {
 
+/// Class Value serves as a base class for other Value classes
+/// and provides for them reference counting.
+/// Refcountig doesn't work transparently automatically
+/// and has be done manually using methods grab() and drop().
 class Value {
 	public:
 		Value();
@@ -27,7 +31,7 @@ class Value {
 		void drop();
 
 	private:
-		int refCount;
+		int refCount;///< Number of references pointing to this instance
 };
 
 } // End namespace Arglib

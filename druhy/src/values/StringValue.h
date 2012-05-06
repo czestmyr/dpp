@@ -7,6 +7,7 @@
 
 namespace Arglib {
 
+/// Class StringValue encapsulates type string.
 class StringValue : public Value {
 	public:
 		StringValue(std::string newValue):value(newValue){}
@@ -15,7 +16,7 @@ class StringValue : public Value {
 		void set(std::string newValue) { value = newValue; }
 		std::string get() { return value; }
 	private:
-		std::string value;
+		std::string value; ///< field to hold the value
 
 };
 

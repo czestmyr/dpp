@@ -6,6 +6,7 @@
 
 namespace Arglib {
 
+/// Class BoolValue encapsulates the primitive type bool.
 class BoolValue: public Value {
 	public:
 		BoolValue(bool newValue): value(newValue) {}
@@ -14,10 +15,11 @@ class BoolValue: public Value {
 		void set(bool newValue) { value = newValue; }
 		bool get() { return value; }
 	private:
-		bool value;
+		bool value; ///< field to hold the value
 };
 
-template <> bool ValueHandle::getValue<bool>();
+template <>
+bool ValueHandle::getValue<bool>();
 
 } // End namespace Arglib
 
