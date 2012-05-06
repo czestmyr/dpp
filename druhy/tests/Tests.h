@@ -7,8 +7,14 @@
 
 #include "TestFunction.h"
 
+// Let's be a little bit bad and use s using definition in a header file. After all, we are only in tests
+using namespace Arglib;
+
 class ArgList;
-class FrontEnd;
+
+namespace Arglib {
+	class FrontEnd;
+}
 
 class Tests {
 	public:
