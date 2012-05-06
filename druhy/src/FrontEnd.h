@@ -16,7 +16,10 @@
 class FrontEnd {
 	public:
 		FrontEnd();
+		FrontEnd(const FrontEnd& other);
 		~FrontEnd();
+
+		FrontEnd& operator=(const FrontEnd& other);
 
 		/// TODO: Document, what a "DerivedType" is
 		template <class DerivedType>

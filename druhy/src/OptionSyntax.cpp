@@ -11,13 +11,17 @@ typedef pair<SynonymMap::const_iterator, SynonymMap::const_iterator> ConstSynony
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
+OptionSyntax::OptionSyntax(const OptionSyntax& other) {
+	initFrom(other);
+}
+
 OptionSyntax::~OptionSyntax() {
-	// Delete all the types
-	map<unsigned int, Type*>::iterator it = types.begin();
-	while (it != types.end()) {
-		delete it->second;
-		it++;
-	}
+	deinit();
+}
+
+OptionSyntax& OptionSyntax::operator=(const OptionSyntax& other) {
+	deinit();
+	initFrom(other);
 }
 
 void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
@@ -109,6 +113,32 @@ unsigned int OptionSyntax::getId(const string& option) const {
 
 const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
 	return requiredOptions;
+}
+
+void OptionSyntax::deinit() {
+	// Delete all the types
+	map<unsigned int, Type*>::iterator it = types.begin();
+	while (it != types.end()) {
+		delete it->second;
+		it++;
+	}
+}
+
+void OptionSyntax::initFrom(const OptionSyntax& other) {
+	lastId = other.lastId;
+	ids = other.ids;
+	synonyms = other.synonyms;
+	paramAttributes = other.paramAttributes;
+	helpStrings = other.helpStrings;
+	requiredOptions = other.requiredOptions;
+
+	// Clone all the types from the other syntax
+	types.clear();
+	map<unsigned int, Type*>::const_iterator it = other.types.begin();
+	while (it != other.types.end()) {
+		types.insert(pair<unsigned int, Type*>(it->first, it->second->clone()));
+		it++;
+	}
 }
 
 unsigned int OptionSyntax::getUnusedId() {

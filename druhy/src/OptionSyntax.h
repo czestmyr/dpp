@@ -15,7 +15,10 @@ typedef std::list<std::string>::iterator StrListIt;
 class OptionSyntax {
 	public:
 		OptionSyntax();
+		OptionSyntax(const OptionSyntax& other);
 		~OptionSyntax();
+
+		OptionSyntax& operator=(const OptionSyntax& other);
 
 		void addOption(const std::string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib);
 		void addSynonym(const std::string& original, const std::string& synonym);
@@ -30,6 +33,9 @@ class OptionSyntax {
 
 		const std::set<unsigned int>& getRequiredOptions() const;
 	private:
+		void deinit();
+		void initFrom(const OptionSyntax& other);
+
 		unsigned int getUnusedId();
 		unsigned int lastId;
 

@@ -10,9 +10,21 @@ FrontEnd::FrontEnd() {
 	data = new ArgumentData();
 }
 
+FrontEnd::FrontEnd(const FrontEnd& other) {
+	syntax = new OptionSyntax(*other.syntax);
+	data = new ArgumentData(*other.data);
+}
+
 FrontEnd::~FrontEnd() {
 	delete data;
 	delete syntax;
+}
+
+FrontEnd& FrontEnd::operator=(const FrontEnd& other) {
+	delete data;
+	delete syntax;
+	syntax = new OptionSyntax(*other.syntax);
+	data = new ArgumentData(*other.data);
 }
 
 void FrontEnd::addSynonym(const string& original, const string& synonym) {
