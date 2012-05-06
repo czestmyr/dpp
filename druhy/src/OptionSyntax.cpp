@@ -58,7 +58,7 @@ ParameterAttribute OptionSyntax::getAttribute(const string& option) const {
 	return paramAttributes.find(id)->second;
 }
 
-const Type* OptionSyntax::getType(const string& option) const {
+const Type* OptionSyntax::getParameterType(const string& option) const {
 	unsigned int id = getId(option);
 	return types.find(id)->second;
 }
