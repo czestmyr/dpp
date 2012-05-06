@@ -8,6 +8,8 @@ using namespace std;
 
 typedef multimap<unsigned int, string> SynonymMap;
 typedef pair<SynonymMap::const_iterator, SynonymMap::const_iterator> ConstSynonymRange;
+typedef map<unsigned int, ParameterAttribute> ParamAttributeMap;
+typedef map<unsigned int, Type*> ParamTypeMap;
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
@@ -67,7 +69,8 @@ void OptionSyntax::setOptionHelp(const string& option, const string& helpString)
 }
 
 void OptionSyntax::writeHelp(ostream& stream, int terminalSize) const {
-	stream << "\tOption help:" << endl << endl;
+	stream << "\tOption help:" << endl;
+	stream << "\t(* = Required option; [ PARAM ] = Optional parameter)" << endl << endl;
 
 	// We iterate over all option ids until we encounter a new one
 	set<unsigned int> processedIds;
@@ -80,12 +83,14 @@ void OptionSyntax::writeHelp(ostream& stream, int terminalSize) const {
 		if (processedIds.count(id) == 0) {
 			processedIds.insert(id);
 
-			writeSynonyms(id, stream);
-			
+			stream << "\t";
 			// Write out option attribute if necessarry
 			if (requiredOptions.count(id) > 0) {
-				stream << "; REQUIRED";
+				stream << "*";
 			}
+			writeSynonyms(id, stream);
+			writeParameter(id, stream);
+			
 			stream << endl;
 
 			// Get the help string
@@ -120,7 +125,7 @@ const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
 
 void OptionSyntax::deinit() {
 	// Delete all the types
-	map<unsigned int, Type*>::iterator it = types.begin();
+	ParamTypeMap::iterator it = types.begin();
 	while (it != types.end()) {
 		delete it->second;
 		it++;
@@ -137,7 +142,7 @@ void OptionSyntax::initFrom(const OptionSyntax& other) {
 
 	// Clone all the types from the other syntax
 	types.clear();
-	map<unsigned int, Type*>::const_iterator it = other.types.begin();
+	ParamTypeMap::const_iterator it = other.types.begin();
 	while (it != other.types.end()) {
 		types.insert(pair<unsigned int, Type*>(it->first, it->second->clone()));
 		it++;
@@ -154,7 +159,7 @@ bool OptionSyntax::isOptionDefined(const string& optionName) const {
 }
 
 void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
-	stream << "\t";
+	stream << " ";
 
 	// Find the range of synonyms in the synonym multimap
 	SynonymMap::const_iterator synIt = synonyms.find(id);
@@ -172,6 +177,36 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 			stream << "--";
 		}
 		stream << synIt->second;
+	}
+}
+
+void OptionSyntax::writeParameter(unsigned int id, std::ostream& stream) const {
+	// Find out whether there is any parameter at all and what is its attribute
+	ParamAttributeMap::const_iterator attrIt = paramAttributes.find(id);
+	if (attrIt == paramAttributes.end()) {
+		return;
+	}
+
+	ParameterAttribute attrib = attrIt->second;
+	if (attrib == PARAM_FORBIDDEN) {
+		return;
+	}
+
+	ParamTypeMap::const_iterator typeIt = types.find(id);
+	if (typeIt == types.end()) {
+		return;
+	}
+
+	stream << " ";
+
+	// Write out the parameter with brackets if it is optional.
+	if (attrib == PARAM_ALLOWED) {
+		stream << "[ ";
+	}
+	Type* paramType = typeIt->second;
+	stream << paramType->syntaxHelpPlaceholder();
+	if (attrib == PARAM_ALLOWED) {
+		stream << " ]";
 	}
 }
 

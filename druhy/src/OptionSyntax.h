@@ -42,6 +42,7 @@ class OptionSyntax {
 		bool isOptionDefined(const std::string& optionName) const;
 
 		void writeSynonyms(unsigned int id, std::ostream& stream) const;
+		void writeParameter(unsigned int id, std::ostream& stream) const;
 		void writeWithLimit(std::string& string, int limit, std::ostream& stream) const;
 		void writeOutLine(StrListIt lineBegin, StrListIt lineEnd, std::ostream& stream) const;
 

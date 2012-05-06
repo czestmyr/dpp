@@ -22,6 +22,12 @@ class Type {
 		/// The method should return the new object's pointer cast to Type*
 		virtual Type* clone() const = 0;
 
+		/// Returns a string that will be printed in OptionSyntax help for options with
+		/// parameters with this type.
+		virtual const char* syntaxHelpPlaceholder() const {
+			return "PARAM";
+		}
+
 		template <typename DerivedType>
 		static Type* getClone(const DerivedType& type) {
 			// Compilation-time checks will ensure that type is derived from Type

@@ -23,7 +23,7 @@ bool UseCases::runShortOptionsTest() {
 	IntegerType integer = IntegerType();
 	integer.setHighBound(100);
 	integer.setLowBound(0);
-	arglib.addOption("p", OPTION_ALLOWED, integer, PARAM_REQUIRED);
+	arglib.addOption("p", OPTION_ALLOWED, integer, PARAM_ALLOWED);
 	arglib.setOptionHelp("p", "Help for the integer option. I want it to be very long so that I can test the automatic line breaking routine that I just created. Hopefully, it will look as good as I suppose. We'll see. If it is not good, I will have to program the line-breaking routine again.");
 
 	cout << endl;
