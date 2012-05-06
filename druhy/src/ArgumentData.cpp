@@ -2,7 +2,7 @@
 
 using namespace std;
 
-bool ArgumentData::addArgument(const string& argument) {
+void ArgumentData::addArgument(const string& argument) {
 	arguments.push_back(argument);
 }
 
