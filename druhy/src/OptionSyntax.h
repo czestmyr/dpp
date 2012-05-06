@@ -61,6 +61,7 @@ class OptionSyntax {
 		/// The option can be specified by any of the so-far defined synonyms for it.
 		/// @param option The name of the option.
 		/// @return Type of the option's parameter. If the option has no parameter, DummyType is returned.
+		/// @throws ArgumentException In case the option weren't defined.
 		const Type* getParameterType(const std::string& option) const;
 
 		/// Sets a help string for the given option.
@@ -69,6 +70,7 @@ class OptionSyntax {
 		/// documentation for the option ;-)
 		/// @param option Name of the option.
 		/// @param helpString Help for this option.
+		/// @throws ArgumentException In case the option weren't defined.
 		void setOptionHelp(const std::string& option, const std::string& helpString);
 
 		/// Writes help for all options into the given output stream.
@@ -81,6 +83,7 @@ class OptionSyntax {
 		/// The option can be specified by any of the so-far defined synonyms for it. In fact, the definition
 		/// of a synonymous option is that it has the same id. The id can be used in calls to ArgumentData.
 		/// @return Id of the option.
+		/// @throws ArgumentException In case the option weren't defined.
 		unsigned int getId(const std::string& option) const;
 
 		/// Returns the first found synonymous name for the given option.
