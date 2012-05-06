@@ -49,6 +49,12 @@ bool FrontEnd::isOptionSet(const string& optionName) const {
 	data->isOptionSet(id);
 }
 
+bool FrontEnd::isOptionParameterSet(const string& optionName) const {
+	unsigned int id = syntax->getId(optionName);
+	ValueHandle valueHandle = data->getOptionParameter(id);
+	return !valueHandle.isEmpty();
+}
+
 const vector<string>& FrontEnd::getRegularArguments() const {
 	data->getArguments();
 }
