@@ -5,6 +5,7 @@
 using namespace std;
 
 FileType::FileType() {	
+	parameterName = "FILE";
 }
 
 FileType::~FileType() {
@@ -20,6 +21,3 @@ Type* FileType::clone() const {
 	return new FileType(*this);
 }
 
-const char* FileType::syntaxHelpPlaceHolder() const {
-	return "FILE";
-}

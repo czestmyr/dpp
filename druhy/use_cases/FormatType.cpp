@@ -5,6 +5,7 @@
 using namespace std;
 
 FormatType::FormatType() {	
+	parameterName = "FORMAT";
 }
 
 FormatType::~FormatType() {
@@ -20,6 +21,3 @@ Type* FormatType::clone() const {
 	return new FormatType(*this);
 }
 
-const char* FormatType::syntaxHelpPlaceHolder() const {
-	return "FORMAT";
-}

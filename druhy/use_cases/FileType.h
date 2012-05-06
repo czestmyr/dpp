@@ -10,7 +10,6 @@ class FileType: public Type {
 
 		Value* fromString(const std::string& argument) const;
 		Type* clone() const;
-		const char* syntaxHelpPlaceHolder() const;
 	private:
 };
 

@@ -8,6 +8,7 @@ using namespace std;
 IntegerType::IntegerType() {
 	hasLowBound = false;
 	hasHighBound = false;
+	parameterName = "INTEGER";
 }
 
 void IntegerType::setLowBound(int bound) {

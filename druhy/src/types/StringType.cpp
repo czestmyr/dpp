@@ -7,7 +7,7 @@
 using namespace std;
 
 StringType::StringType() {
-	
+	parameterName = "STRING";	
 }
 
 Value* StringType::fromString(const string& argument) const {

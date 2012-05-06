@@ -24,8 +24,14 @@ class Type {
 
 		/// Returns a string that will be printed in OptionSyntax help for options with
 		/// parameters with this type.
-		virtual const char* syntaxHelpPlaceHolder() const {
-			return "PARAM";
+		std::string getParameterName() const {
+			return parameterName;
+		}
+		
+		/// Sets a string that will be printed in OptionSyntax help for options with
+		/// parameters with this type.
+		void setParameterName(const std::string& newParameterName) {
+			parameterName = newParameterName;
 		}
 
 		template <typename DerivedType>
@@ -35,6 +41,8 @@ class Type {
 			Type* typeCopy = typePtr->clone();
 			return typeCopy;
 		}
+	protected:
+		std::string parameterName;
 };
 
 #endif

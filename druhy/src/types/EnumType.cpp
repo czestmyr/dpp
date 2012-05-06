@@ -6,6 +6,7 @@
 using namespace std;
 
 EnumType::EnumType() {
+	parameterName = "ENUM";
 }
 
 void EnumType::addAllowedStrings(const std::vector<std::string>& newStrings) {

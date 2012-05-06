@@ -18,5 +18,5 @@ ${NAME_LS}: ls.o ${OBJECTS}
 	g++ ${CXXFLAGS} -c $< -o $@
 
 clean:
-	rm -rf time.o ls.o ${OBJECTS} ${NAME}
+	rm -rf time.o ls.o ${OBJECTS} ${NAME_LS} ${NAME_TIME}
 

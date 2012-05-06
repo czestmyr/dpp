@@ -1,6 +1,4 @@
 #include "Arglib.h"
-#include "FormatType.h"
-#include "FileType.h"
 
 #include <string>
 #include <iostream>
@@ -12,58 +10,54 @@ int main(int argc, const char* argv[]) {
 	//TODO: proc jsme vlastne pro Option neudelali vlastni tridu?
 	FrontEnd arglib;
 
-	FormatType formatType = FormatType();
-	arglib.addOption("f", OPTION_ALLOWED, formatType, PARAM_REQUIRED);
-	arglib.addSynonym("f","format");
-	arglib.setOptionHelp("f", "Specify output format, possibly overriding the format specified in the environment variable TIME.");
-
-	arglib.addOption("p");
-	arglib.addSynonym("p","portability");
-	arglib.setOptionHelp("p", "Use the portable output format.");
-
-	FileType fileType = FileType();
-	arglib.addOption("o", OPTION_ALLOWED, fileType, PARAM_REQUIRED);
-	arglib.addSynonym("o","output");
-	arglib.setOptionHelp("o", "Do not send the results to stderr, but overwrite the specified file.");
-
 	arglib.addOption("a");
-	arglib.addSynonym("a","append");
-	arglib.setOptionHelp("a", "(Used together with -o.) Do not overwrite but append.");
+	arglib.addSynonym("a","all");
+	arglib.setOptionHelp("a", "do not ignore entries starting with .");
+	
+	StringType sizeType = StringType();
+	sizeType.setParameterName("SIZE");
+	arglib.addOption("block-size", OPTION_ALLOWED, sizeType, PARAM_REQUIRED);
+	arglib.setOptionHelp("block-size", "scale sizes by SIZE before printing them.  E.g., `--block-size=M' prints sizes in units of 1,048,576 bytes.   See  SIZE  format below.");
 
-	arglib.addOption("v");
-	arglib.addSynonym("v","verbose");
-	arglib.setOptionHelp("v", "Give very verbose output about all the program knows about.");
+	IntegerType widthType = IntegerType();
+	widthType.setParameterName("COLS");
+	widthType.setLowBound(0);
+	arglib.addOption("w", OPTION_ALLOWED, widthType, PARAM_REQUIRED);
+	arglib.addSynonym("w","width");
+	arglib.setOptionHelp("w", "assume screen width instead of current value");
+
+
+	arglib.addOption("d");
+	arglib.addSynonym("d","directory");
+	arglib.setOptionHelp("d", "list directory entries instead of contents, and do not dereference symbolic links");
 
 	arglib.addOption("help");
-	arglib.setOptionHelp("help", "Print a usage message on standard output and exit successfully.");
+	arglib.setOptionHelp("help", "display this help and exit");
 
-	arglib.addOption("V");
-	arglib.addSynonym("V","version");
-	arglib.setOptionHelp("V", "Print version information on standard output, then exit successfully.");
+	arglib.addOption("version");
+	arglib.setOptionHelp("version", "output version information and exit");
+
 
 	arglib.parse(argc, argv);
 	if (arglib.isOptionSet("help")) {
 		arglib.writeHelp(cout);
 	}
-	if (arglib.isOptionSet("f")) {
-		string val = arglib.getOptionParameter<string>("f");
-		cout << "Option: " << "f" << " has param: " << val << endl; 
+	if (arglib.isOptionSet("block-size")) {
+		int val = arglib.getOptionParameter<int>("block-size");
+		cout << "Option: " << "block-size" << " has param: " << val << endl; 
 	}
-	if (arglib.isOptionSet("portability")) {
-		cout << "Option: " << "portability" << " was set." << endl; 
-	}
-	if (arglib.isOptionSet("o")) {
-		string val = arglib.getOptionParameter<string>("o");
-		cout << "Option: " << "o" << " has param: " << val << endl; 
+	if (arglib.isOptionSet("w")) {
+		int val = arglib.getOptionParameter<int>("w");
+		cout << "Option: " << "w" << " has param: " << val << endl; 
 	}
 	if (arglib.isOptionSet("a")) {
 		cout << "Option: " << "a" << " was set." << endl; 
 	}
-	if (arglib.isOptionSet("v")) {
-		cout << "Option: " << "v" << " was set." << endl; 
+	if (arglib.isOptionSet("d")) {
+		cout << "Option: " << "d" << " was set." << endl; 
 	}
-	if (arglib.isOptionSet("V")) {
-		cout << "Option: " << "V" << " was set." << endl; 
+	if (arglib.isOptionSet("version")) {
+		cout << "Option: " << "version" << " was set." << endl; 
 	}
 
 	cout << "Program got this arguments:";
