@@ -7,12 +7,12 @@ namespace Arglib {
 template <>
 int ValueHandle::getValue<int>() {
 	if (isEmpty()) {
-		throw ArgumentException("No parametr were added to this option.");
+		throw ArgumentException("No parameter specified.");
 	}
 
 	IntValue* intValue = dynamic_cast<IntValue*>(valuePtr);
 	if (intValue == NULL) {
-		throw ArgumentException("Type defined with this option doesn't match type required by this function.");
+		throw ArgumentException("This option has a different type than specified in template function");
 	}
 	return intValue->get();
 
