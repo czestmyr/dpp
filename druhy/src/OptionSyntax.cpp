@@ -6,6 +6,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 typedef multimap<unsigned int, string> SynonymMap;
 typedef pair<SynonymMap::const_iterator, SynonymMap::const_iterator> ConstSynonymRange;
 typedef map<unsigned int, ParameterAttribute> ParamAttributeMap;
@@ -264,4 +266,6 @@ void OptionSyntax::writeOutLine(StrListIt lineBegin, StrListIt lineEnd, ostream&
 	}
 	stream << endl;
 }
+
+} // End namespace Arglib
 

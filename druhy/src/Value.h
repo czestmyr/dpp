@@ -1,6 +1,8 @@
 #ifndef _ARGLIB_VALUE_H_
 #define _ARGLIB_VALUE_H_
 
+namespace Arglib {
+
 class Value {
 	public:
 		Value();
@@ -27,6 +29,8 @@ class Value {
 	private:
 		int refCount;
 };
+
+} // End namespace Arglib
 
 #endif
 

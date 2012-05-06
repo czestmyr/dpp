@@ -1,5 +1,7 @@
 #include "Value.h"
 
+namespace Arglib {
+
 Value::Value(): refCount(0) {}
 
 Value::~Value() {}
@@ -14,4 +16,6 @@ void Value::drop() {
 		delete this;
 	}
 }
+
+} // End namespace Arglib
 

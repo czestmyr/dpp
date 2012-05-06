@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 EnumType::EnumType() {
 	parameterName = "ENUM";
 }
@@ -16,6 +18,7 @@ void EnumType::addAllowedStrings(const std::vector<std::string>& newStrings) {
 void EnumType::addAllowedString(const std::string& newString) {
 	allowedStrings.insert(newString);
 }
+
 Value* EnumType::fromString(const string& argument) const {
 
 	StringParser argParser(argument);
@@ -49,4 +52,6 @@ Value* EnumType::fromString(const string& argument) const {
 Type* EnumType::clone() const {
 	return new EnumType(*this);
 }
+
+} // End namespace Arglib
 

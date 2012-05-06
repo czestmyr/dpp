@@ -1,6 +1,8 @@
 #include "BoolValue.h"
 #include "../ArgumentException.h"
 
+namespace Arglib {
+
 //TODO: Add proper information to this exception!
 template <> bool ValueHandle::getValue<bool>() {
 		if( valuePtr == NULL ) {
@@ -14,4 +16,6 @@ template <> bool ValueHandle::getValue<bool>() {
 		return boolValue->get();
 
 };
+
+} // End namespace Arglib
 

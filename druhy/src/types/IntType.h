@@ -4,6 +4,8 @@
 #include "../Type.h"
 #include "../Value.h"
 
+namespace Arglib {
+
 /// Represents integer parameter of an option in command line parameters.
 /// It's class derived from Type and overrides methods fromString() and clone().
 /// Using method fromString it parses string parametr and converts them to
@@ -37,5 +39,7 @@ class IntType: public Type {
 		int lowBound; ///< Low bound of this integer type.
 		int highBound; ///< High bound of this integer type.
 };
+
+} // End namespace Arglib
 
 #endif

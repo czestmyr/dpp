@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 void ArgumentData::addArgument(const string& argument) {
 	arguments.push_back(argument);
 }
@@ -27,3 +29,6 @@ void ArgumentData::resetToEmpty() {
 	arguments.clear();
 	options.clear();
 }
+
+} // End namespace Arglib
+

@@ -4,6 +4,8 @@
 #include "../Value.h"
 #include "../ValueHandle.h"
 
+namespace Arglib {
+
 class IntValue: public Value {
 	public:
 		IntValue(int newValue): value(newValue) {}
@@ -16,5 +18,7 @@ class IntValue: public Value {
 };
 
 template <> int ValueHandle::getValue<int>();
+
+} // End namespace Arglib
 
 #endif

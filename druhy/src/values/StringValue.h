@@ -5,6 +5,8 @@
 #include "../Value.h"
 #include "../ValueHandle.h"
 
+namespace Arglib {
+
 class StringValue : public Value {
 	public:
 		StringValue(std::string newValue):value(newValue){}
@@ -19,5 +21,7 @@ class StringValue : public Value {
 
 template <>
 std::string ValueHandle::getValue<std::string>();
+
+} // End namespace Arglib
 
 #endif

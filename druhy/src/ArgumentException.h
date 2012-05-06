@@ -4,6 +4,8 @@
 #include <exception>
 #include <string>
 
+namespace Arglib {
+
 /// Exception that happened during parsing of the arguments.
 class ArgumentException: public std::exception {
 	public:
@@ -13,6 +15,8 @@ class ArgumentException: public std::exception {
 	private:
 		std::string message;
 };
+
+} // End namespace Arglib
 
 #endif
 

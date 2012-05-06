@@ -3,6 +3,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 StringParser::StringParser(const string& toParse): parsedString(toParse), position(0) {}
 
 int StringParser::parseMany(const string& chars, CharMatchingLogic logic) {
@@ -67,4 +69,6 @@ int StringParser::parseOneInternal(const string& chars, CharMatchingLogic logic)
 		return 1;
 	}
 }
+
+} // End namespace Arglib
 

@@ -4,6 +4,8 @@
 #include "../Value.h"
 #include "../ValueHandle.h"
 
+namespace Arglib {
+
 class BoolValue: public Value {
 	public:
 		BoolValue(bool newValue): value(newValue) {}
@@ -16,5 +18,7 @@ class BoolValue: public Value {
 };
 
 template <> bool ValueHandle::getValue<bool>();
+
+} // End namespace Arglib
 
 #endif

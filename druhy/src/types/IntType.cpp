@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace Arglib {
+
 IntType::IntType() {
 	hasLowBound = false;
 	hasHighBound = false;
@@ -68,4 +70,6 @@ Value* IntType::fromString(const string& argument) const {
 Type* IntType::clone() const {
 	return new IntType(*this);
 }
+
+} // End namespace Arglib
 
