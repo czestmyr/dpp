@@ -3,6 +3,7 @@
 #include "../src/values/Values.h"
 // TODO: improve the inlcude chaing
 using namespace std;
+using namespace Arglib;
 
 FileType::FileType() {	
 	parameterName = "FILE";

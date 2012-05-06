@@ -5,6 +5,7 @@
 #include <vector>
 
 using namespace std;
+using namespace Arglib;
 
 int main(int argc, const char* argv[]) {
 	//TODO: proc jsme vlastne pro Option neudelali vlastni tridu?

@@ -3,13 +3,13 @@
 
 #include "Arglib.h"
 
-class FileType: public Type {
+class FileType: public Arglib::Type {
 	public:
 		FileType();
 		~FileType();
 
-		Value* fromString(const std::string& argument) const;
-		Type* clone() const;
+		Arglib::Value* fromString(const std::string& argument) const;
+		Arglib::Type* clone() const;
 	private:
 };
 

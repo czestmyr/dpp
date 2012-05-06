@@ -3,13 +3,13 @@
 
 #include "Arglib.h"
 
-class FormatType: public Type {
+class FormatType: public Arglib::Type {
 	public:
 		FormatType();
 		~FormatType();
 
-		Value* fromString(const std::string& argument) const;
-		Type* clone() const;
+		Arglib::Value* fromString(const std::string& argument) const;
+		Arglib::Type* clone() const;
 	private:
 };
 
