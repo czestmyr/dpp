@@ -29,10 +29,10 @@ OptionSyntax& OptionSyntax::operator=(const OptionSyntax& other) {
 }
 
 void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
-	if(isOptionDefined(optionName)) {
+	if (isOptionDefined(optionName)) {
 		// Prevent type memory leaking by deleting the newly copied type
 		delete paramType;
-		throw ArgumentException("Option: " + optionName + "has been already defined");
+		throw ArgumentException("Option: " + optionName + " has been already defined");
 	}
 	unsigned int id = getUnusedId();
 	ids.insert(pair<string, unsigned int>(optionName, id));
@@ -47,8 +47,8 @@ void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAtt
 }
 
 void OptionSyntax::addSynonym(const string& original, const string& synonym) {
-	if(isOptionDefined(synonym)) {
-		throw ArgumentException("Option: " + synonym + "has been already defined");
+	if (isOptionDefined(synonym)) {
+		throw ArgumentException("Option: " + synonym + " has been already defined");
 	}
 	unsigned int id = getId(original);
 	ids.insert(pair<string, unsigned int>(synonym, id));
