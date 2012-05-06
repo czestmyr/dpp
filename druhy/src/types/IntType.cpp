@@ -1,27 +1,27 @@
 #include <cstdlib>
-#include "IntegerType.h"
+#include "IntType.h"
 #include "../values/Values.h"
 #include "../StringParser.h"
 
 using namespace std;
 
-IntegerType::IntegerType() {
+IntType::IntType() {
 	hasLowBound = false;
 	hasHighBound = false;
 	parameterName = "INTEGER";
 }
 
-void IntegerType::setLowBound(int bound) {
+void IntType::setLowBound(int bound) {
 	hasLowBound = true;
 	lowBound = bound;
 }
 
-void IntegerType::setHighBound(int bound) {
+void IntType::setHighBound(int bound) {
 	hasHighBound = true;
 	highBound = bound;
 }
 
-Value* IntegerType::fromString(const string& argument) const {
+Value* IntType::fromString(const string& argument) const {
 	StringParser argParser(argument);
 
 	// Parse some whitespace, followed by a plus or minus sign and some
@@ -65,7 +65,7 @@ Value* IntegerType::fromString(const string& argument) const {
 	return val;
 }
 
-Type* IntegerType::clone() const {
-	return new IntegerType(*this);
+Type* IntType::clone() const {
+	return new IntType(*this);
 }
 

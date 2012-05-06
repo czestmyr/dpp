@@ -20,7 +20,7 @@ bool UseCases::runShortOptionsTest() {
 	arglib.addOption("v", OPTION_REQUIRED);
 	arglib.addSynonym("v", "u");
 
-	IntegerType integer = IntegerType();
+	IntType integer = IntType();
 	integer.setHighBound(100);
 	integer.setLowBound(0);
 	arglib.addOption("p", OPTION_ALLOWED, integer, PARAM_ALLOWED);

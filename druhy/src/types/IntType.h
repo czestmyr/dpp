@@ -1,13 +1,13 @@
-#ifndef _ARGLIB_INTEGER_TYPE_H_
-#define _ARGLIB_INTEGER_TYPE_H_
+#ifndef _ARGLIB_INT_TYPE_H_
+#define _ARGLIB_INT_TYPE_H_
 
 #include "../Type.h"
 #include "../Value.h"
 
-class IntegerType: public Type {
+class IntType: public Type {
 	public:
-		IntegerType();
-		~IntegerType() {}
+		IntType();
+		~IntType() {}
 
 		void setLowBound(int bound);
 		void setHighBound(int bound);

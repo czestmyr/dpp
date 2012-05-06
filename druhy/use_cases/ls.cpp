@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
 	arglib.addOption("block-size", OPTION_ALLOWED, sizeType, PARAM_REQUIRED);
 	arglib.setOptionHelp("block-size", "scale sizes by SIZE before printing them.  E.g., `--block-size=M' prints sizes in units of 1,048,576 bytes.   See  SIZE  format below.");
 
-	IntegerType widthType = IntegerType();
+	IntType widthType = IntType();
 	widthType.setParameterName("COLS");
 	widthType.setLowBound(0);
 	arglib.addOption("w", OPTION_ALLOWED, widthType, PARAM_REQUIRED);
