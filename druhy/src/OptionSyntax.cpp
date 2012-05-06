@@ -11,17 +11,23 @@ typedef pair<SynonymMap::const_iterator, SynonymMap::const_iterator> ConstSynony
 
 OptionSyntax::OptionSyntax(): lastId(0) {}
 
+OptionSyntax::OptionSyntax(const OptionSyntax& other) {
+	initFrom(other);
+}
+
 OptionSyntax::~OptionSyntax() {
-	// Delete all the types
-	map<unsigned int, Type*>::iterator it = types.begin();
-	while (it != types.end()) {
-		delete it->second;
-		it++;
-	}
+	deinit();
+}
+
+OptionSyntax& OptionSyntax::operator=(const OptionSyntax& other) {
+	deinit();
+	initFrom(other);
 }
 
 void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
 	if(isOptionDefined(optionName)) {
+		// Prevent type memory leaking by deleting the newly copied type
+		delete paramType;
 		throw ArgumentException("Option: " + optionName + "has been already defined");
 	}
 	unsigned int id = getUnusedId();
@@ -29,6 +35,7 @@ void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAtt
 	synonyms.insert(pair<unsigned int, string>(id, optionName));
 	paramAttributes.insert(pair<unsigned int, ParameterAttribute>(id, paramAttrib));
 	types.insert(pair<unsigned int, Type*>(id, paramType));
+
 
 	if (optionAttrib == OPTION_REQUIRED) {
 		requiredOptions.insert(id);
@@ -74,6 +81,12 @@ void OptionSyntax::writeHelp(ostream& stream, int terminalSize) const {
 			processedIds.insert(id);
 
 			writeSynonyms(id, stream);
+			
+			// Write out option attribute if necessarry
+			if (requiredOptions.count(id) > 0) {
+				stream << "; REQUIRED";
+			}
+			stream << endl;
 
 			// Get the help string
 			map<unsigned int, string>::const_iterator helpIt;
@@ -105,6 +118,32 @@ const set<unsigned int>& OptionSyntax::getRequiredOptions() const {
 	return requiredOptions;
 }
 
+void OptionSyntax::deinit() {
+	// Delete all the types
+	map<unsigned int, Type*>::iterator it = types.begin();
+	while (it != types.end()) {
+		delete it->second;
+		it++;
+	}
+}
+
+void OptionSyntax::initFrom(const OptionSyntax& other) {
+	lastId = other.lastId;
+	ids = other.ids;
+	synonyms = other.synonyms;
+	paramAttributes = other.paramAttributes;
+	helpStrings = other.helpStrings;
+	requiredOptions = other.requiredOptions;
+
+	// Clone all the types from the other syntax
+	types.clear();
+	map<unsigned int, Type*>::const_iterator it = other.types.begin();
+	while (it != other.types.end()) {
+		types.insert(pair<unsigned int, Type*>(it->first, it->second->clone()));
+		it++;
+	}
+}
+
 unsigned int OptionSyntax::getUnusedId() {
 	lastId++;
 	return lastId;
@@ -134,7 +173,6 @@ void OptionSyntax::writeSynonyms(unsigned int id, ostream& stream) const {
 		}
 		stream << synIt->second;
 	}
-	stream << endl;
 }
 
 void OptionSyntax::writeWithLimit(string& str, int limit, ostream& stream) const {
