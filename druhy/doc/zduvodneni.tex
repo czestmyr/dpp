@@ -1,0 +1,93 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{a4wide}
+
+%opening
+\title{Zdůvodnění návrhu k 2.úkolu na DPP}
+\author{Martin Bulant a Čestmír Houška}
+
+\begin{document}
+
+\maketitle
+
+\section*{Zvolené technologie}
+
+Pro naše řešení knihovny jsme si zvolili jazyk C++, se kterým máme oba největší zkušenosti. Po prozkoumání
+požadavků ze zadání jsme se rozhodli, že až na občasné počítání referencí a parsování řetězců nebude potřeba
+používat žádnou jinou knihovnu, než standartní STL. Proto jsme si počítání referencí a parsování napsali také
+sami, abychom snížili závislost našeho řešení na jiných knihovnách, což je u tak jednoduché knihovny, jako
+je ta naše, žádoucí.
+
+\section*{Základní struktura tříd}
+
+Knihovna se skládá z několika hlavních tříd, které se starají o jednotlivé podúkoly při parsování parametrů.
+Těmi podúkoly jsou naparsování vstupních stringů a jejich rozdělení na jednotlivé tokeny -- o to se stará třída \verb|ArgumentParser|.
+Dále je třeba uchovat naparsovaná data -- tento úkol řeší třída \verb|ArgumentData|.
+Dříve než je ovšem možné parsovat, je třeba nastavit a uložit syntaxi, kterou daný program vyžaduje, to zajišťuje třída \verb|OptionSyntax|.
+
+Pro jednoduchost parsovací úlohy jsme se rozhodli pro parserem řízené zpracování. To znamená, že hlavní slovo
+má třída \verb|ArgumentParser|, která při parsování vstupu využívá informací ze třídy \verb|OptionSyntax| a \verb|ArgumentData|.
+Vzhledem k tomu, že se zde komunikuje pouze se dvěma třídami, jsou tyto odkazovány přímo z \verb|ArgumentParseru|
+a není použit návrhový vzor Mediator.
+
+Pro zjednodušní práce s knihovnou je celá tato struktura zastřešena třídou \verb|FrontEnd|, která poskytuje metody
+potřebné pro práci s knihovnou. Veškeré operace, jako definování parametrů či zjišťování jestli byl
+daný parametr nastaven, se provádí skrz ni. Tuto třídu lze i kopírovat, čímž je možné si uchovat stav knihovny
+spolu s uloženými argumenty.
+
+Při parsování je dále využívána třída \verb|StringParser|, která obsahuje pomocné funkce pro parsovaní řetězců. Tato třída
+vlastně zaobaluje postupné porovnávání jednotlivých znaků v řetězci a posouvání ukazatele na znak v něm.
+
+\section*{Rozhraní voleb}
+
+Definování voleb, jejich parametrů, či případných synonym se provádí srz volání metod na třídě \verb|FrontEnd|. Tento způsob
+byl zvolen díky možnosti okamžité kontroly zadávaných hodnot vůči již definovaným volbám. Což by při použití
+zastřešující struktury pro volbu a nastavování parametrů přímo na ní nebylo možné. Druhým důvodem bylo, že nám tento
+způsob přišel přehlednější. 
+
+Reakci na předání volby ve formě callbacků jsme zavrhli, jelikož parsování argumentů probíhá většinou spíše na začátku
+programu. Přičemž callbacky by byly vhodnější pro volání v celém průběhu programu. Zde by se pomocí nich stejně
+pouze nastavovaly jen hodnoty nějakých proměn-ných. Je podle nás tedy mnohem lepší tyto hodnoty rovnou uložit někde
+uvnitř knihovny a nechat uživatele, aby si je vytáhl podle potřeby.
+
+Získání voleb v jednom velkém seznamu nám také nepřišlo vhodné, neboť by si uživatel pak stejně musel zjišťovat, které
+volby byly zadány. Proto jsme mu práci zjednodušili a umožnili ptát se na to, jestli volba byla definována, přímo naší knihovny.
+
+\section*{Typy a hodnoty parametrů}
+
+Pro definování typu parametru jsme využili dědění od základního typu \verb|Type|, který definuje potřebné operace,
+využívané naší knihovnou. Tento způsob jsme zvolili z důvodu velmi jednodu-chého rozšiřování knihovny o nové typy
+možných argumentů pro pokročilejší uživatele. Každý typ pak rozhoduje v metodě \verb|fromString|, jak bude parsovat
+vstupní řetězce a kdy vyhodí jakou chybu.
+
+Polymorfismus hodnot parametrů voleb jsme vyřešili opět děděním -- tentokrát od třídy \verb|Value|. Důvodem pro dvě
+hierarchie je možnost mít více typů, které budou vracet stejnou hodnotu (například soubor a výčtový typ budou oba
+vracet řetězcovou hodnotu, přestože se jedná o různé typy).
+
+Získávání hodnot je řešeno pomocí šablonové metody, která provede dynamické přetypování z třídy \verb|Value| na jejího příslušného
+potomka. To, o jakého potomka se jedná, se zjistí z typu hodnoty, kterou má knihovna vrátit. Takže pokud například
+uživatel napíše:
+\begin{verbatim}arglib.getOptionParameter<int>("volba")\end{verbatim}
+bude se uložená hodnota přetypovávat na \verb|IntValue|. Tento
+postup je sice poněkud náchylný na chyby (když uživatel zadá nesprávný šablonový typ), ale tyto chyby lze díky výjimkám
+snadno odhalit a výsledný zdrojový uživatelský kód nám takto přišel nejelegantnější.
+
+\section*{Chybové stavy}
+
+Kontrolu voleb parametrů a jejich typů provádí knihovna implicitně. Pokud parametry předané programu nebudou
+korektní, nemá cenu v práci s programem dále pokračovat.
+
+Pro ohlašování chyb jsme použili výjimky, jelikož umožňují používat jednodušší rozhraní funkcí, které provádějí
+jednotlivé operace na vnitřních třídách. V opačném případě by bylo nutné pro funkce vracející hodnotou vracet
+informaci o úspěchu pomocí reference v parametrech či kódováním do návratové hodnoty. Další výhodou pak bylo
+velké zjednodušení konstrukcí pro řízení toku uvnitř knihovny.
+
+Použili jsme vlastní typ výjimky s odpovídajícím názvem pro práci při zpracování agrumentů.
+Vzhledem k malému rozsahu jsme definovali pouze jeden typ a přesnější určení provádíme v rámci textového popisu,
+který je součástí výjimky. Vzhledem k tomu, že nepředpokládáme žádné automatické zpracování výjimky, nanejvýš
+vypsání její chybové hlášky a skončení programu, je pouhý textový popis naprosto dostačující.
+
+Hlášení uživateli programu knihovna přímo nevypisuje, všechny chyby hlásí pomocí výjimek. Jak na ně bude reagovat
+uživatel-programátor při návrhu svého programu, je čistě na jeho volbě.
+
+\end{document}
