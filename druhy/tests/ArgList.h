@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-// TODO: document that thic class does not copy the strings. It is just a container of const char pointers.
-// Therefore, only immutable strings must be passed to it
-
+// A list of arguments.
+// This class does not copy the strings. It is just a container of const char pointers.
+// Therefore, only immutable strings must be passed to it.
 class ArgList {
 	public:
 		ArgList();

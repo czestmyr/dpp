@@ -85,8 +85,6 @@ bool PathologicalTests::requiredOptionNotSetTest() {
 }
 
 bool PathologicalTests::twoCallsOfParseFunctionTest() {
-	// TODO: check if option parameters are reseted as well
-	// // should test if status is reset before second call of that function
 	ArgList args1;
 	args1.push("program").push("-t");
 	
@@ -113,7 +111,6 @@ bool PathologicalTests::twoCallsOfParseFunctionTest() {
 }
 
 bool PathologicalTests::twoCallsOfParseFunctionArgumentsTest() {
-	// TODO: test if regular arguments are correctly read
 	ArgList args1;
 	args1.push("program").push("firstArgument").push("SecondArgument");
 	
