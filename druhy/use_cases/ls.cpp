@@ -8,7 +8,6 @@ using namespace std;
 using namespace Arglib;
 
 int main(int argc, const char* argv[]) {
-	//TODO: proc jsme vlastne pro Option neudelali vlastni tridu?
 	FrontEnd arglib;
 
 	arglib.addOption("a");
@@ -18,7 +17,9 @@ int main(int argc, const char* argv[]) {
 	StringType sizeType = StringType();
 	sizeType.setParameterName("SIZE");
 	arglib.addOption("block-size", OPTION_ALLOWED, sizeType, PARAM_REQUIRED);
-	arglib.setOptionHelp("block-size", "scale sizes by SIZE before printing them.  E.g., `--block-size=M' prints sizes in units of 1,048,576 bytes.   See  SIZE  format below.");
+	string blockSizeHelp = "scale sizes by SIZE before printing them. E.g., `--block-size=M' prints sizes in"
+	                       " units of 1,048,576 bytes.";
+	arglib.setOptionHelp("block-size", blockSizeHelp);
 
 	IntType widthType = IntType();
 	widthType.setParameterName("COLS");
@@ -27,23 +28,32 @@ int main(int argc, const char* argv[]) {
 	arglib.addSynonym("w","width");
 	arglib.setOptionHelp("w", "assume screen width instead of current value");
 
-
 	arglib.addOption("d");
 	arglib.addSynonym("d","directory");
 	arglib.setOptionHelp("d", "list directory entries instead of contents, and do not dereference symbolic links");
 
 	arglib.addOption("help");
+	arglib.addSynonym("help", "h");
 	arglib.setOptionHelp("help", "display this help and exit");
 
 	arglib.addOption("version");
+	arglib.addSynonym("version", "v");
 	arglib.setOptionHelp("version", "output version information and exit");
 
-
-	arglib.parse(argc, argv);
+	try {
+		arglib.parse(argc, argv);
+	} catch (ArgumentException e) {
+		cerr << "ls: " << e.what() << endl;
+		return 1;
+	}
 
 	// Ask which options were defined and possibly ask arguments
 	if (arglib.isOptionSet("help")) {
+		cout << "ls - list directory contents" << endl << endl;
+		cout << "\tSynopsis:" << endl;
+		cout << "\t\tls [OPTION]... [FILE(s)]..." << endl << endl;
 		arglib.writeHelp(cout);
+		return 0;
 	}
 	if (arglib.isOptionSet("block-size")) {
 		if (arglib.isOptionParameterSet("block-size")) {
@@ -67,8 +77,13 @@ int main(int argc, const char* argv[]) {
 		cout << "Option: " << "version" << " was set." << endl; 
 	}
 
-	cout << "Program got this arguments:";
 	vector<string> args = arglib.getRegularArguments();
+	if (args.size() == 0) {
+		cerr << "No files specified, try -h for help" << endl;
+		return -1;
+	}
+
+	cout << "Program got this arguments:";
 	for( vector<string>::iterator it = args.begin(); it!=args.end();++it){
 		cout<< " " << (*it);
 	}
