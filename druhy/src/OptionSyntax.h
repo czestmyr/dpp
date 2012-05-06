@@ -39,7 +39,12 @@ class OptionSyntax {
 		/// @param paramAttrib Attribute of the parameter. Defines whether the parameter is optional,
 		///	allowed or required. Possible values are PARAM_REQUIRED, PARAM_ALLOWED amd PARAM_FORBIDDEN
 		/// @throws ArgumentException In case the option of same name were already defined.
-		void addOption(const std::string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib);
+		void addOption(
+			const std::string& optionName, 
+			OptionAttribute optionAttrib, 
+			Type* paramType, 
+			ParameterAttribute paramAttrib);
+
 
 		/// Adds an option that is synonymous to another option.
 		/// All the properties (option attribute and parameter type and attribute) are retained from the
@@ -47,7 +52,8 @@ class OptionSyntax {
 		/// have the same option id (see OptionSyntax::getId()) and will point to the same option.
 		/// @param original Name of the original option (e.g. "version")
 		/// @param synonym Name of the synonym (e.g. "v")
-		/// @throws ArgumentException In case the option of same name were already defined or the option weren't defined.
+		/// @throws ArgumentException In case the option of same name
+		/// were already defined or the option weren't defined.
 		void addSynonym(const std::string& original, const std::string& synonym);
 
 		/// Returns the attribute of the given option.

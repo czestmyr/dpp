@@ -28,7 +28,12 @@ OptionSyntax& OptionSyntax::operator=(const OptionSyntax& other) {
 	initFrom(other);
 }
 
-void OptionSyntax::addOption(const string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib) {
+void OptionSyntax::addOption(
+	const string& optionName, 
+	OptionAttribute optionAttrib, 
+	Type* paramType, 
+	ParameterAttribute paramAttrib
+) {
 	if (isOptionDefined(optionName)) {
 		// Prevent type memory leaking by deleting the newly copied type
 		delete paramType;

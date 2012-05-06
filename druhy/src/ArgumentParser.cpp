@@ -126,7 +126,8 @@ void ArgumentParser::saveOption(const std::string& option, const std::string* va
 
 	// If the value is specified and the option forbids it, complain
 	if (value != NULL && attrib == PARAM_FORBIDDEN) {
-		throw ArgumentException(string("Option ") + option + " does not allow parameters, but value " + *value + " was given!");
+		throw ArgumentException(string("Option ") + option +
+			" does not allow parameters, but value " + *value + " was given!");
 	}
 
 	// If the value is not specified and the option requires it, complain
