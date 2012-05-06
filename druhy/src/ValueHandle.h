@@ -30,7 +30,7 @@ class ValueHandle {
 		/// @param newValue New argument value to be hold by this handle.
 		void setValue(Value* newValue);
 
-		/// Defines method to access and cast the value to proper type. TODO: rewrite for better text 
+		/// Defines method to access and cast the value to type defined by user.  
 		/// T Template parameter type to which the handled value shuuld be stored.
 		/// Must be specialized for Type derived from class Value and stored in this instance. 
 		template <class T>

@@ -38,6 +38,7 @@ class OptionSyntax {
 		///	The ownership of the Type instance is transfered to the OptionSyntax object.
 		/// @param paramAttrib Attribute of the parameter. Defines whether the parameter is optional,
 		///	allowed or required. Possible values are PARAM_REQUIRED, PARAM_ALLOWED amd PARAM_FORBIDDEN
+		/// @throws ArgumentException In case the option of same name were already defined.
 		void addOption(const std::string& optionName, OptionAttribute optionAttrib, Type* paramType, ParameterAttribute paramAttrib);
 
 		/// Adds an option that is synonymous to another option.
@@ -46,18 +47,21 @@ class OptionSyntax {
 		/// have the same option id (see OptionSyntax::getId()) and will point to the same option.
 		/// @param original Name of the original option (e.g. "version")
 		/// @param synonym Name of the synonym (e.g. "v")
+		/// @throws ArgumentException In case the option of same name were already defined or the option weren't defined.
 		void addSynonym(const std::string& original, const std::string& synonym);
 
 		/// Returns the attribute of the given option.
 		/// The option can be specified by any of the so-far defined synonyms for it.
 		/// @param option Name of the option.
 		/// @return attribute that says whether the option is allowed or required.
+		/// @throws ArgumentException In case the option weren't defined.
 		ParameterAttribute getAttribute(const std::string& option) const;
 
 		/// Returns the type of the parameter of a given option.
 		/// The option can be specified by any of the so-far defined synonyms for it.
 		/// @param option The name of the option.
 		/// @return Type of the option's parameter. If the option has no parameter, DummyType is returned.
+		/// @throws ArgumentException In case the option weren't defined.
 		const Type* getParameterType(const std::string& option) const;
 
 		/// Sets a help string for the given option.
@@ -66,6 +70,7 @@ class OptionSyntax {
 		/// documentation for the option ;-)
 		/// @param option Name of the option.
 		/// @param helpString Help for this option.
+		/// @throws ArgumentException In case the option weren't defined.
 		void setOptionHelp(const std::string& option, const std::string& helpString);
 
 		/// Writes help for all options into the given output stream.
@@ -78,6 +83,7 @@ class OptionSyntax {
 		/// The option can be specified by any of the so-far defined synonyms for it. In fact, the definition
 		/// of a synonymous option is that it has the same id. The id can be used in calls to ArgumentData.
 		/// @return Id of the option.
+		/// @throws ArgumentException In case the option weren't defined.
 		unsigned int getId(const std::string& option) const;
 
 		/// Returns the first found synonymous name for the given option.

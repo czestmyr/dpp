@@ -41,6 +41,7 @@ class FrontEnd {
 		/// @param paramType Allows the user to define type of option arguments 
 		/// @param paramAttrib Specifier defining if option arguments are required, allowed or forbidden.
 		///	Possible values are PARAM_REQUIRED, PARAM_ALLOWED amd PARAM_FORBIDDEN
+		/// @throws ArgumentException In case the option of same name were already defined.
 		template <class DerivedType>
 		void addOption(
 			const std::string& optionName,
@@ -60,6 +61,7 @@ class FrontEnd {
 		/// @param optionAttrib Specifier defining if option is allowed or required.
 		///	Possible values are OPTION_ALLOWED and OPTION_REQUIRED.
 		///	Default value is OPTION_ALLOWED
+		/// @throws ArgumentException In case the option of same name were already defined.
 		void addOption(const std::string& optionName, OptionAttribute optionAttrib = OPTION_ALLOWED) {
 			addOptionInternal(optionName, optionAttrib, Type::getClone(DummyType()), PARAM_FORBIDDEN);
 		}
@@ -70,11 +72,13 @@ class FrontEnd {
 		/// Synonym can be in long or short form.
 		/// @param original Alredy specified option to which we want to add a synonym.
 		/// @param synonym Name of option which should be synonym for original.
+		/// @throws ArgumentException In case the option weren't defined
 		void addSynonym(const std::string& original, const std::string& synonym);
 
 		/// Assigns help to option specified by optionName.
 		/// @param optionName Name of option to which add the help.
 		/// @param help Text of help to assign.
+		/// @throws ArgumentException In case the option weren't defined
 		void setOptionHelp(const std::string& optionName, const std::string& help);
 
 		/// Writes help to all specified options and format it to desired width.
@@ -88,16 +92,19 @@ class FrontEnd {
 		/// @param argv Command line parameters given to the program.
 		/// 	They have to start with name of the program,
 		///	because this is common for arguments in C++.
+		/// @throws ArgumentException In case the parsing fails.
 		void parse(int argc, const char* argv[]);
 
 		/// Checks if the option optionName was given.
 		/// @param optionName Name of the option to be tested if given.
 		/// @return If option optionName was given.
+		/// @throws ArgumentException In case the option weren't defined
 		bool isOptionSet(const std::string& optionName) const;
 
 		/// Checks if the parameter to option optionName was given.
 		/// @param optionName Name of the option to be tested for parameter.
 		/// @return If a parameter to option optionName was given.
+		/// @throws ArgumentException In case the option weren't defined
 		bool isOptionParameterSet(const std::string& optionName) const;
 
 		/// This method gets parameter of option specified by optionName.
@@ -105,6 +112,7 @@ class FrontEnd {
 		/// ValueType template parameter specifies a type of return value expected by the user.
 		/// @param optionName Name of the option to which return the argument. 
 		/// @return Value of the argument casted to type ValueType
+		/// @throws ArgumentException If the option weren't defined or casting fails.
 		template <class ValueType>
 		ValueType getOptionParameter(const std::string& optionName) const {
 			unsigned int id = syntax->getId(optionName);
@@ -133,6 +141,7 @@ class FrontEnd {
 		/// @param paramType Specifies a type of parameter. This type must be derived from type Type. 
 		/// @param paramAttrib Specifier defining if option arguments are required, allowed or forbidden.
 		///	Possible values are PARAM_REQUIRED, PARAM_ALLOWED amd PARAM_FORBIDDEN
+		/// @throws ArgumentException In case the option of same name were already defined.
 		void addOptionInternal(
 			const std::string& optionName, 
 			OptionAttribute optionAttrib, 

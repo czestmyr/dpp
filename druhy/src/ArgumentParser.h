@@ -24,6 +24,7 @@ class ArgumentParser {
 		/// Parses the command-line arguments
 		/// @param argc as in standard C++ main function.
 		/// @param argv as in standard C++ main function.
+		/// @throws ArgumentException In case the parsing can't be finished due to error.
 		void parse(int argc, const char* argv[]);
 	private:
 		/// Internal helper method for short option parsing.
@@ -31,6 +32,7 @@ class ArgumentParser {
 		/// @param option Name of the parsed option (should be actually only one character)
 		/// @param arguments reference to the internal vector of parsed arguments
 		/// @param argIndex The index that corresponds to the currently parsed option
+		/// @throws ArgumentException If the short option has incorect format.
 		int parseShortOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
 
 		/// Internal helper method for option parsing.
@@ -38,11 +40,13 @@ class ArgumentParser {
 		/// @param option Name of the parsed option (should be actually only one character)
 		/// @param arguments reference to the internal vector of parsed arguments
 		/// @param argIndex The index that corresponds to the currently parsed option
+		/// @throws ArgumentException If the option can't be saved.
 		int parseOption(const std::string& option, const std::vector<std::string>& arguments, int argIndex);
 
 		/// Saves the value of the option parameter into the ArgumentData object.
 		/// @param option The option whose parameter's value is being set
 		/// @param value pointer to the string that represents the parameter's value.
+		/// @throws ArgumentException If the option can't be saved.
 		void saveOption(const std::string& option, const std::string* value);
 
 		/// Enum that defines all possible argument types
