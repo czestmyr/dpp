@@ -3,7 +3,6 @@
 
 namespace Arglib {
 
-//TODO: Add proper information to this exception!
 template <>
 bool ValueHandle::getValue<bool>() {
 	if (isEmpty()) {
