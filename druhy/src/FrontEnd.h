@@ -13,6 +13,13 @@
 #include "OptionSyntax.h"
 #include "ArgumentData.h"
 
+/// Class that serves as an input point to this library for users. 
+/// It provides all methods to normal using of this library. As the name says it serves as an FrontEnd
+/// to classes which are used to represent all necessary data structures.
+/// Using this class it's possible to specify options and their properties.
+/// Method parse then parse commandline arguments given to the program.
+/// The last part allows to get informations which options were given to the program through command line.
+/// What were their arguments and what were regular arguments of the program.
 class FrontEnd {
 	public:
 		FrontEnd();
@@ -21,15 +28,14 @@ class FrontEnd {
 
 		FrontEnd& operator=(const FrontEnd& other);
 
-		/// TODO: Document, what a "DerivedType" is
-		/// Adds new option witch all its properties specified by the user.
+		/// Adds new option with all its properties specified by the user.
 		/// 
-		/// @param DefivedType Type specifiing which arguments can be added to the option.
+		/// @param DerivedType Type specifiing which arguments can be added to the option.
 		///	It must be class derived from class Type.
 		/// @param optionName Name of option to be added to set of known options.
-		/// @param optionAttrib Spedifier defining if option is allowed or required.
+		/// @param optionAttrib Specifier defining if option is allowed or required.
 		///	Possible values are OPTION_ALLOWED and OPTION_REQUIRED.
-		/// @param paramType Allows the user to define type without any knowledge of templates. TODO: write better 
+		/// @param paramType Allows the user to define type of option arguments 
 		/// @param paramAttrib Specifier defining if option arguments are required, allowed or forbidden.
 		///	Possible values are PARAM_REQUIRED, PARAM_ALLOWED amd PARAM_FORBIDDEN
 		template <class DerivedType>
@@ -48,7 +54,7 @@ class FrontEnd {
 		/// This method has to be here because without a type specification, the compiler
 		/// does not know, which template instance of addOption it has to create.
 		/// @param optionName Name of option to be added to set of known options.
-		/// @param optionAttrib Spedifier defining if option is allowed or required.
+		/// @param optionAttrib Specifier defining if option is allowed or required.
 		///	Possible values are OPTION_ALLOWED and OPTION_REQUIRED.
 		///	Default value is OPTION_ALLOWED
 		void addOption(const std::string& optionName, OptionAttribute optionAttrib = OPTION_ALLOWED) {
@@ -63,7 +69,7 @@ class FrontEnd {
 		/// @param synonym Name of option which should be synonym for original.
 		void addSynonym(const std::string& original, const std::string& synonym);
 
-		/// Assignss help to specified option.
+		/// Assignss help to option specified by optionName.
 		/// @param optionName Name of option to which add the help.
 		/// @param help Text of help to assign.
 		void setOptionHelp(const std::string& optionName, const std::string& help);
@@ -74,19 +80,19 @@ class FrontEnd {
 		///	The help will be wrapped to this number of characters.
 		void writeHelp(std::ostream& stream, int terminalSize = 80) const;
 
-		/// Parse arguments stored in @param argv.
+		/// Parse arguments stored in argv.
 		/// @param argc Number of tokens in argv.
 		/// @param argv Command line parameters given to the program.
 		/// 	They have to start with name of the program,
 		///	because this is common for agguments in C++.
 		void parse(int argc, const char* argv[]);
 
-		/// Tests if the option @param optionName was given.
+		/// Checks if the option optionName was given.
 		/// @param optionName Name of the option to be tested if given.
 		/// @return If option optionName was given.
 		bool isOptionSet(const std::string& optionName) const;
 
-		/// Tests if the parameter to option @param optionName was given.
+		/// Checks if the parameter to option optionName was given.
 		/// @param optionName Name of the option to be tested for parameter.
 		/// @return If a parameter to option optionName was given.
 		bool isOptionParameterSet(const std::string& optionName) const;
@@ -114,7 +120,7 @@ class FrontEnd {
 	private:
 		/// Separates adding new option in frontEnd and our internal representations of option syntax.
 		/// @param optionName Name of option to be added in set of known options.
-		/// @param optionAttrib Spedifier defining if option is allowed or required.
+		/// @param optionAttrib Specifier defining if option is allowed or required.
 		///	Possible values are OPTION_ALLOWED and OPTION_REQUIRED.
 		/// @param paramType Specifies a type of parameter. This type must be derived from type Type. 
 		/// @param paramAttrib Specifier defining if option arguments are required, allowed or forbidden.
@@ -126,8 +132,8 @@ class FrontEnd {
 			ParameterAttribute paramAttrib
 		);
 		
-		OptionSyntax* syntax; /// Stores syntax of options defined by the user.
-		ArgumentData* data; /// Stores all regular arguments given in parameters.
+		OptionSyntax* syntax; ///< Stores syntax of options defined by the user.
+		ArgumentData* data; ///< Stores all regular arguments given in parameters.
 };
 
 #endif
