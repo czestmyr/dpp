@@ -2,7 +2,7 @@ CCXX = g++-4.5
 CXXFLAGS = -Wall -O2 -std=c++0x -Isolution -DCOLORS
 BINARY = options_tests
 
-SOURCES = main.cpp framework.cpp
+SOURCES = main.cpp framework.cpp category_tests.cpp
 LIB_SOURCES = solution/common.cpp solution/option_category.cpp solution/option.cpp solution/option_parser.cpp
 
 OBJECTS := $(addsuffix .o, $(basename $(SOURCES)))

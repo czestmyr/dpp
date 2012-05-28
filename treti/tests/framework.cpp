@@ -12,7 +12,14 @@ int TestGroup::runTests() {
   cout << endl << "Running " << description << "..." << endl;
   for (unsigned int i = 0; i < tests.size(); i++) {
     cout << "       " << tests[i]->getDescription();
-    if (tests[i]->run()) {
+    bool success = false;
+    try {
+      success = tests[i]->run();
+    } catch (std::exception& exc) {
+      cout << endl << "       " << exc.what();
+    }
+
+    if (success) {
       cout << "\r" << GREEN_BEGIN << "[ OK ]" << COLOR_END << endl;
       numTestsOk++;
     } else {

@@ -22,7 +22,7 @@
 //------------------------------------------------------------------------------
 //         Macros for definition of test classes inside test groups
 //------------------------------------------------------------------------------
-#define TEST_BEGIN(name, description) \
+#define DECLARE_TEST(name, description) \
     class name: public Test {\
       public:\
         static void init(TestGroup* parent) {\
@@ -33,15 +33,15 @@
           return description ;\
         }\
 \
-        bool run() {
-#define TEST_END }};
+        bool run();\
+    };\
 
 //------------------------------------------------------------------------------
 //                                  Assertions
 //------------------------------------------------------------------------------
 #define ASSERT_EQUALS(value1, value2) {\
   if (value1 != value2) {\
-    throw Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 <<\
+    throw ::Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 <<\
       "\". Was " << value1 << " and " << value2;\
   }\
 }
@@ -55,6 +55,7 @@ namespace Tests {
 class TestingException: public std::exception {
   public:
     TestingException() {}
+
     TestingException(const TestingException& other) {
       message << other.message.rdbuf();
     }
@@ -69,7 +70,7 @@ class TestingException: public std::exception {
     }
 
     /// Extraction of exception message
-    const char* what() { return message.str().c_str(); }
+    const char* what() const throw() { return message.str().c_str(); }
 
   private:
     std::stringstream message;
