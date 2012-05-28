@@ -17,16 +17,32 @@ bool CategoryTests::Init2::run() {
   return checkSanity(cat);
 }
 
-bool CategoryTests::Init3::run() {
+bool CategoryTests::Add1::run() {
   option_category cat("Test options", "Options that should test this library");
-  cout << endl << cat;
-  return checkSanity(cat);
+  cat.add_options()
+    ("v", "verbose", "Whether the output of the program should be verbose")
+    ("h", "help", "Print out help for the program");
+  return checkSanity(cat, 2);
 }
 
-bool CategoryTests::checkSanity(option_category& cat) {
+bool CategoryTests::Add2::run() {
+  option_category cat("Test options", "Options that should test this library");
+  cat.add_options()
+    << option("v", "verbose", "Whether the output of the program should be verbose")
+    << option("h", "help", "Print out help for the program");
+  return checkSanity(cat, 2);
+}
+
+bool CategoryTests::Output::run() {
+  option_category cat("Test options", "Options that should test this library");
+  cout << endl << cat;
+  return checkSanity(cat, 0);
+}
+
+bool CategoryTests::checkSanity(option_category& cat, size_t size) {
   const option_category& constCat = cat;
 
-  ASSERT_EQUALS(cat.size(), 0);
+  ASSERT_EQUALS(cat.size(), size);
   ASSERT_EQUALS_NOPRINT(cat.begin() + cat.size(), cat.end());
   ASSERT_EQUALS_NOPRINT(constCat.begin() + constCat.size(), constCat.end());
 
