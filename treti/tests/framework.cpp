@@ -1,10 +1,23 @@
 #include "framework.h"
 
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
 namespace Tests {
+
+void Test::dumpArguments(int argc, const char* argv[]) {
+  for (int i = 0; i < argc; ++i) {
+    // If the option contains backspaces, output it with quotes
+    if (strchr(argv[i], ' ')) {
+      out() << "\"" << argv[i] << "\" ";
+    } else {
+      out() << argv[i] << " ";
+    }
+  }
+  out() << endl;
+}
 
 void Test::dumpOutput() {
   if (output.str().size() != 0) {

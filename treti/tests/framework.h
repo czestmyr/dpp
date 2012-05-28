@@ -113,6 +113,9 @@ class Test {
     /// A short (one line) description of this test.
     virtual const char* getDescription() = 0;
 
+    /// Outputs the simulated command line to the cout.
+    void dumpArguments(int argc, const char* argv[]);
+
     /// Returns an output stream to be used in tests
     std::ostream& out() {
       return output;
