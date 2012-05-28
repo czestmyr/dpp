@@ -13,42 +13,45 @@ bool ParsingTests::CatOutput::run() {
 }
 
 bool ParsingTests::SimpleOk::run() {
-  option_category cat;
-  prepareCategory(cat);
-
-  option_parser parser(cat);
-
   const char* argv[] = { "program", "-f", "hello_world.cpp" };
-  dumpArguments(3, argv);
-  ASSERT(parser.parse(3, const_cast<char**>(argv)));
-
+  testOk(this, 3, argv);
   return true;
 }
 
 bool ParsingTests::SimpleErr::run() {
-  option_category cat;
-  prepareCategory(cat);
-
-  option_parser parser(cat);
-
   const char* argv[] = { "program", "-i", "hello_world.cpp" };
-  dumpArguments(3, argv);
-  ASSERT_FALSE(parser.parse(3, const_cast<char**>(argv)));
-
+  testFail(this, 3, argv);
   return true;
 }
 
 bool ParsingTests::StrangeName::run() {
+  const char* argv[] = { "program", "!@#$%^&*()-_+[]{}\\|;:\"'<>.?/" };
+  testOk(this, 2, argv);
+  return true;
+}
+
+bool ParsingTests::DuplicateOption::run() {
+  const char* argv[] = { "program", "-s", "-s" };
+  testOk(this, 3, argv);
+  return true;
+}
+
+void ParsingTests::testOk(Test* test, int argc, const char* argv[]) {
   option_category cat;
   prepareCategory(cat);
-
   option_parser parser(cat);
 
-  const char* argv[] = { "program", "!@#$%^&*()-_+[]{}\\|;:\"'<>.?/" };
-  dumpArguments(2, argv);
-  ASSERT(parser.parse(2, const_cast<char**>(argv)));
+  test->dumpArguments(argc, argv);
+  ASSERT(parser.parse(argc, const_cast<char**>(argv)));
+}
 
-  return true;
+void ParsingTests::testFail(Test* test, int argc, const char* argv[]) {
+  option_category cat;
+  prepareCategory(cat);
+  option_parser parser(cat);
+
+  test->dumpArguments(argc, argv);
+  ASSERT_FALSE(parser.parse(argc, const_cast<char**>(argv)));
 }
 
 void ParsingTests::prepareCategory(option_category& cat) {
