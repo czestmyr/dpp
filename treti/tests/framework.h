@@ -1,9 +1,14 @@
 #ifndef OPTION_TESTS_FRAMEWORK_H
 #define OPTION_TESTS_FRAMEWORK_H
 
+#include <exception>
 #include <vector>
+#include <string>
+#include <sstream>
 
-// Colored output macros
+//------------------------------------------------------------------------------
+//                             Colored output macros
+//------------------------------------------------------------------------------
 #ifdef COLORS
 	#define GREEN_BEGIN "\e[0;32m"
 	#define RED_BEGIN "\e[0;31m"
@@ -14,7 +19,9 @@
 	#define COLOR_END ""
 #endif
 
-// Macros for definition of test classes inside test groups
+//------------------------------------------------------------------------------
+//         Macros for definition of test classes inside test groups
+//------------------------------------------------------------------------------
 #define TEST_BEGIN(name, description) \
     class name: public Test {\
       public:\
@@ -29,9 +36,46 @@
         bool run() {
 #define TEST_END }};
 
+//------------------------------------------------------------------------------
+//                                  Assertions
+//------------------------------------------------------------------------------
+#define ASSERT_EQUALS(value1, value2) {\
+  if (value1 != value2) {\
+    throw Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 <<\
+      "\". Was " << value1 << " and " << value2;\
+  }\
+}
+
+//------------------------------------------------------------------------------
+//                                 Test classes
+//------------------------------------------------------------------------------
 namespace Tests {
 
-/// A simple test class
+/// Testing exception class
+class TestingException: public std::exception {
+  public:
+    TestingException() {}
+    TestingException(const TestingException& other) {
+      message << other.message.rdbuf();
+    }
+
+    ~TestingException() throw() {}
+
+    /// Operator for exception message creation
+    template <class T>
+    TestingException& operator<< (const T& output) {
+      message << output;
+      return *this;
+    }
+
+    /// Extraction of exception message
+    const char* what() { return message.str().c_str(); }
+
+  private:
+    std::stringstream message;
+};
+
+// A simple test class
 class Test {
   public:
     /// The method that will run the test.
