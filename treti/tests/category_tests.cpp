@@ -35,7 +35,7 @@ bool CategoryTests::Add2::run() {
 
 bool CategoryTests::Output::run() {
   option_category cat("Test options", "Options that should test this library");
-  cout << endl << cat;
+  out() << cat;
   return checkSanity(cat, 0);
 }
 

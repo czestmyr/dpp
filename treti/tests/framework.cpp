@@ -6,27 +6,65 @@ using namespace std;
 
 namespace Tests {
 
+void Test::dumpOutput() {
+  if (output.str().size() != 0) {
+    string line;
+    cout << TEST_TAB << "Output of std::cout: " << endl;
+    cout << YELLOW_BEGIN;
+    while (getline(output, line)) {
+      cout << TEST_TAB << line << endl;
+    }
+    cout << COLOR_END;
+  }
+
+  output.str() = "";
+  output.clear();
+}
+
+void Test::dumpErrorOutput() {
+  if (errorOutput.str().size() != 0) {
+    string line;
+    cout << TEST_TAB << "Output of std::cerr: " << endl;
+    cout << YELLOW_BEGIN;
+    while (getline(errorOutput, line)) {
+      cout << TEST_TAB << line << endl;
+    }
+    cout << COLOR_END;
+  }
+
+  errorOutput.str() = "";
+  errorOutput.clear();
+}
+
 int TestGroup::runTests() {
   int numTestsOk = 0;
 
-  cout << endl << "Running " << description << "... (" << (int)(tests.size()) << " tests)" << endl;
+  cout << endl << TEST_SEP << "Running " << description << "... (" << (int)(tests.size()) << " tests)" << endl;
   for (unsigned int i = 0; i < tests.size(); i++) {
     cout << TEST_TAB << tests[i]->getDescription();
     bool success = false;
+
+    tests[i]->redirectErr();
+
     try {
       success = tests[i]->run();
+      if (success) {
+        cout << "\r" << GREEN_BEGIN << "[ OK ]" << COLOR_END << endl;
+        numTestsOk++;
+      } else {
+        cout << "\r" << RED_BEGIN << "[FAIL]" << COLOR_END << endl;
+      }
     } catch (std::exception& exc) {
-      cout << TEST_ENDL << exc.what();
+      cout << "\r" << RED_BEGIN << "[FAIL]" << COLOR_END << TEST_ENDL;
+      cout << RED_BEGIN << exc.what() << COLOR_END << endl;
     }
 
-    if (success) {
-      cout << "\r" << GREEN_BEGIN << "[ OK ]" << COLOR_END << endl;
-      numTestsOk++;
-    } else {
-      cout << "\r" << RED_BEGIN << "[FAIL]" << COLOR_END << endl;
-    }
+    tests[i]->restoreErr();
+
+    tests[i]->dumpOutput();
+    tests[i]->dumpErrorOutput();
   }
-  cout << "End of " << description << endl;
+  cout << TEST_TAB << "End of " << description << " ";
 
   return numTestsOk;
 }

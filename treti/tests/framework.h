@@ -4,21 +4,24 @@
 #include <exception>
 #include <vector>
 #include <string>
+#include <iostream>
 #include <sstream>
 
 //------------------------------------------------------------------------------
 //                             Formatted output macros
 //------------------------------------------------------------------------------
 #ifdef COLORS
-	#define GREEN_BEGIN "\e[0;32m"
-	#define RED_BEGIN "\e[0;31m"
-	#define COLOR_END "\e[0m"
+  #define GREEN_BEGIN "\e[0;32m"
+  #define RED_BEGIN "\e[0;31m"
+  #define YELLOW_BEGIN "\e[0;33m"
+  #define COLOR_END "\e[0m"
 #else
-	#define GREEN_BEGIN ""
-	#define RED_BEGIN ""
-	#define COLOR_END ""
+  #define GREEN_BEGIN ""
+  #define RED_BEGIN ""
+  #define COLOR_END ""
 #endif
 #define TEST_TAB "       "
+#define TEST_SEP "=====> "
 #define TEST_ENDL std::endl << TEST_TAB
 
 //------------------------------------------------------------------------------
@@ -41,6 +44,21 @@
 //------------------------------------------------------------------------------
 //                                  Assertions
 //------------------------------------------------------------------------------
+
+// Asserts that an expression evaluates to true
+#define ASSERT(expr) {\
+  if (expr) {\
+  } else {\
+    throw ::Tests::TestingException() << "Assertion \"" << #expr << "\" failed in " << __FILE__ << ":" << __LINE__;\
+  }\
+}
+
+// Asserts that an expression evaluates to true
+#define ASSERT_FALSE(expr) {\
+  if (expr) {\
+    throw ::Tests::TestingException() << "Assertion \"" << #expr << " == false\" failed in " << __FILE__ << ":" << __LINE__;\
+  }\
+}
 
 // Assert that two expressions are equal. Warning! Both expressions are evaluated twice!
 #define ASSERT_EQUALS(value1, value2) {\
@@ -66,25 +84,23 @@ namespace Tests {
 class TestingException: public std::exception {
   public:
     TestingException() {}
-
-    TestingException(const TestingException& other) {
-      message << other.message.rdbuf();
-    }
-
     ~TestingException() throw() {}
 
     /// Operator for exception message creation
     template <class T>
     TestingException& operator<< (const T& output) {
-      message << output;
+      std::stringstream ss(message);
+      ss.seekp(0, std::ios_base::end);
+      ss << output;
+      message = ss.str();
       return *this;
     }
 
     /// Extraction of exception message
-    const char* what() const throw() { return message.str().c_str(); }
+    const char* what() const throw() { return message.c_str(); }
 
   private:
-    std::stringstream message;
+    std::string message;
 };
 
 // A simple test class
@@ -96,6 +112,33 @@ class Test {
 
     /// A short (one line) description of this test.
     virtual const char* getDescription() = 0;
+
+    /// Returns an output stream to be used in tests
+    std::ostream& out() {
+      return output;
+    }
+
+    /// Redirects error output to our stringstream
+    void redirectErr() {
+      errBackup = std::cerr.rdbuf();
+      std::cerr.rdbuf(errorOutput.rdbuf());
+    }
+
+    /// Restores the state of error output to original state before calling redirectErr()
+    void restoreErr() {
+      std::cerr.rdbuf(errBackup);
+    }
+
+    /// Dumps output stream to std::cout
+    void dumpOutput();
+
+    /// Dumps error output stream to std::cout
+    void dumpErrorOutput();
+
+  private:
+    std::stringstream output;
+    std::stringstream errorOutput;
+    std::streambuf* errBackup;
 };
 
 /// A group of tests
