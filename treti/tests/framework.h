@@ -164,8 +164,9 @@ class TestGroup {
     TestGroup(const char* _description): description(_description) {}
 
     /// Runs all tests that were included in this group by appendTest().
+    /// &param verbose Whether cerr and cout should be 
     /// &return Number of tests that were successful.
-    int runTests();
+    int runTests(bool verbose);
 
     /// Returns the total number of tests that are inside this group.
     /// &return Number of included tests.
@@ -201,7 +202,7 @@ class Tests {
 
   public:
     /// Runs all the tests and prints output to console
-    bool runTests();
+    bool runTests(bool verbose);
 
   private:
     std::vector<TestGroup*> testGroups;

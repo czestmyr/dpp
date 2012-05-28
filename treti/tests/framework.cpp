@@ -49,16 +49,19 @@ void Test::dumpErrorOutput() {
   errorOutput.clear();
 }
 
-int TestGroup::runTests() {
-  int numTestsOk = 0;
-
+int TestGroup::runTests(bool verbose) {
+  // Print the test gruop header
   cout << endl << TEST_SEP << "Running " << description << "... (" << (int)(tests.size()) << " tests)" << endl;
+
+  // Run all tests in this category and calculate number of successes
+  int numTestsOk = 0;
   for (unsigned int i = 0; i < tests.size(); i++) {
     cout << TEST_TAB << tests[i]->getDescription();
-    bool success = false;
 
     tests[i]->redirectErr();
 
+    // Run test and catch any exceptions
+    bool success = false;
     try {
       success = tests[i]->run();
       if (success) {
@@ -74,8 +77,11 @@ int TestGroup::runTests() {
 
     tests[i]->restoreErr();
 
-    tests[i]->dumpOutput();
-    tests[i]->dumpErrorOutput();
+    // If the user wanted, print the standart output and error output
+    if (verbose) {
+      tests[i]->dumpOutput();
+      tests[i]->dumpErrorOutput();
+    }
   }
   cout << TEST_TAB << "End of " << description << " ";
 
@@ -88,18 +94,24 @@ Tests::~Tests() {
   }
 }
 
-bool Tests::runTests() {
-  int failed = 0;
-
+bool Tests::runTests(bool verbose) {
+  // Calculate the total number of tests
   int numTotalTests = 0;
   for (unsigned int i = 0; i < testGroups.size(); ++i) {
     numTotalTests += testGroups[i]->getTestNum();
   }
 
+  // Print the header
   cout << "Testing Option library (" << numTotalTests << " tests)..." << endl;
+  if (!verbose) {
+    cout << "For verbose tests add option -v or --verbose" << endl;
+  }
+
+  // Run all test groups and count number of failed tests
+  int failed = 0;
   for (unsigned int i = 0; i < testGroups.size(); ++i) {
     int numGroupTests = testGroups[i]->getTestNum();
-    int okGroupTests  = testGroups[i]->runTests();
+    int okGroupTests  = testGroups[i]->runTests(verbose);
 
     if (okGroupTests < numGroupTests) {
       cout << RED_BEGIN << "[" << okGroupTests << "/" << numGroupTests << "] tests OK" << COLOR_END << endl;
@@ -109,6 +121,7 @@ bool Tests::runTests() {
     }
   }
 
+  // Print how many tests have failed
   if (failed != 0) {
     cout << endl << RED_BEGIN << failed << " test(s) failed!" << COLOR_END << endl;
   } else {
