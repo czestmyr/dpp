@@ -7,7 +7,7 @@
 #include <sstream>
 
 //------------------------------------------------------------------------------
-//                             Colored output macros
+//                             Formatted output macros
 //------------------------------------------------------------------------------
 #ifdef COLORS
 	#define GREEN_BEGIN "\e[0;32m"
@@ -18,6 +18,8 @@
 	#define RED_BEGIN ""
 	#define COLOR_END ""
 #endif
+#define TEST_TAB "       "
+#define TEST_ENDL std::endl << TEST_TAB
 
 //------------------------------------------------------------------------------
 //         Macros for definition of test classes inside test groups
@@ -39,10 +41,19 @@
 //------------------------------------------------------------------------------
 //                                  Assertions
 //------------------------------------------------------------------------------
+
+// Assert that two expressions are equal. Warning! Both expressions are evaluated twice!
 #define ASSERT_EQUALS(value1, value2) {\
   if (value1 != value2) {\
     throw ::Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 <<\
       "\". Was " << value1 << " and " << value2;\
+  }\
+}
+
+// Asserts that two expressions are equal. Does not print their value and evaluates them only once.
+#define ASSERT_EQUALS_NOPRINT(value1, value2) {\
+  if (value1 != value2) {\
+    throw ::Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 << "\"";\
   }\
 }
 

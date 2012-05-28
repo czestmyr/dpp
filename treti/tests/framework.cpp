@@ -9,14 +9,14 @@ namespace Tests {
 int TestGroup::runTests() {
   int numTestsOk = 0;
 
-  cout << endl << "Running " << description << "..." << endl;
+  cout << endl << "Running " << description << "... (" << (int)(tests.size()) << " tests)" << endl;
   for (unsigned int i = 0; i < tests.size(); i++) {
-    cout << "       " << tests[i]->getDescription();
+    cout << TEST_TAB << tests[i]->getDescription();
     bool success = false;
     try {
       success = tests[i]->run();
     } catch (std::exception& exc) {
-      cout << endl << "       " << exc.what();
+      cout << TEST_ENDL << exc.what();
     }
 
     if (success) {

@@ -1,5 +1,7 @@
 CCXX = g++-4.5
 CXXFLAGS = -Wall -O2 -std=c++0x -Isolution -DCOLORS
+# Change CXXFLAGS to following if your shell does not support colors:
+#CXXFLAGS = -Wall -O2 -std=c++0x -Isolution
 BINARY = options_tests
 
 SOURCES = main.cpp framework.cpp category_tests.cpp
