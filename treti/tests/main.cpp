@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "category_tests.h"
+#include "restriction_tests.h"
 #include "parsing_tests.h"
 #include "options.h"
 
@@ -24,6 +25,7 @@ int main (int argc, char* argv[]) {
 
   // Append the test groups and run the tests
   tests.appendGroup(new Tests::CategoryTests());
+  tests.appendGroup(new Tests::RestrictionTests());
   tests.appendGroup(new Tests::ParsingTests());
 
   return tests.runTests(verbose);

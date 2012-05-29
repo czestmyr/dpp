@@ -60,18 +60,11 @@
   }\
 }
 
-// Assert that two expressions are equal. Warning! Both expressions are evaluated twice!
+// Assert that two expressions are equal.
 #define ASSERT_EQUALS(value1, value2) {\
   if (value1 != value2) {\
-    throw ::Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 <<\
-      "\". Was " << value1 << " and " << value2;\
-  }\
-}
-
-// Asserts that two expressions are equal. Does not print their value and evaluates them only once.
-#define ASSERT_EQUALS_NOPRINT(value1, value2) {\
-  if (value1 != value2) {\
-    throw ::Tests::TestingException() << "Assertion failed in \"" << #value1 << " == " << #value2 << "\"";\
+    throw ::Tests::TestingException() << "Assertion \"" << #value1 << " == " << #value2 <<\
+      "\" failed in " << __FILE__ << ":" << __LINE__;\
   }\
 }
 

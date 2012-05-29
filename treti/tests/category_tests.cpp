@@ -43,8 +43,8 @@ bool CategoryTests::checkSanity(option_category& cat, size_t size) {
   const option_category& constCat = cat;
 
   ASSERT_EQUALS(cat.size(), size);
-  ASSERT_EQUALS_NOPRINT(cat.begin() + cat.size(), cat.end());
-  ASSERT_EQUALS_NOPRINT(constCat.begin() + constCat.size(), constCat.end());
+  ASSERT_EQUALS(cat.begin() + cat.size(), cat.end());
+  ASSERT_EQUALS(constCat.begin() + constCat.size(), constCat.end());
 
   return true;
 }
