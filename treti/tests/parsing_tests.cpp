@@ -16,8 +16,8 @@ bool ParsingTests::CatOutput::run() {
 }
 
 bool ParsingTests::SimpleOk::run() {
-  const char* argv[] = { "program", "-f", "hello_world.cpp" };
-  testOk(this, 3, argv);
+  const char* argv[] = { "program", "-r", "-f", "hello_world.cpp" };
+  testOk(this, 4, argv);
   return true;
 }
 
@@ -28,20 +28,20 @@ bool ParsingTests::ComplexOk::run() {
 }
 
 bool ParsingTests::UnknownShort::run() {
-  const char* argv[] = { "program", "-i", "hello_world.cpp" };
-  testFail(this, 3, argv);
+  const char* argv[] = { "program", "-r", "-i", "hello_world.cpp" };
+  testFail(this, 4, argv);
   return true;
 }
 
 bool ParsingTests::UnknownLong::run() {
-  const char* argv[] = { "program", "--input", "hello_world.cpp" };
-  testFail(this, 3, argv);
+  const char* argv[] = { "program", "-r", "--input", "hello_world.cpp" };
+  testFail(this, 4, argv);
   return true;
 }
 
 bool ParsingTests::MalformedShort::run() {
-  const char* argv[] = { "program", "-fs" };
-  testFail(this, 2, argv);
+  const char* argv[] = { "program", "-r", "-fs" };
+  testFail(this, 3, argv);
   return true;
 }
 
@@ -52,20 +52,26 @@ bool ParsingTests::CamoShort::run() {
 }
 
 bool ParsingTests::MissingRequired::run() {
-  const char* argv[] = { "program", "-r" };
-  testFail(this, 2, argv);
+  const char* argv[] = { "program", "-r", "--required_value" };
+  testFail(this, 3, argv);
   return true;
 }
 
 bool ParsingTests::ProvidedOptional::run() {
-  const char* argv[] = { "program", "-f", "myfile.txt" };
-  testOk(this, 3, argv);
+  const char* argv[] = { "program", "-r", "-f", "myfile.txt" };
+  testOk(this, 4, argv);
   return true;
 }
 
 bool ParsingTests::OmitedOptional::run() {
+  const char* argv[] = { "program", "-r", "-f" };
+  testOk(this, 3, argv);
+  return true;
+}
+
+bool ParsingTests::RequiredOption::run() {
   const char* argv[] = { "program", "-f" };
-  testOk(this, 2, argv);
+  testFail(this, 2, argv);
   return true;
 }
 
@@ -76,14 +82,14 @@ bool ParsingTests::DifferentType::run() {
 }
 
 bool ParsingTests::StrangeName::run() {
-  const char* argv[] = { "program", "!@#$%^&*()-_+[]{}\\|;:\"'<>.?/" };
-  testOk(this, 2, argv);
+  const char* argv[] = { "program", "-r", "--!@#$%^&*()-_+[]{}\\|;:\"'<>.?/" };
+  testOk(this, 3, argv);
   return true;
 }
 
 bool ParsingTests::DuplicateOption::run() {
-  const char* argv[] = { "program", "-s", "-s" };
-  testOk(this, 3, argv);
+  const char* argv[] = { "program", "-r", "-s", "-s" };
+  testOk(this, 4, argv);
   return true;
 }
 
@@ -106,10 +112,13 @@ void ParsingTests::testFail(Test* test, int argc, const char* argv[]) {
 }
 
 void ParsingTests::prepareCategory(option_category& cat) {
+  option required = option("r", "", "Required option with an optional value", option_value<int>(5, OPTIONAL));
+  required.category(REQUIRED);
   cat.add_options()
     << option("f", "file", "Some file to be parsed", option_value<string>("output.txt", OPTIONAL))
     << option("s", "!@#$%^&*()-_+[]{}\\|;:\"'<>.?/", "Strange option")
-    << option("r", "", "Required option", option_value<int>(5, REQUIRED));
+    << option("", "required_value", "Option with a required value", option_value<int>(0, REQUIRED))
+    << required;
 }
 
 }  // End namespace Tests

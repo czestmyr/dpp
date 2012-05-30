@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -O2 -std=c++0x -Isolution -DCOLORS -g
 #CXXFLAGS = -Wall -O2 -std=c++0x -Isolution
 BINARY = options_tests
 
-SOURCES = main.cpp framework.cpp category_tests.cpp parsing_tests.cpp restriction_tests.cpp
+SOURCES = main.cpp framework.cpp option_tests.cpp value_tests.cpp category_tests.cpp parsing_tests.cpp restriction_tests.cpp usage_tests.cpp
 LIB_SOURCES = solution/common.cpp solution/option_category.cpp solution/option.cpp solution/option_parser.cpp
 
 OBJECTS := $(addsuffix .o, $(basename $(SOURCES)))
