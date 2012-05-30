@@ -124,6 +124,9 @@ bool Tests::runTests(bool verbose) {
   // Print how many tests have failed
   if (failed != 0) {
     cout << endl << RED_BEGIN << failed << " test(s) failed!" << COLOR_END << endl;
+    if (!verbose) {
+      cout << RED_BEGIN << "You can re-run the tests with option \"-v\" to see more details" << COLOR_END << endl;
+    }
   } else {
     cout << endl << GREEN_BEGIN << "All tests passed!" << COLOR_END << endl;
   }
