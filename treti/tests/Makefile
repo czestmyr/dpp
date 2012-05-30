@@ -1,4 +1,4 @@
-CCXX = g++-4.5
+CCXX = g++
 CXXFLAGS = -Wall -O2 -std=c++0x -Isolution -DCOLORS -g
 # Change CXXFLAGS to following if your shell does not support colors:
 #CXXFLAGS = -Wall -O2 -std=c++0x -Isolution

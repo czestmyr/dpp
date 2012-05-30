@@ -1,4 +1,4 @@
-CCXX = g++-4.5
+CCXX = g++
 CXXFLAGS = -Wall -O2 -std=c++0x
 LDFLAGS = 
 BINARY = options_test

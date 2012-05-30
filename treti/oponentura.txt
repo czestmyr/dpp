@@ -1,0 +1,94 @@
+
+                    Oponentura ke knihovně Program options
+             3.úkol do předmětu Doporučené postupy v programování
+                             Čestmír Houška, 2012
+
+Splnění zadání
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    Co do splnění požadavků ze zadání je na tom mně dodaná knihovna poměrně
+dobře. Z funkčních požadavků chybí jen možnost u volby zakázat hodnotu, což je
+poměrně nešikovné ve chvíli, kdy chceme volbu jen jako přepínač.
+    Dále chyběla ukázková implementace příkazu time. Na druhou stranu, autoři
+místo toho vytvořili jiný ukázkový příklad (./options_test), takže bych to
+nehodnotil jako nedostatek.
+
+Pohodlnost práce s knihovnou
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    Autoři dovedli k dokonalosti snížení syntaktické režie při používání jejich
+knihovny, zde opravdu odvedli kus velmi dobré práce.
+    Velice dobře se díky šablonám vypořádali i s novými typy voleb. Uživatel
+této knihovny tak nemusí pro podporu svého nového typu dělat takřka nic. Stačí,
+aby jeho typ podporoval lexical_cast - třeba pomocí proudových operátorů.
+    Co mi však přišlo lehce krkolomné, byly konstruktory třídy option. Jmenovitě
+nutnost zadávat krátké či dlouhé názvy voleb i v případě, že tyto nebudou
+využity. Je však pravdou, že díky tomu, že se v obou případech jednalo o
+stringy, by tento problém byl asi těžko řešitelný.
+    Horší je problém s povinnými hodnotami, kdy po mně syntaxe vyžadovala zadat
+defaultní hodnotu proměnné, přestože nikdy nemohla být použita.
+    Menší výhrady bych měl i k pojmenování některých tříd. Konkrétně k příliš
+obecnému "placeholderu" nebo k třídě "option_restriction", kterou bych osobně
+pojmenoval spíš jako "value_restriction".
+    Jako asi nejhorší prohřešek vidím oznamování chyb, kdy knihovna bez možnosti
+toto chování jakkoliv zarazit vypisuje problémy s parsováním na standartní
+chybový výstup. Toto chování je spíš podobné výjimkám, přestože pro zjištění
+úspěšnosti parsování je použito vrácení booleovské chybové hodnoty. Výjimky však
+z knihovny taktéž mohou vypadnout, a to při zjišťování hodnoty neexistující
+volby. Celkově se tak v knihovně nacházejí tři nesourodé systémy na hlášení chyb
+- chybové hodnoty, automatické výpisy na std. chybový výstup a výjimky.
+
+Zdrojový kód a implementace
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    Autoři mohli trochu lépe připravit zakomponování knihovny do projektu.
+Například do jejího Makefile přidat pravidlo na vytvoření archivu, který by si
+pak mohli uživatelé jejich knihovny zakompilovat do projektu. Stejně tak nikde
+nebylo napsáno, jaký soubor mám pro práci s knihovnou includovat.
+    Hodně mi vadilo použití standardu C++11, a to ani ne tak kvůli
+srozumitelnosti kódu jako kvůli nekompatibilitě s kompilátory. Musel jsem
+instalovat dvě nové verze GCC, abych byl schopen knihovnu vůbec přeložit.
+GCC-4.6 si stěžoval na parametrizované konstruktory unique_ptr(...) a GCC-4.4
+zase měl problém s konstruktem foreach. Pomohlo až GCC-4.5. Přitom stačilo do
+dokumentace napsat, na jaké verzi GCC byla knihovna testována. Při použití
+bleeding-edge standardu není trocha nekompatibility až takovým překvapením.
+    Co se týče kódu samotného, tak je dobře strukturovaný a velmi srozumitelný.
+Zastavil bych se snad už jen u zbytečných typedefů, které jsou dle mého názoru
+jen na škodu. Myslím, že "char" vypadá o něco lépe než "short_name_type". Takto
+zneužívané typedefy jen zastírají skutečné typy a zhoršují čitelnost.
+
+Hodnocení zdůvodnění návrhu
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    Zde autoři dopodrobna zdůvodnili svoji "vlajkovou loď" v podobě skvěle
+zhuštěné syntaxe pro použití jejich knihovny. V porovnání s naším řešením je tak
+kód zapisující stejné volby zhruba poloviční.
+    Autoři se potom zbytečně věnují tématům, jako je zdůvodnění ručně psaného
+hard-coded parseru oproti obecnému nebo popis coding rules, které v projektu
+použili.
+    Dále se přiznám, že jsem ani po několikerém přečtení nepochopil význam konce
+části o hodnotách voleb, konkrétně od slov "Myšlenka se dá zevšeobecnit" dále.
+Stejně tak věta "Restrikce se střetávají s navlas stejnými problémy jako samotné
+hodnoty a jsou navlas stejně řešené - žádné překvapení se nekoná" mi moc
+informací nepředala.
+    Úplně však chybí část věnovaná chybovým stavům. Například o vyhazované
+výjimce jsem se dozvěděl až díky testům. V dokumentaci se o ní sice mlhavě píše
+(cosi o assertu), ale hodilo by se toto chování obhájit i ve zdůvodnění.
+
+Dokumentace
+¯¯¯¯¯¯¯¯¯¯¯
+    Dokumentace je standardně na dobré úrovni (jak již je zvykem při použití
+Doxygen-like nástrojů), nestalo se mi, že bych narazil na nezdokumentovanou
+třídu nebo metodu.
+    Úvodní strana vhodně a stručně uvede neznalého programátora pomocí příkladů
+do tajů používání knihovny.
+
+Testovatelnost
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    Zde nemám autorům téměř co vytknout. Dobře testovatelné byly všechny
+důležité veřejné třídy a metody v knihovně. Pouze mě trochu svazoval typ druhého
+parametru v metodě option_parser::parse(...), kde byl "char*", což vadilo při
+předávání hard-coded hodnot v testech.
+
+Shrnutí
+¯¯¯¯¯¯¯
+    Celkově bych toto řešení označil za zdařilé. Problém mám jen s řešením
+ohlašování chyb a lehce podceněném předání knihovny dalším programátorům. Taktéž
+zdůvodnění návrhu mohlo být propracovanější.
+
